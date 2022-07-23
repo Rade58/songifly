@@ -1,0 +1,1 @@
+# Project bootstraped with `npx create-next-app@latest --ts`
