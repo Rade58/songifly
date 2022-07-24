@@ -3,6 +3,8 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -49,6 +51,7 @@ const Home: NextPage = () => {
               </ul>
             </div>
           </div>
+          <ThemeSwitcher />
         </div>
       </header>
 
