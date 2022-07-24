@@ -3,6 +3,18 @@ import { useTheme } from "next-themes";
 
 import themes from "../themes";
 
+const change = (currentTheme: string, themeList: string[]) => {
+  //
+  const indexOfCurrent = themeList.indexOf(currentTheme);
+  const listLength = themeList.length;
+
+  if (listLength !== indexOfCurrent + 1) {
+    return themeList[indexOfCurrent + 1];
+  }
+
+  return themeList[0];
+};
+
 const useThemeSwitcher = () => {
   const [mounted, setMounted] = useState<boolean>(false);
 
@@ -12,14 +24,14 @@ const useThemeSwitcher = () => {
 
   const { setTheme, theme: currentTheme } = useTheme();
 
-  const changeTheme = (theme: string) => {
-    setTheme(theme);
+  const changeTheme = () => {
+    setTheme(change(currentTheme ? currentTheme : themes[0], themes));
   };
 
   return {
-    theme: mounted ? currentTheme : themes[0],
-    changeTheme: mounted ? changeTheme : (theme: string) => undefined,
-    availableThemes: themes,
+    theme: mounted && currentTheme ? currentTheme : themes[0],
+    changeTheme: mounted ? changeTheme : () => undefined,
+    availableThemes: themes ? themes : [],
   };
 };
 
