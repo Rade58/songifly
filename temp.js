@@ -11,3 +11,4 @@ const jsonString = /\[.+\]/.exec(typescriptString);
 const themesArr = jsonString ? JSON.parse(jsonString) : [];
 
 console.log({ themesArr });
+console.log(themesArr[0]);

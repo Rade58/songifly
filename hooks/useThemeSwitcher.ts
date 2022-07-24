@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
-import themes from "../themes";
+import themes from "../daisy-themes";
 /**
  *
  * @param currentTheme
  * @param themeList
  * @returns
  */
-const change = (currentTheme: string, themeList: string[]) => {
+const change = (
+  currentTheme: typeof themes[number],
+  themeList: typeof themes
+) => {
   //
   const indexOfCurrent = themeList.indexOf(currentTheme);
   const listLength = themeList.length;
@@ -34,17 +37,27 @@ const useThemeSwitcher = () => {
   const { setTheme, theme: currentTheme } = useTheme();
 
   const toggleTheme = () => {
-    setTheme(change(currentTheme ? currentTheme : themes[0], themes));
+    setTheme(
+      change(
+        currentTheme
+          ? (currentTheme as unknown as typeof themes[number])
+          : themes[0],
+        themes
+      )
+    );
   };
 
-  /* const chngeToSpecificTheme = (theme: (typeof themes[number]) as const) => {
-
-  } */
+  const changeToSpecificTheme = (theme: typeof themes[number]) => {
+    setTheme(theme);
+  };
 
   return {
     theme: mounted && currentTheme ? currentTheme : themes[0],
     toggleTheme: mounted ? toggleTheme : () => undefined,
     availableThemes: themes ? themes : [],
+    changeToSpecificTheme: mounted
+      ? changeToSpecificTheme
+      : (theme: typeof themes[number]) => undefined,
   };
 };
 

@@ -1,11 +1,16 @@
 // INTENDED TO BE USED (IMPORTED AND USED) FOR TAILWIND CONFIGURATION BUT ALSO IN
 // THEME SWITCHER LOGIC
 
-const themes = require("./themes.ts");
+const { readFileSync } = require("fs");
 
-const data = [...themes];
+const typescriptThemeFileContent = readFileSync("./daisy-themes.ts");
 
-/**
- * @type "fantasy", "dracula"[]
- */
-module.exports = data;
+const typescriptString = Buffer.from(typescriptThemeFileContent).toString(
+  "utf-8"
+);
+
+const jsonString = /\[.+\]/.exec(typescriptString);
+
+const themesArr = jsonString ? JSON.parse(jsonString) : [];
+// console.log({ themesArr });
+module.exports = themesArr;
