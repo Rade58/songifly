@@ -55,21 +55,21 @@
       },
       "alias": {
         "map": [
-          ["@/components", "./src/components"],
-          ["@/types", "./src/types"],
-          ["@/lib", "./src/lib"],
+          ["@/components", "./components"],
+          ["@/types", "./types"],
+          ["@/lib", "./lib"],
           /** ["@/theme", "./theme"], */
-          ["@/machines", "./src/machines"],
-          ["@/constants", "./src/constants"],
-          ["@/hooks", "./src/hooks"],
-          ["@/util", "./src/util"],
-          ["@/svgs", "./src/svgs"],
-          ["@/styles", "./src/styles"],
+          ["@/machines", "./machines"],
+          ["@/constants", "./constants"],
+          ["@/hooks", "./hooks"],
+          ["@/util", "./util"],
+          ["@/svgs", "./svgs"],
+          ["@/styles", "./styles"],
           /**  ["@/db", "./db"], */
-          ["@/pages", "./src/pages"],
-          ["@/api_middlewares", "./src/api_middlewares"],
-          ["@/views", "./src/views"],
-          ["@/temp_helpers", "./src/temp_helpers"]
+          ["@/pages", "./pages"],
+          ["@/api_middlewares", "./api_middlewares"],
+          ["@/views", "./views"],
+          ["@/temp_helpers", "./temp_helpers"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".tsx", ".json"]
       }

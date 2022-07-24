@@ -15,21 +15,22 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/components/*": ["src/components/*"],
-      "@/types/*": ["src/types/*"],
-      "@/lib/*": ["src/lib/*"],
-      "@/machines/*": ["src/machines/*"],
-      "@/constants/*": ["src/constants/*"],
-      "@/hooks/*": ["src/hooks/*"],
-      "@/util/*": ["src/util/*"],
-      "@/svgs/*": ["src/svgs/*"],
-      "@/styles/*": ["src/styles/*"],
+      "@/components/*": ["components/*"],
+      "@/types/*": ["types/*"],
+      "@/lib/*": ["lib/*"],
+      "@/machines/*": ["machines/*"],
+      "@/constants/*": ["constants/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/util/*": ["util/*"],
+      "@/svgs/*": ["svgs/*"],
+      "@/styles/*": ["styles/*"],
       // "@/db/*": ["db/*"],
-      "@/pages/*": ["src/pages/*"],
-      "@/api_middlewares/*": ["src/api_middlewares/*"],
-      "@/views/*": ["src/views/*"],
-      "@/temp_helpers/*": ["src/temp_helpers/*"]
-    },"baseUrl": "."
+      "@/pages/*": ["pages/*"],
+      "@/api_middlewares/*": ["api_middlewares/*"],
+      "@/views/*": ["views/*"],
+      "@/temp_helpers/*": ["temp_helpers/*"]
+    },
+    "baseUrl": "."
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
