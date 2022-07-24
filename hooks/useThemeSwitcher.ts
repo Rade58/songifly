@@ -14,20 +14,20 @@ const change = (
 ) => {
   //
 
-  console.log({ themeList, currentTheme });
+  // console.log({ themeList, currentTheme });
 
   const indexOfCurrent = themeList.indexOf(currentTheme);
   const listLength = themeList.length;
 
-  console.log({ indexOfCurrent, listLength });
+  // console.log({ indexOfCurrent, listLength });
 
   if (listLength !== indexOfCurrent + 1) {
-    console.log(themeList[indexOfCurrent + 1]);
+    // console.log(themeList[indexOfCurrent + 1]);
 
     return themeList[indexOfCurrent + 1];
   }
 
-  console.log(themeList[0]);
+  // console.log(themeList[0]);
 
   return themeList[0];
 };
@@ -38,14 +38,29 @@ const change = (
 //
 const useThemeSwitcher = () => {
   const [mounted, setMounted] = useState<boolean>(false);
-  const { setTheme, theme: currentTheme } = useTheme();
+  const {
+    setTheme,
+    theme: currentTheme,
+    resolvedTheme,
+    themes: passedThemes,
+    forcedTheme,
+    systemTheme,
+  } = useTheme();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   const toggleTheme = useCallback(() => {
-    console.log({ setTheme, mounted });
+    // console.log({ setTheme, mounted, currentTheme, resolvedTheme });
+    console.log({
+      setTheme,
+      theme: currentTheme,
+      resolvedTheme,
+      themes: passedThemes,
+      forcedTheme,
+      systemTheme,
+    });
 
     if (!setTheme || !mounted) return;
     setTheme(

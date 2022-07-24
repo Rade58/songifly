@@ -2,6 +2,8 @@
 
 const themes = require("./themes.cjs");
 
+console.log({ tailThemes: themes });
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -14,7 +16,7 @@ module.exports = {
   // daisyUI config (optional)
   daisyui: {
     styled: true,
-    // themes: ["fantasy","dracula" ],
+    // themes: ["fantasy", "dracula"],
     themes,
     base: true,
     utils: true,
@@ -23,5 +25,5 @@ module.exports = {
     prefix: "",
     darkTheme: themes[1],
   },
-  darkMode: "class",
+  // darkMode: "class",
 };

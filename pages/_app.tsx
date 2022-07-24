@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <ThemeProvider
         enableSystem={false}
-        attribute="class"
+        attribute="data-theme"
         defaultTheme={themes[0]}
         enableColorScheme={false}
       >
