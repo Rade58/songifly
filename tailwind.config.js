@@ -2,7 +2,7 @@
 
 const themes = require("./themes.cjs");
 
-console.log({ tailThemes: themes });
+// console.log({ tailThemes: themes });
 
 module.exports = {
   content: [
