@@ -2,11 +2,13 @@ import { useEffect, useState, useCallback } from "react";
 import { useTheme } from "next-themes";
 
 import themes from "../theme/daisy-themes";
+
 /**
  *
  * @param currentTheme
  * @param themeList
  * @returns
+ * @description helper
  */
 const change = (
   currentTheme: typeof themes[number],
@@ -14,28 +16,20 @@ const change = (
 ) => {
   //
 
-  // console.log({ themeList, currentTheme });
-
   const indexOfCurrent = themeList.indexOf(currentTheme);
   const listLength = themeList.length;
 
-  // console.log({ indexOfCurrent, listLength });
-
   if (listLength !== indexOfCurrent + 1) {
-    // console.log(themeList[indexOfCurrent + 1]);
-
     return themeList[indexOfCurrent + 1];
   }
-
-  // console.log(themeList[0]);
 
   return themeList[0];
 };
 
-//
-//
-//
-//
+/**
+ *
+ * @description Use when you want to change theme, or you wantt an access to a current theme
+ */
 const useThemeSwitcher = () => {
   const [mounted, setMounted] = useState<boolean>(false);
   const {
@@ -61,7 +55,7 @@ const useThemeSwitcher = () => {
       forcedTheme,
       systemTheme,
     });
- */
+    */
     if (!setTheme || !mounted) return;
     setTheme(
       change(
