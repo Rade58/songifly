@@ -1,5 +1,4 @@
 // INTENDED TO BE USED (IMPORTED AND USED) FOR TAILWIND CONFIGURATION BUT ALSO IN
-// THEME SWITCHER LOGIC
 
 const { readFileSync } = require("fs");
 
@@ -12,5 +11,5 @@ const typescriptString = Buffer.from(typescriptThemeFileContent).toString(
 const jsonString = /\[.+\]/.exec(typescriptString);
 
 const themesArr = jsonString ? JSON.parse(jsonString) : [];
-console.log({ themesArr });
+// console.log({ themesArr });
 module.exports = themesArr;
