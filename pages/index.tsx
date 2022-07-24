@@ -1,3 +1,4 @@
+/* eslint jsx-a11y/anchor-is-valid: 1 */
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -27,12 +28,19 @@ const Home: NextPage = () => {
               />
             </div>
             <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <label
+                htmlFor="#lala"
+                // eslint-disable-next-line
+                tabIndex={0}
+                className="btn btn-ghost btn-circle avatar"
+              >
                 <div className="w-10 rounded-full">
+                  {/* eslint-disable-next-line */}
                   <img src="https://placeimg.com/80/80/people" />
                 </div>
               </label>
               <ul
+                // eslint-disable-next-line
                 tabIndex={0}
                 className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
               >

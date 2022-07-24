@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useTheme } from "next-themes";
 
-import themes from "../daisy-themes";
+import themes from "../theme/daisy-themes";
 /**
  *
  * @param currentTheme
@@ -53,7 +53,7 @@ const useThemeSwitcher = () => {
 
   const toggleTheme = useCallback(() => {
     // console.log({ setTheme, mounted, currentTheme, resolvedTheme });
-    console.log({
+    /* console.log({
       setTheme,
       theme: currentTheme,
       resolvedTheme,
@@ -61,7 +61,7 @@ const useThemeSwitcher = () => {
       forcedTheme,
       systemTheme,
     });
-
+ */
     if (!setTheme || !mounted) return;
     setTheme(
       change(

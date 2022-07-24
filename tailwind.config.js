@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const themes = require("./themes.cjs");
+const themes = require("./theme/themes.cjs");
 
 // console.log({ tailThemes: themes });
 

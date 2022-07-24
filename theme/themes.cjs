@@ -3,7 +3,7 @@
 
 const { readFileSync } = require("fs");
 
-const typescriptThemeFileContent = readFileSync("./daisy-themes.ts");
+const typescriptThemeFileContent = readFileSync("./theme/daisy-themes.ts");
 
 const typescriptString = Buffer.from(typescriptThemeFileContent).toString(
   "utf-8"
