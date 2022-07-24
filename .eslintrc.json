@@ -1,3 +1,78 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+
+    "plugin:react/recommended",
+    "next",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": 1,
+    "@typescript-eslint/no-empty-function": 1,
+    "@typescript-eslint/no-var-requires": 1,
+    "@typescript-eslint/no-inferrable-types": 1,
+    "@typescript-eslint/ban-ts-comment": 1,
+    "react/prop-types": 0,
+    "no-console": 1,
+    "react-hooks/rules-of-hooks": 2,
+    "react-hooks/exhaustive-deps": 1
+    /** "react/react-in-jsx-scope": 0*/
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "import",
+    "jsx-a11y",
+    "react-hooks"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "ignorePatterns": ["node_modules/", ".next/", "build/"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
+      },
+      "alias": {
+        "map": [
+          ["@/components", "./src/components"],
+          ["@/types", "./src/types"],
+          ["@/lib", "./src/lib"],
+          /** ["@/theme", "./theme"], */
+          ["@/machines", "./src/machines"],
+          ["@/constants", "./src/constants"],
+          ["@/hooks", "./src/hooks"],
+          ["@/util", "./src/util"],
+          ["@/svgs", "./src/svgs"],
+          ["@/styles", "./src/styles"],
+          /**  ["@/db", "./db"], */
+          ["@/pages", "./src/pages"],
+          ["@/api_middlewares", "./src/api_middlewares"],
+          ["@/views", "./src/views"],
+          ["@/temp_helpers", "./src/temp_helpers"]
+        ],
+        "extensions": [".ts", ".js", ".jsx", ".tsx", ".json"]
+      }
+    }
+  }
 }
