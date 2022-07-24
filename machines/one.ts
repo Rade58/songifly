@@ -16,6 +16,7 @@ export enum EE {
   PLACEHOLDING_TWO = "PLACEHOLDING_TWO",
   // events not depending on finite state
   CHECK_CURRENT_DARK_MODE = "CHECK_CURRENT_DARK_MODE",
+  CLICK = "CLICK",
 }
 
 // TO BE USED AS GENERIC TYPES INSIDE STATE MACHINE DEFINISTION
@@ -40,6 +41,12 @@ export type machineEventsGenericType =
     }
   | {
       type: EE.PLACEHOLDING_TWO;
+      payload: {
+        placeholder: string;
+      };
+    }
+  | {
+      type: EE.CLICK;
       payload: {
         placeholder: string;
       };
@@ -79,7 +86,11 @@ const mainMachine =
       },
     },
     states: {
-      idle: {},
+      idle: {
+        on: {
+          [EE.CLICK]: {},
+        },
+      },
       non_idle: {},
     },
   });
