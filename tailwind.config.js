@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const themes = require("./themes");
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -11,12 +14,14 @@ module.exports = {
   // daisyUI config (optional)
   daisyui: {
     styled: true,
-    themes: ["fantasy","dracula" ],
+    // themes: ["fantasy","dracula" ],
+    themes,
     base: true,
     utils: true,
     logs: true,
     rtl: false,
     prefix: "",
-    darkTheme: "dark",
+    darkTheme: themes[1],
   },
-}
+  darkMode: "class",
+};
