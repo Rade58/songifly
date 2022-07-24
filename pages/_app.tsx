@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 
 // FOR THEMES
 import { ThemeProvider } from "next-themes";
-import themes from "../themes";
+import themes from "../daisy-themes";
 //
 
 function MyApp({ Component, pageProps }: AppProps) {

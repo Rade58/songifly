@@ -9,10 +9,10 @@ interface Props {
 }
 
 const ThemeSwitcher: FC<Props> = () => {
-  const { changeTheme } = useThemeSwitcher();
+  const { toggleTheme } = useThemeSwitcher();
 
   return (
-    <button onMouseDown={() => changeTheme()} className="btn btn-primary">
+    <button onMouseDown={() => toggleTheme()} className="btn btn-primary">
       Button
     </button>
   );

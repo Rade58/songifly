@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useTheme } from "next-themes";
 
 import themes from "../daisy-themes";
@@ -13,12 +13,21 @@ const change = (
   themeList: typeof themes
 ) => {
   //
+
+  console.log({ themeList, currentTheme });
+
   const indexOfCurrent = themeList.indexOf(currentTheme);
   const listLength = themeList.length;
 
+  console.log({ indexOfCurrent, listLength });
+
   if (listLength !== indexOfCurrent + 1) {
+    console.log(themeList[indexOfCurrent + 1]);
+
     return themeList[indexOfCurrent + 1];
   }
+
+  console.log(themeList[0]);
 
   return themeList[0];
 };
@@ -29,14 +38,16 @@ const change = (
 //
 const useThemeSwitcher = () => {
   const [mounted, setMounted] = useState<boolean>(false);
+  const { setTheme, theme: currentTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const { setTheme, theme: currentTheme } = useTheme();
+  const toggleTheme = useCallback(() => {
+    console.log({ setTheme, mounted });
 
-  const toggleTheme = () => {
+    if (!setTheme || !mounted) return;
     setTheme(
       change(
         currentTheme
@@ -45,19 +56,21 @@ const useThemeSwitcher = () => {
         themes
       )
     );
-  };
+  }, [setTheme, currentTheme, mounted]);
 
-  const changeToSpecificTheme = (theme: typeof themes[number]) => {
-    setTheme(theme);
-  };
+  const changeToSpecificTheme = useCallback(
+    (theme: typeof themes[number]) => {
+      if (!setTheme || !mounted) return;
+      setTheme(theme);
+    },
+    [setTheme, mounted]
+  );
 
   return {
     theme: mounted && currentTheme ? currentTheme : themes[0],
-    toggleTheme: mounted ? toggleTheme : () => undefined,
+    toggleTheme,
     availableThemes: themes ? themes : [],
-    changeToSpecificTheme: mounted
-      ? changeToSpecificTheme
-      : (theme: typeof themes[number]) => undefined,
+    changeToSpecificTheme,
   };
 };
 
