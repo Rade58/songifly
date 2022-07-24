@@ -24,7 +24,7 @@
       "@/util/*": ["util/*"],
       "@/svgs/*": ["svgs/*"],
       "@/styles/*": ["styles/*"],
-      // "@/db/*": ["db/*"],
+      /** "@/db/*": ["db/*"], */
       "@/pages/*": ["pages/*"],
       "@/api_middlewares/*": ["api_middlewares/*"],
       "@/views/*": ["views/*"],
