@@ -41,10 +41,10 @@ const useThemeSwitcher = () => {
   const {
     setTheme,
     theme: currentTheme,
-    resolvedTheme,
-    themes: passedThemes,
-    forcedTheme,
-    systemTheme,
+    // resolvedTheme,
+    // themes: passedThemes,
+    // forcedTheme,
+    // systemTheme,
   } = useTheme();
 
   useEffect(() => {
