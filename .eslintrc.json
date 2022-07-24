@@ -68,7 +68,8 @@
           /**  ["@/db", "./db"], */
           ["@/pages", "./pages"],
           ["@/api_middlewares", "./api_middlewares"],
-          ["@/views", "./views"],
+          /**["@/views", "./views"],*/
+          ["@/layouts", "./layouts"],
           ["@/temp_helpers", "./temp_helpers"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".tsx", ".json"]
