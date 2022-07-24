@@ -11,7 +11,7 @@ module.exports = {
   // daisyUI config (optional)
   daisyui: {
     styled: true,
-    themes: ["halloween", "fantasy"],
+    themes: ["dracula", "fantasy"],
     base: true,
     utils: true,
     logs: true,
