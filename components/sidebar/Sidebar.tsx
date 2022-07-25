@@ -3,6 +3,7 @@ import React from "react";
 import type { FC, ReactNode } from "react";
 
 import ThemeSwitcherLink from "./ThemeSwitcherLink";
+import Logo from "./Logo";
 
 interface Props {
   children?: ReactNode;
@@ -11,6 +12,7 @@ interface Props {
 const Sidebar: FC<Props> = () => {
   return (
     <div className="border-0 border-gray-500">
+      <Logo />
       <ul className="menu bg-base-100 w-full">
         <ThemeSwitcherLink />
         <li>
