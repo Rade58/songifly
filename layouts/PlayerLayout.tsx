@@ -2,6 +2,8 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
+import Sidebar from "@/components/sidebar/Sidebar";
+
 interface Props {
   children?: ReactNode;
 }
@@ -11,7 +13,7 @@ const PlayerLayout: FC<Props> = ({ children }) => {
     <>
       <main className="border-0 border-rose-600 w-screen h-screen">
         <aside className="border- border-rose-200 absolute top-0 h-screen w-[250px]">
-          Sidebar
+          <Sidebar />
         </aside>
 
         <section className="cont">{children}</section>
