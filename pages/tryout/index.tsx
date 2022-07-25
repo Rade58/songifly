@@ -5,8 +5,12 @@ import type { FC, ReactNode, ReactElement } from "react";
 
 import type { NextPageWithLayout } from "@/pages/_app";
 
-// THIS IS REGULAR REACT COMPONENT THAT
-// USES ITS children
+//
+// AS YOU CAN SEE THIS IS THE PAGE THAT has PER PAGE LAYOUT
+//
+//
+//
+
 import PlayerLayout from "@/layouts/PlayerLayout";
 
 const TryoutPage: NextPageWithLayout = () => {
@@ -14,14 +18,7 @@ const TryoutPage: NextPageWithLayout = () => {
 };
 
 TryoutPage.getLayout = (page: ReactElement) => {
-  return (
-    <PlayerLayout>
-      {/* YOU CAN STILL DEFINE HERE OTHER LAYOUTS
-    // THAT WOULD ALSO WRAP {page} */}
-      {/* THESE LAYOUTS ARE NAMED: NESTED LAYOUTS */}
-      {page}
-    </PlayerLayout>
-  );
+  return <PlayerLayout>{page}</PlayerLayout>;
 };
 
 export default TryoutPage;

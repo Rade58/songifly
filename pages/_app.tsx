@@ -8,6 +8,8 @@ import { ThemeProvider } from "next-themes";
 import themes from "../theme/daisy-themes";
 //
 
+import MainLayout from "@/layouts/MainLayout";
+
 export type NextPageWithLayout = NP & {
   getLayout?: (page: RE) => ReactNode;
 };
@@ -37,7 +39,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         defaultTheme={themes[0]}
         enableColorScheme={false}
       >
-        {getLayout(<Component {...pageProps} />)}
+        <MainLayout>{getLayout(<Component {...pageProps} />)}</MainLayout>
       </ThemeProvider>
     </>
   );
