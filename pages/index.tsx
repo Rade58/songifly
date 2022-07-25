@@ -7,7 +7,7 @@ import styles from "../styles/Home.module.css";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const Home: NextPage = () => {
-  return <div className="border border-teal-400 m-16">Index page</div>;
+  return <div className="border border-teal-400">Index page</div>;
 };
 
 export default Home;
