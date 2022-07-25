@@ -7,12 +7,13 @@ const themes = require("./theme/themes.cjs");
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
+    "./layouts/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
   // daisyUI config (optional)
   daisyui: {
     styled: true,
@@ -23,7 +24,7 @@ module.exports = {
     logs: true,
     rtl: false,
     prefix: "",
-    darkTheme: themes[1],
+    darkTheme: "media",
   },
   // darkMode: "class",
 };

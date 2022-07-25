@@ -8,10 +8,13 @@ interface Props {
 
 const PlayerLayout: FC<Props> = ({ children }) => {
   return (
-    <div>
-      <h1>Player Layout</h1>
-      {children}
-    </div>
+    <>
+      <main className="container border-8 border-teal-50">
+        <div className="border border-teal-300 m-16">Hello World</div>
+        Player Layout
+        {children}
+      </main>
+    </>
   );
 };
 
