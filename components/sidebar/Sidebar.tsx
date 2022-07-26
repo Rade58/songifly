@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 
 import Logo from "./Logo";
 
+import Playlists from "./Plylists";
+
 import { mainLinks, otherLinks } from "@/constants/links";
 
 interface Props {
@@ -18,63 +20,89 @@ const Sidebar: FC<Props> = () => {
 
   // console.log(pathname);
   return (
-    <div className="border-0 border-gray-500">
-      <Logo />
-      <ul className="menu menu-compact bg-base-100 w-full">
-        {/* ------ */}
+    <>
+      <div className="sidebar-data border-0 border-gray-500 h-full">
+        <Logo />
+        <ul className="nav-list menu menu-compact bg-base-100 w-full border-1 border-rose-800">
+          {/* ------ */}
 
-        {mainLinks.map(({ icon: Icon, name, route }, i) => {
-          return (
-            <li
-              key={name + i}
-              className={`${pathname === route ? "bordered" : ""} ${
-                mainLinks.length === i + 1 ? "mb-4" : ""
-              }`.trim()}
-            >
-              <Link href={route}>
-                <a>
-                  <Icon size={28} />
-                  <span className="text-sm">{name}</span>
-                </a>
-              </Link>
-            </li>
-          );
-        })}
-        {/* ------ */}
-
-        {otherLinks.map(({ icon: Icon, name, route, isLink }, i) => {
-          return (
-            <li
-              key={name + i}
-              className={`${pathname === route ? "bordered" : ""}`.trim()}
-            >
-              {isLink ? (
+          {mainLinks.map(({ icon: Icon, name, route }, i) => {
+            return (
+              <li
+                key={name + i}
+                className={`${pathname === route ? "bordered" : ""} ${
+                  mainLinks.length === i + 1 ? "mb-4" : ""
+                }`.trim()}
+              >
                 <Link href={route}>
                   <a>
                     <Icon size={28} />
                     <span className="text-sm">{name}</span>
                   </a>
                 </Link>
-              ) : (
-                <button
-                  onClick={() => {
-                    console.log("Create Playlist");
-                  }}
-                >
-                  <Icon size={28} />
-                  <span className="text-sm">{name}</span>
-                </button>
-              )}
-            </li>
-          );
-        })}
+              </li>
+            );
+          })}
+          {/* ------ */}
 
-        {/* ------ */}
-      </ul>
-      <div>
-        <div className="divider mx-6"></div>
+          {otherLinks.map(({ icon: Icon, name, route, isLink }, i) => {
+            return (
+              <li
+                key={name + i}
+                className={`${pathname === route ? "bordered" : ""}`.trim()}
+              >
+                {isLink ? (
+                  <Link href={route}>
+                    <a>
+                      <Icon size={28} />
+                      <span className="text-sm">{name}</span>
+                    </a>
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => {
+                      console.log("Create Playlist");
+                    }}
+                  >
+                    <Icon size={28} />
+                    <span className="text-sm">{name}</span>
+                  </button>
+                )}
+              </li>
+            );
+          })}
+
+          {/* ------ */}
+        </ul>
+        <div>
+          <div className="divider mx-2 my-0"></div>
+        </div>
+        {/* --------- */}
+        <div className="playlist-cont">
+          <Playlists />
+        </div>
       </div>
-    </div>
+
+      <style jsx>
+        {
+          /* css */ `
+            .sidebar-data {
+              --height1: 233px;
+            }
+
+            .nav-list {
+              height: var(--height1);
+            }
+
+            .playlist-cont {
+              border: crimson solid 1px;
+              height: calc(100% - var(--height1) - 4rem - 28px);
+              overflow: hidden;
+            }
+          `
+        }
+      </style>
+    </>
   );
 };
 

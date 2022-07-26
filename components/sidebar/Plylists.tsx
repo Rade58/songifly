@@ -7,7 +7,37 @@ interface Props {
 }
 
 const Playlists: FC<Props> = () => {
-  return null;
+  return (
+    <>
+      <ul className="playlists-menu border border-indigo-900">
+        {new Array(50).fill("Foo world playlist").map((val, i) => {
+          return (
+            <li key={val + i}>
+              <a
+                href="http://google.com"
+                className="link"
+                target={"_blank"}
+                rel="noreferrer"
+              >
+                {val}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <style jsx>
+        {
+          /*css */ `
+            .playlists-menu {
+              overflow-y: auto;
+              height: 100%;
+              /* height: 380px; */
+            }
+          `
+        }
+      </style>
+    </>
+  );
 };
 
 export default Playlists;
