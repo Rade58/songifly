@@ -19,6 +19,7 @@ export const getServerSideProps: GetServerSideProps<
 
   console.log({ ENV: process.env.NODE_ENV });
   console.log({ DB: process.env.DATABASE_URL });
+  console.log({ KOBAYASHI: process.env.KOBAYASHI });
 
   params?.siteId; //
 
