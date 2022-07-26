@@ -2,76 +2,63 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
-import ThemeSwitcherLink from "./ThemeSwitcherLink";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import Logo from "./Logo";
+
+import { mainLinks, otherLinks } from "@/constants/links";
 
 interface Props {
   children?: ReactNode;
 }
 
 const Sidebar: FC<Props> = () => {
+  const { pathname } = useRouter();
+
+  // console.log(pathname);
   return (
     <div className="border-0 border-gray-500">
       <Logo />
       <ul className="menu bg-base-100 w-full">
-        <ThemeSwitcherLink />
-        <li>
-          <a className="text-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        {/* ------ */}
+
+        {mainLinks.map(({ icon: Icon, name, route }, i) => {
+          return (
+            <li
+              key={name + i}
+              className={`${pathname === route ? "bordered" : ""} ${
+                mainLinks.length === i + 1 ? "mb-6" : ""
+              }`.trim()}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-              />
-            </svg>
-            Item 1
-          </a>
-        </li>
-        <li className="bordered">
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              <Link href={route}>
+                <a>
+                  <Icon size={28} />
+                  <span className="text-sm">{name}</span>
+                </a>
+              </Link>
+            </li>
+          );
+        })}
+        {/* ------ */}
+
+        {otherLinks.map(({ icon: Icon, name, route }, i) => {
+          return (
+            <li
+              key={name + i}
+              className={`${pathname === route ? "bordered" : ""}`.trim()}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-              />
-            </svg>
-            I have border
-          </a>
-        </li>
-        <li>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-              />
-            </svg>
-            Item 3
-          </a>
-        </li>
+              <Link href={route}>
+                <a>
+                  <Icon size={28} />
+                  <span className="text-sm">{name}</span>
+                </a>
+              </Link>
+            </li>
+          );
+        })}
+
+        {/* ------ */}
       </ul>
     </div>
   );
