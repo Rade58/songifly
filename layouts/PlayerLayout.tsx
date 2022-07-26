@@ -12,7 +12,7 @@ const PlayerLayout: FC<Props> = ({ children }) => {
   return (
     <>
       <main className="border-0 border-rose-600 w-screen h-screen">
-        <aside className="sidebar-cont border border-rose-200 absolute top-0 h-screen w-[250px]">
+        <aside className="sidebar-cont border border-rose-200 absolute top-0 h-screen w-56">
           <Sidebar />
         </aside>
 
@@ -25,8 +25,8 @@ const PlayerLayout: FC<Props> = ({ children }) => {
         {
           /* css */ `
             .cont {
-              width: calc(100vw - 250px);
-              margin-left: 250px;
+              width: calc(100vw - 14rem);
+              margin-left: 14rem;
               border: crimson solid 1px;
               box-sizing: border-box;
               margin-bottom: 6rem;

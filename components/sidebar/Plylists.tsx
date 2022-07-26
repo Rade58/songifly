@@ -9,13 +9,13 @@ interface Props {
 const Playlists: FC<Props> = () => {
   return (
     <>
-      <ul className="playlists-menu border-0 border-indigo-900">
+      <ul className="playlists-menu border-0 border-indigo-900 py-1.5 bg-base-300">
         {new Array(50).fill("Foo world playlist").map((val, i) => {
           return (
-            <li key={val + i}>
+            <li key={val + i} className="ml-5 mr-4 my-3 text-sm">
               <a
                 href="http://google.com"
-                className="link no-underline hover:opacity-80"
+                className="link no-underline opacity-70 hover:opacity-100 cursor-default"
                 target={"_blank"}
                 rel="noreferrer"
               >

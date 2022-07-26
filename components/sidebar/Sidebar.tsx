@@ -23,7 +23,7 @@ const Sidebar: FC<Props> = () => {
     <>
       <div className="sidebar-data border-0 border-gray-500 h-full">
         <Logo />
-        <ul className="nav-list menu menu-compact bg-base-100 w-full border-1 border-rose-800">
+        <ul className="nav-list menu menu-compact bg-base-300 w-full border-1 border-rose-800">
           {/* ------ */}
 
           {mainLinks.map(({ icon: Icon, name, route }, i) => {
@@ -74,8 +74,8 @@ const Sidebar: FC<Props> = () => {
 
           {/* ------ */}
         </ul>
-        <div>
-          <div className="divider mx-2 my-0"></div>
+        <div className="bg-base-300 mb-0 shadow-xl -mt-1 drop-shadow-2xl shadow-slate-900">
+          <div className="divider ml-5 mr-6 my-0 relative top-1.5"></div>
         </div>
         {/* --------- */}
         <div className="playlist-cont">
@@ -96,7 +96,7 @@ const Sidebar: FC<Props> = () => {
 
             .playlist-cont {
               border: crimson solid 0px;
-              height: calc(100% - var(--height1) - 4rem - 33px);
+              height: calc(100% - var(--height1) - 4rem - 29px);
               overflow: hidden;
             }
           `
