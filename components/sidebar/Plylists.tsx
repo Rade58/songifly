@@ -19,7 +19,7 @@ const Playlists: FC<Props> = () => {
                 target={"_blank"}
                 rel="noreferrer"
               >
-                {val}
+                {val + " " + i}
               </a>
             </li>
           );
