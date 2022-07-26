@@ -20,7 +20,7 @@ const Sidebar: FC<Props> = () => {
   return (
     <div className="border-0 border-gray-500">
       <Logo />
-      <ul className="menu bg-base-100 w-full">
+      <ul className="menu menu-compact bg-base-100 w-full">
         {/* ------ */}
 
         {mainLinks.map(({ icon: Icon, name, route }, i) => {
@@ -28,7 +28,7 @@ const Sidebar: FC<Props> = () => {
             <li
               key={name + i}
               className={`${pathname === route ? "bordered" : ""} ${
-                mainLinks.length === i + 1 ? "mb-6" : ""
+                mainLinks.length === i + 1 ? "mb-4" : ""
               }`.trim()}
             >
               <Link href={route}>
