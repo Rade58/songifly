@@ -15,7 +15,7 @@ const Playlists: FC<Props> = () => {
             <li key={val + i}>
               <a
                 href="http://google.com"
-                className="link"
+                className="link no-underline hover:opacity-80"
                 target={"_blank"}
                 rel="noreferrer"
               >
