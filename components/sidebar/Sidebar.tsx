@@ -60,6 +60,9 @@ const Sidebar: FC<Props> = () => {
 
         {/* ------ */}
       </ul>
+      <div>
+        <div className="divider mx-6"></div>
+      </div>
     </div>
   );
 };
