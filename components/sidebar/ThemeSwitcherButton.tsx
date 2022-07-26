@@ -20,7 +20,10 @@ const ThemeSwitcherButton: FC<Props> = () => {
   const sunOrMoon = themes[0] !== theme;
 
   return (
-    <button className="btn btn-ghost btn-xs mr-3" onClick={toggleTheme}>
+    <button
+      className="btn btn-circle btn-ghost btn-sm mr-3"
+      onClick={toggleTheme}
+    >
       {sunOrMoon ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
