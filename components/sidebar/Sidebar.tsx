@@ -16,7 +16,7 @@ const Sidebar: FC<Props> = () => {
       <ul className="menu bg-base-100 w-full">
         <ThemeSwitcherLink />
         <li>
-          <a>
+          <a className="text-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
