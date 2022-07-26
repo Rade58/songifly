@@ -95,8 +95,8 @@ const Sidebar: FC<Props> = () => {
             }
 
             .playlist-cont {
-              border: crimson solid 1px;
-              height: calc(100% - var(--height1) - 4rem - 28px);
+              border: crimson solid 0px;
+              height: calc(100% - var(--height1) - 4rem - 33px);
               overflow: hidden;
             }
           `

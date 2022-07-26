@@ -9,7 +9,7 @@ interface Props {
 const Playlists: FC<Props> = () => {
   return (
     <>
-      <ul className="playlists-menu border border-indigo-900">
+      <ul className="playlists-menu border-0 border-indigo-900">
         {new Array(50).fill("Foo world playlist").map((val, i) => {
           return (
             <li key={val + i}>
