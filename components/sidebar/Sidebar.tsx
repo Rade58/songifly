@@ -21,7 +21,7 @@ const Sidebar: FC<Props> = () => {
   // console.log(pathname);
   return (
     <>
-      <div className="sidebar-data border-0 border-gray-500 h-full">
+      <div className="bg-base-300 sidebar-data border-0 border-gray-500 h-full">
         <Logo />
         <ul className="nav-list menu menu-compact bg-base-300 w-full border-1 border-rose-800">
           {/* ------ */}
@@ -74,7 +74,7 @@ const Sidebar: FC<Props> = () => {
 
           {/* ------ */}
         </ul>
-        <div className="bg-base-300 mb-0 shadow-xl -mt-1 drop-shadow-2xl shadow-slate-900">
+        <div className="bg-base-300 mb-0 shadow-xl -mt-1 drop-shadow-sm shadow-base-100">
           <div className="divider ml-5 mr-6 my-0 relative top-1.5"></div>
         </div>
         {/* --------- */}
