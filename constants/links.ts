@@ -7,6 +7,13 @@ import {
 } from "react-icons/md";
 import type { IconType } from "react-icons";
 
+interface OtherLink {
+  name: string;
+  route: string;
+  icon: IconType;
+  isLink: boolean;
+}
+
 type LinkList = { name: string; route: string; icon: IconType }[];
 
 export const mainLinks: LinkList = [
@@ -27,15 +34,17 @@ export const mainLinks: LinkList = [
   },
 ];
 
-export const otherLinks: LinkList = [
+export const otherLinks: OtherLink[] = [
   {
     name: "Create Playlist",
     route: "/create-playlist",
     icon: MdPlaylistAdd,
+    isLink: false,
   },
   {
     name: "Liked Songs",
     route: "/liked-songs",
     icon: MdFavorite,
+    isLink: true,
   },
 ];

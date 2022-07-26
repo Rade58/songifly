@@ -42,18 +42,29 @@ const Sidebar: FC<Props> = () => {
         })}
         {/* ------ */}
 
-        {otherLinks.map(({ icon: Icon, name, route }, i) => {
+        {otherLinks.map(({ icon: Icon, name, route, isLink }, i) => {
           return (
             <li
               key={name + i}
               className={`${pathname === route ? "bordered" : ""}`.trim()}
             >
-              <Link href={route}>
-                <a>
+              {isLink ? (
+                <Link href={route}>
+                  <a>
+                    <Icon size={28} />
+                    <span className="text-sm">{name}</span>
+                  </a>
+                </Link>
+              ) : (
+                <button
+                  onClick={() => {
+                    console.log("Create Playlist");
+                  }}
+                >
                   <Icon size={28} />
                   <span className="text-sm">{name}</span>
-                </a>
-              </Link>
+                </button>
+              )}
             </li>
           );
         })}
