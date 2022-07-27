@@ -18,6 +18,8 @@ model User {
   name      String
   email     String   @unique
   password  String
+
+  playlists Playlist[]
 }
 
 model Song {
@@ -47,4 +49,7 @@ model Playlist {
   name      String
 
   songs Song[]
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
 }
