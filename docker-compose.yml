@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+
+  # I made up this name
+  songifly-dev-db:
+    image: postgres:13.3
+    container_name: songify-db-dev
+    environment:
+      - POSTGRES_USER=themata
+      - POSTGRES_PASSWORD=schism
+      - POSTGRES_DB=songify
+    ports:
+      - "5432:5432"
+    # persist data even if container shuts down
+    # and we add reference the name of the volume
+    # I DON'T NEED PERSISTING BETWING RESTARTS AT THIS POINT
+    # volumes:
+      # - my-db-data:/var/lib/postgresql/data/
+#setting a name for volume to be easier menagable
+# 
+# I DON'T NEED PERSISTING DATBASE BETWEEN RESTARTS AT THIS POINT
+# volumes:
+  # my-db-data:  # yes this is how you write it (without anything as value)
