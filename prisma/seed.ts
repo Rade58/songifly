@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 async function main() {
   await Promise.all(
     artistsData.map(async (artist) => {
-      // upsert MEANS: CREATE OR UPDATE
+      // upsert MEANS: CREATE OR UPDATE IF EXISTS
       return prisma.artist.upsert({
         where: {
           name: artist.name,
@@ -32,6 +32,21 @@ async function main() {
       });
     })
   );
+
+  // LET'S CREATE A USER
+  //
+  const salt = bcrypt.genSaltSync();
+  const user = await prisma.user.upsert({
+    where: {
+      email: "user@example.com",
+    },
+    update: {},
+    create: {
+      email: "user@example.com",
+      password: bcrypt.hashSync("password66", salt),
+      name: "Satoshy Foobarson",
+    },
+  });
 }
 
 // export default async () => {
