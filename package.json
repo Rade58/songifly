@@ -6,7 +6,7 @@
     "_________dbs____________": "_____________________first you run dbs-dev-up (in one termianal) after that you can run prisma comands in separate terminal______________________",
     "dbs-dev-up": "docker-compose up",
     "dbs-dev-down": "docker-compose down",
-    "postgres-cont-bash": "docker-compose run fancy-shiba-serv bash",
+    "postgres-cont-bash": "docker-compose run songifly-db-service bash",
     "_________development shorthand scripts____________": "_________________________________________________",
     "develop": "yarn p-push-dev && yarn dev",
     "_________prisma(common for development and production)--------------": "--------------------------",

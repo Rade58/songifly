@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   # I made up this name
-  songifly-dev-db:
+  songifly-db-service:
     image: postgres:13.3
     container_name: songify-db-dev
     environment:
