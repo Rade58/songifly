@@ -51,8 +51,7 @@
     "p:migrate:dev": "dotenv -e .env.development.local -- npx prisma migrate dev",
     "p:migrate:init:dev": "dotenv -e .env.development.local -- npx prisma migrate dev --name init",
     "p:migrate:init:prod": "dotenv -e .env.production.local -- npx prisma migrate dev --name init",
-    "p:introspect": "dotenv -e .env.production.local -- npx prisma introspect",
-    "migrate:init:test": "dotenv -e .env.test -- npx prisma migrate dev --name init"
+    "p:introspect": "dotenv -e .env.production.local -- npx prisma introspect"
   },
   "dependencies": {
     "@prisma/client": "^4.1.0",
