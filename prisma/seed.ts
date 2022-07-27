@@ -21,7 +21,11 @@ async function main() {
           // PRISMA IS COOL BECAUSE YOU CAN DO NESTEND INSERTS
           songs: {
             create: artist.songs.map((song) => {
-              return { name: song.name, duration: song.duration };
+              return {
+                name: song.name,
+                duration: song.duration,
+                url: song.url,
+              };
             }),
           },
         },
@@ -30,13 +34,15 @@ async function main() {
   );
 }
 
-export default async () => {
-  return main()
-    .catch((err) => {
-      console.error(err);
-      process.exit(1);
-    })
-    .finally(async () => {
-      await prisma.$disconnect();
-    });
-};
+// export default async () => {
+// return
+
+main()
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+// };
