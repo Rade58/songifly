@@ -36,8 +36,12 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     });
 
     if (posibleUser === null) {
-      res.writeHead(302, { Location: "/signup" });
-      return res.end();
+      return res.status(401).json({
+        errors: ["Email doesn't exist, try creating aaccount first!"],
+      });
+
+      /* res.writeHead(302, { Location: "/signup" });
+      return res.end(); */
     }
 
     // compare password hashes
