@@ -7,14 +7,14 @@ import cookie from "cookie";
 
 import prisma from "@/lib/prisma";
 
+import { SONGIFY_ACCESS_TOKEN } from "@/constants/token";
+
 type Data = {
   data?: "hello world";
   errors?: string[];
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  console.log({ user });
-
   const { email, password, username } = req.body as {
     email: string;
     password: string;
@@ -58,13 +58,14 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     // IN SOME FILE
     // TOSO: WE WILL DO THAT
 
-    const serializedCookie = cookie.serialize("Bearer token", token, {
+    const serializedCookie = cookie.serialize(SONGIFY_ACCESS_TOKEN, token, {
       httpOnly: true,
-      maxAge: 28800,
-      sameSite: true,
+      maxAge: 8 * 60 * 60,
+      sameSite: "lax",
       secure:
-        process.env.NODE_ENV !== "development" ||
-        process.env.NODE_ENV !== "development",
+        process.env.NODE_ENV !== "development" &&
+        process.env.NODE_ENV !== "test",
+      path: "/",
     });
 
     res.setHeader("Set-Cookie", serializedCookie);
