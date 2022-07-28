@@ -9,7 +9,7 @@
 const fetcher = function <T = undefined>(
   url: string,
   data: T | undefined = undefined
-) {
+): Promise<Response> {
   return fetch(`${window.location.origin}/api${url}`, {
     //
     method: data ? "POST" : "GET",
