@@ -15,6 +15,10 @@ type Data = {
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  if (req.method !== "POST") {
+    return res.status(400).json({ errors: ["Wrong http method!"] });
+  }
+
   const { email, password, username } = req.body as {
     email: string;
     password: string;
