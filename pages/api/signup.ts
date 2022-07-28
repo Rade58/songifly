@@ -76,7 +76,9 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     res.setHeader("Set-Cookie", serializedCookie);
 
-    return res.status(201).json({ user });
+    return res
+      .status(201)
+      .json({ user: { ...user, password: "__undefined__" } });
   } catch (err) {
     if (err instanceof Error) {
       console.error(err.message);
