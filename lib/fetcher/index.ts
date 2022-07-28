@@ -6,7 +6,10 @@
  * @returns Promise<Response>
  * @description fetcher argument for useSWR hook
  */
-const fetcher = function <T>(url: string, data: T | undefined = undefined) {
+const fetcher = function <T = undefined>(
+  url: string,
+  data: T | undefined = undefined
+) {
   return fetch(`${window.location.origin}/api${url}`, {
     //
     method: data ? "POST" : "GET",
