@@ -4,7 +4,7 @@
  * @param url string
  * @param data any
  * @returns Promise<Response>
- * @description fetcher argument for useSWR hook
+ * @description fetcher argument for useSWR hook; but also can be used for sign in/up
  */
 const fetcher = function <T = undefined>(
   url: string,
