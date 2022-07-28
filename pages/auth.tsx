@@ -1,8 +1,8 @@
 /* eslint react/react-in-jsx-scope: 0 */
 /* eslint jsx-a11y/anchor-is-valid: 1 */
-import type { GetServerSideProps, NextPage as NP } from "next";
-
 import { useEffect } from "react";
+import Router from "next/router";
+import type { GetServerSideProps, NextPage as NP } from "next";
 
 interface PropsI {
   placeholder: boolean;
@@ -21,6 +21,11 @@ const AuthPage: NP<PropsI> = (props) => {
 
   useEffect(() => {
     console.log("1. AUTH MOUNTED");
+    console.log({ RouterPath: Router.pathname });
+    console.log({ RouterPath: Router.asPath });
+    console.log("WINDOW");
+    console.log(window.location.pathname);
+    console.log(window.location.origin);
 
     return () => {
       console.log("2. AUTH UNMOUNTED");
