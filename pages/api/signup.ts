@@ -78,8 +78,19 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     return res.status(201).json({ user });
   } catch (err) {
-    return res
-      .status(401)
-      .json({ errors: ["User with provided email already exists!"] });
+    return res.status(401).json({
+      errors: [
+        "User with provided email already exists! Or your datbase is down!",
+      ],
+    });
   }
 };
+
+// WE CAN TEST THIS WITH HTTPIE, BUT REMEMMBER THAT HTTPIE IS CLI TOOL
+// BUT IT IS BETTER TO TEST THIS IN INSOMNIA IF YOU WANT TO
+// HAVE TO ACCESS TO THE COOKIE SINCE INSOMNIA ACTS LIKE A BROWSER
+
+// BUT ANYWAYS, IF YOU TEST THIS WITH HTTPIE USER WILL BE CREATED IN DATABASE
+// HERE YOU GO
+
+//                http POST :3000/api/signup email=johndoe@example.com password=shibainu username="John Doe"
