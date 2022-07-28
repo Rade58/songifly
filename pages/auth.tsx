@@ -14,10 +14,10 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
   };
 };
 
-const Page: NP<PropsI> = (props) => {
+const AuthPage: NP<PropsI> = (props) => {
   //
 
   return <div>Sign-in/up {props.placeholder}</div>;
 };
 
-export default Page;
+export default AuthPage;
