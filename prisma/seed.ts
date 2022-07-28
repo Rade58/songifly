@@ -47,6 +47,34 @@ async function main() {
       name: "Satoshy Foobarson",
     },
   });
+
+  // ADDING PLAYLISTS TO THE USER
+  // YOU CAN'T UPSERT BECAUSE PLAYLIST DON'T HAVE
+  // ANY UNIQUE FILELD, EXPECT ID
+  // YOU CAN'T SEARCH BY ID WHEN YOU DON'T HAVE ANY PLAYLIST
+  // MOCK DATA WITH A NAME OF THE PLAYLIST AND SIMILAR
+
+  const songs = await prisma.song.findMany();
+
+  await Promise.all([
+    new Array(16).fill(1).map(async (_, i) => {
+      return prisma.playlist.create({
+        data: {
+          name: `Playlist ${_ + i}`,
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+          songs: {
+            connect: songs.map(({ id }) => {
+              return { id };
+            }),
+          },
+        },
+      });
+    }),
+  ]);
 }
 
 // export default async () => {
