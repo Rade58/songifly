@@ -51,7 +51,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     const token = jwt.sign(
       { email, id: user.id, date: new Date() },
-      process.env.NODE_ENV === "development"
+      process.env.NODE_ENV === "production"
         ? (process.env.SECRET as string)
         : "shibainu",
       {
@@ -78,11 +78,13 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     return res.status(201).json({ user });
   } catch (err) {
-    return res.status(401).json({
-      errors: [
-        "User with provided email already exists! Or your datbase is down!",
-      ],
-    });
+    if (err instanceof Error) {
+      console.error(err.message);
+
+      return res.status(401).json({
+        errors: [err.message],
+      });
+    }
   }
 };
 
@@ -93,4 +95,4 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 // BUT ANYWAYS, IF YOU TEST THIS WITH HTTPIE USER WILL BE CREATED IN DATABASE
 // HERE YOU GO
 
-//                http POST :3000/api/signup email=johndoe@example.com password=shibainu username="John Doe"
+//                http POST :3000/api/signup email=bobby@example.com password=shibainu username="John Doe"
