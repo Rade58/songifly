@@ -10,7 +10,7 @@ import prisma from "@/lib/prisma";
 import { SONGIFY_ACCESS_TOKEN } from "@/constants/token";
 
 type Data = {
-  data?: "hello world";
+  data?: { user: { email: string; username: string } };
   errors?: string[];
 };
 
@@ -69,11 +69,13 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     });
 
     res.setHeader("Set-Cookie", serializedCookie);
+
+    return res
+      .status(201)
+      .json({ data: { user: { email, username: user.name } } });
   } catch (err) {
     return res
       .status(401)
       .json({ errors: ["User with provided email already exists!"] });
   }
-
-  res.status(200).json({ data: "hello world" });
 };
