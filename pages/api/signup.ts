@@ -5,12 +5,14 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
 
+import type { User } from "@prisma/client";
+
 import prisma from "@/lib/prisma";
 
 import { SONGIFY_ACCESS_TOKEN } from "@/constants/token";
 
 type Data = {
-  data?: { user: { email: string; username: string } };
+  user?: User;
   errors?: string[];
 };
 
@@ -74,9 +76,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     res.setHeader("Set-Cookie", serializedCookie);
 
-    return res
-      .status(201)
-      .json({ data: { user: { email, username: user.name } } });
+    return res.status(201).json({ user });
   } catch (err) {
     return res
       .status(401)
