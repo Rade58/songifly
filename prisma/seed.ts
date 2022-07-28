@@ -60,7 +60,7 @@ async function main() {
     new Array(16).fill(1).map(async (_, i) => {
       return prisma.playlist.create({
         data: {
-          name: `Playlist ${_ + i}`,
+          name: `Playlist #${_ + i}`,
           user: {
             connect: {
               id: user.id,
