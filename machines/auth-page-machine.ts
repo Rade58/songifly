@@ -22,7 +22,7 @@ export const fs = {
  * @description EVENTS
  */
 export const EV = {
-  PAGE_VISIT_TOGGLE: "PAGE_VISIT_TOGGLE",
+  PAGE_VISIT: "PAGE_VISIT",
   AUTH_MODE_TOGGLE: "AUTH_MODE_TOGGLE",
   BACK_TO_OFF_PAGE: "BACK_TO_OFF_PAGE",
 } as const;
@@ -33,7 +33,8 @@ export interface MachineContextGenericI {
   random: number;
 }
 
-export type machineEventsGenericType = /* | {
+export type machineEventsGenericType =
+  /* | {
       type: EE.A;
       payload: {
         placeholder: number;
@@ -41,7 +42,7 @@ export type machineEventsGenericType = /* | {
     } 
   |*/
   | {
-      type: typeof EV.PAGE_VISIT_TOGGLE;
+      type: typeof EV.PAGE_VISIT;
     }
   | { type: typeof EV.AUTH_MODE_TOGGLE }
   | { type: typeof EV.BACK_TO_OFF_PAGE };
@@ -68,7 +69,7 @@ export type machineFiniteStatesGenericType =
 
 // -----------------  MACHINE --------------------
 
-const mainMachine = createMachine<
+const authPageMachine = createMachine<
   MachineContextGenericI,
   machineEventsGenericType,
   machineFiniteStatesGenericType
@@ -105,10 +106,13 @@ const mainMachine = createMachine<
   states: {
     [fs.off_auth]: {
       on: {
-        [EV.PAGE_VISIT_TOGGLE]: {
+        [EV.PAGE_VISIT]: {
           // ADDING DOT BEFORE IT BECAUSE I SAW IT LIKE THIS
           // INSIDE DOCS
-          target: `.${fs["on_auth.signin"]}`,
+          // THIS DOESN'T WORK
+          // target: `.${fs["on_auth.signin"]}`,
+          // THIS WORKS:
+          target: fs["on_auth.signin"],
         },
       },
     },
@@ -138,9 +142,9 @@ const mainMachine = createMachine<
   },
 });
 
-export const mainService = interpret(mainMachine);
+export const authPageService = interpret(authPageMachine);
 
-mainService.onTransition((state, event) => {
+authPageService.onTransition((state, event) => {
   //
   // console.log({ isDarkMode: state.context.isDarkMode });
   // console.log("TRANSITION");
