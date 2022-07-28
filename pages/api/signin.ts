@@ -90,11 +90,5 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 };
 
-// IF YOU TEST THIS WITH HTTPIE USER WILL BE CREATED IN DATABASE
-// HERE YOU GO
-
-//                http POST :3000/api/signup email=bobby@example.com password=shibainu username="John Doe"
-
-// YOU CAN ALSO SEE COOKIE VALUE (Set-Cookie HEADER VALUE) WHEN YOU MAKE THIS REQUEST
-// YOU CAN SEE IT BUT OFCOURSE IT WON'T BE SAVED ANYWHERE
-// SINCE YOU DIDN'T MAKE A REQUEST BY USING BROWSER
+// TEST WITH HTTPIE
+//      http POST :3000/api/signin email=robertlee@example.com password=shibainu
