@@ -3,58 +3,66 @@ import { createMachine, assign, interpret } from "xstate";
 import router from "next/router";
 
 /**
- * @description finite states enum
+ * @description finite states
  */
-export enum fse {
-  off_auth_page = "off_auth_page",
-  signin = "signin",
-  signout = "signout",
-}
+export const fs = {
+  // OF THE AUTH PAGE
+  off_auth: "off_auth",
+  // ON THE AUTH PAGE
+  on_auth: "on_auth",
+  // SUBSTATES (COMPOUND STATES) OF on_auth STATE
+  signin: "signin",
+  signout: "signout",
+  // EXPLICIT DEFINITION OF COMPOUND STATES
+  "on_auth.signin": "on_auth.signin",
+  "on_auth.signout": "on_auth.signout",
+} as const;
 
 /**
- * @description EVENTS ENUM
+ * @description EVENTS
  */
-export enum EE {
-  PLACEHOLDING_ONE = "PLACEHOLDING_ONE",
-  PLACEHOLDING_TWO = "PLACEHOLDING_TWO",
-  // events not depending on finite state
-  CHECK_CURRENT_DARK_MODE = "CHECK_CURRENT_DARK_MODE",
-}
+export const EV = {
+  PAGE_VISIT_TOGGLE: "PAGE_VISIT_TOGGLE",
+  AUTH_MODE_TOGGLE: "AUTH_MODE_TOGGLE",
+  BACK_TO_OFF_PAGE: "BACK_TO_OFF_PAGE",
+} as const;
 
 // TO BE USED AS GENERIC TYPES INSIDE STATE MACHINE DEFINISTION
 
 export interface MachineContextGenericI {
-  isDarkMode: boolean;
   random: number;
 }
 
-export type machineEventsGenericType =
-  | {
-      type: EE.CHECK_CURRENT_DARK_MODE;
-      payload: {
-        isDark: boolean;
-      };
-    }
-  | {
-      type: EE.PLACEHOLDING_ONE;
+export type machineEventsGenericType = /* | {
+      type: EE.A;
       payload: {
         placeholder: number;
       };
-    }
+    } 
+  |*/
   | {
-      type: EE.PLACEHOLDING_TWO;
-      payload: {
-        placeholder: string;
-      };
-    };
+      type: typeof EV.PAGE_VISIT_TOGGLE;
+    }
+  | { type: typeof EV.AUTH_MODE_TOGGLE }
+  | { type: typeof EV.BACK_TO_OFF_PAGE };
 
 export type machineFiniteStatesGenericType =
   | {
-      value: fse.off_auth_page;
+      value: typeof fs.off_auth;
       context: MachineContextGenericI;
     }
   | {
-      value: fse.off_auth_page;
+      value: typeof fs.on_auth;
+      context: MachineContextGenericI;
+    }
+
+  // you need to do this for compound states to have better types
+  | {
+      value: { [fs.on_auth]: typeof fs.signin };
+      context: MachineContextGenericI;
+    }
+  | {
+      value: { [fs.on_auth]: typeof fs.signout };
       context: MachineContextGenericI;
     };
 
@@ -65,15 +73,16 @@ const mainMachine = createMachine<
   machineEventsGenericType,
   machineFiniteStatesGenericType
 >({
-  id: "main_machine",
-  initial: fse.signin,
+  key: "auth",
+  initial: fs.off_auth,
   context: {
-    isDarkMode: false,
     random: 2,
   },
-  // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER -----
+  // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
+  // YOU CANDEFINE TRANSITION HERE TOO-----
   on: {
-    [EE.CHECK_CURRENT_DARK_MODE]: {
+    /* 
+    [EV.CHECK_CURRENT_DARK_MODE]: {
       actions: [
         assign((ctx, event) => {
           const { isDark } = event.payload;
@@ -84,11 +93,48 @@ const mainMachine = createMachine<
         }),
       ],
     },
+    */
+
+    // THIS IS MY TRANSITION, NO MATTER IN WHICH STATE YOUR MACHINE IS
+    // THIS TRANSITION WILL HAPPEN ON THIS EVENT
+    [EV.BACK_TO_OFF_PAGE]: {
+      target: fs.off_auth,
+    },
   },
   // -------------------------------------------------------------------
   states: {
-    // [fse.idle]: {},
-    // [fse.non_idle]: {},
+    [fs.off_auth]: {
+      on: {
+        [EV.PAGE_VISIT_TOGGLE]: {
+          // ADDING DOT BEFORE IT BECAUSE I SAW IT LIKE THIS
+          // INSIDE DOCS
+          target: `.${fs["on_auth.signin"]}`,
+        },
+      },
+    },
+    [fs.on_auth]: {
+      // COMPOUND STATES
+      // DON'T NEED INITIAL BECAUSE ON EVENT I AM JUMPING DIRECTLY
+      // TO SOME OF THESE STATES, YOU CAN SEE BY YOURSELF WHICH ONE
+      // AND ON WHAT EVENT THIS HAPPENS
+      // initial: fs.on_auth,
+      states: {
+        [fs.signin]: {
+          on: {
+            [EV.AUTH_MODE_TOGGLE]: {
+              target: fs.signout,
+            },
+          },
+        },
+        [fs.signout]: {
+          on: {
+            [EV.AUTH_MODE_TOGGLE]: {
+              target: fs.signin,
+            },
+          },
+        },
+      },
+    },
   },
 });
 

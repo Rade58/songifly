@@ -64,36 +64,34 @@ export type machineFiniteStatesGenericType =
 
 // -----------------  MACHINE --------------------
 
-const mainMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QFsCGBLAdgfTQYwAsswBiAYQAkBRMgaWzIFUAlZqgOQBVsARAQWb0AsgHkeVRKAAOAe1joALuhmZJIAB6IAjFoB0ATkNHjRgBwA2ADQgAntoBMAX2fXMMiHDVosuVIWK66BAANmBqsvJKKmqaCAC09voALLoADKnmAMwArKkA7Nn6eZn22dZ2CHn2uqaZqUlFSZmGeVp5LiDeOPhEmGC6bjhBoeFyisqqSBqICan6aXn6WXkr2ZlamUlJ5Yj2mXk1BeYF2fZJ5vrZSU6O1l2+-n2jkRMxM+umaRk5+YXFpTt4qldFoLrkttlzOZ0ksNuZnM4gA */
-  createMachine<
-    MachineContextGenericI,
-    machineEventsGenericType,
-    machineFiniteStatesGenericType
-  >({
-    context: { isDarkMode: false, random: 2 },
-    initial: "idle",
-    id: "main_machine",
-    on: {
-      CHECK_CURRENT_DARK_MODE: {
-        actions: assign((ctx, event) => {
-          const { isDark } = event.payload;
+const mainMachine = createMachine<
+  MachineContextGenericI,
+  machineEventsGenericType,
+  machineFiniteStatesGenericType
+>({
+  context: { isDarkMode: false, random: 2 },
+  initial: "idle",
+  id: "main_machine",
+  on: {
+    CHECK_CURRENT_DARK_MODE: {
+      actions: assign((ctx, event) => {
+        const { isDark } = event.payload;
 
-          return {
-            isDarkMode: isDark,
-          };
-        }),
+        return {
+          isDarkMode: isDark,
+        };
+      }),
+    },
+  },
+  states: {
+    idle: {
+      on: {
+        [EE.CLICK]: {},
       },
     },
-    states: {
-      idle: {
-        on: {
-          [EE.CLICK]: {},
-        },
-      },
-      non_idle: {},
-    },
-  });
+    non_idle: {},
+  },
+});
 
 export const mainService = interpret(mainMachine);
 
