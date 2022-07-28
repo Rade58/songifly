@@ -95,4 +95,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 //                http POST :3000/api/signup email=bobby@example.com password=shibainu username="John Doe"
 
-// YOU CAN SEE ALSO SEE COOKIE VALUE (Set-Cookie HEADER VALUE) WHEN YOU MAKE THIS REQUEST
+// YOU CAN ALSO SEE COOKIE VALUE (Set-Cookie HEADER VALUE) WHEN YOU MAKE THIS REQUEST
+// YOU CAN SEE IT BUT OFCOURSE IT WON'T BE SAVED ANYWHERE
+// SINCE YOU DIDN'T MAKE A REQUEST BY USING BROWSER
