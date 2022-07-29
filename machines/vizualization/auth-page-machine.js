@@ -92,7 +92,7 @@ const ac = {
 const id = "auth-machine";
 const hashedId = `#${id}`;
 const dot = ".";
-const hashedIdDot = `${hashedId + dot}`;
+// const hashedIdDot = `${hashedId + dot}`;
 const hash = "#";
 
 const authPageMachine = createMachine(
@@ -140,7 +140,14 @@ const authPageMachine = createMachine(
                 // BUT DOESN'T WORK
                 // target: `.${fs["on_auth.signin.idle"]}`,
                 // THIS WORKS (WITHOUT DOT ON THE FRONT):
-                target: hashedIdDot + fs["on_auth.signin.idle"],
+                target:
+                  hashedId +
+                  hash +
+                  fs["on_auth"] +
+                  hash +
+                  fs["signin"] +
+                  dot +
+                  fs["idle"],
               },
             },
           },
@@ -178,7 +185,7 @@ const authPageMachine = createMachine(
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
                     target:
-                      hashedIdDot +
+                      hashedId +
                       hash +
                       fs["on_auth"] +
                       hash +
@@ -201,7 +208,7 @@ const authPageMachine = createMachine(
                   },
                   onDone: {
                     target:
-                      hashedIdDot +
+                      hashedId +
                       hash +
                       fs["off_auth"] +
                       dot +
@@ -210,7 +217,7 @@ const authPageMachine = createMachine(
                   },
                   onError: {
                     target:
-                      hashedIdDot +
+                      hashedId +
                       hash +
                       fs["on_auth"] +
                       hash +
@@ -248,7 +255,7 @@ const authPageMachine = createMachine(
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
                     target:
-                      hashedIdDot +
+                      hashedId +
                       hash +
                       fs["on_auth"] +
                       hash +
@@ -275,7 +282,7 @@ const authPageMachine = createMachine(
                   },
                   onDone: {
                     target:
-                      hashedIdDot +
+                      hashedId +
                       hash +
                       fs["off_auth"] +
                       dot +
@@ -284,7 +291,7 @@ const authPageMachine = createMachine(
                   },
                   onError: {
                     target:
-                      hashedIdDot +
+                      hashedId +
                       hash +
                       fs["on_auth"] +
                       hash +
