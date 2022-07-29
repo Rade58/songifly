@@ -1,4 +1,4 @@
-import { createMachine, assign, interpret, Interpreter } from "xstate";
+import { createMachine, assign, interpret } from "xstate";
 
 // NEED TO MOCK THESE
 // import router from "next/router";
