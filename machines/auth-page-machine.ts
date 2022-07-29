@@ -2,6 +2,8 @@ import { createMachine, assign, interpret } from "xstate";
 
 import router from "next/router";
 
+import fetcher from "@/lib/fetcher";
+
 /**
  * @description finite states (not using enums because they are not supported in visualizer)
  */
@@ -57,8 +59,8 @@ const ac = {
   markReqAssFailiure: "markReqAssFailiure",
   // setNetworkError: "setNetworkError",
   // wipeNetworkError: "wipeNetworkError",
-  setSignupSuccessData: "setSignupSuccessData",
-  setSigninSuccessData: "setSigninSuccessData",
+  setSignupBodyData: "setSignupBodyData",
+  setSigninBodyData: "setSigninBodyData",
   navigateOfThePage: "navigateOfThePage",
 } as const;
 
@@ -232,6 +234,7 @@ const authPageMachine = createMachine<
                 on: {
                   [EV.MAKE_SIGNIN_REQUEST]: {
                     target: fs.making_request,
+                    actions: [ac.setSigninBodyData],
                   },
                 },
               },
@@ -257,6 +260,7 @@ const authPageMachine = createMachine<
                 on: {
                   [EV.MAKE_SIGNUP_REQUEST]: {
                     target: fs.making_request,
+                    actions: [ac.setSignupBodyData],
                   },
                 },
               },
@@ -295,14 +299,14 @@ const authPageMachine = createMachine<
           successfulRequest: false,
         };
       }),
-      [ac.setSignupSuccessData]: assign((_, event) => {
+      [ac.setSignupBodyData]: assign((_, event) => {
         if (event.type !== "MAKE_SIGNUP_REQUEST") return {};
 
         return {
           data: event.payload,
         };
       }),
-      [ac.setSigninSuccessData]: assign((_, event) => {
+      [ac.setSigninBodyData]: assign((_, event) => {
         if (event.type !== "MAKE_SIGNIN_REQUEST") return {};
 
         return {
