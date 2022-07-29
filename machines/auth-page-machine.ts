@@ -3,7 +3,7 @@ import { createMachine, assign, interpret } from "xstate";
 import router from "next/router";
 
 /**
- * @description finite states
+ * @description finite states (not using enums because they are not supported in visualizer)
  */
 export const fs = {
   // OF THE AUTH PAGE
@@ -59,6 +59,7 @@ const ac = {
   // wipeNetworkError: "wipeNetworkError",
   setSignupSuccessData: "setSignupSuccessData",
   setSigninSuccessData: "setSigninSuccessData",
+  navigateOfThePage: "navigateOfThePage",
 } as const;
 
 // --------------------------------------------------
@@ -308,6 +309,9 @@ const authPageMachine = createMachine<
           data: event.payload,
         };
       }),
+      [ac.navigateOfThePage]: () => {
+        router.push("/tryout");
+      },
     },
   }
 );
