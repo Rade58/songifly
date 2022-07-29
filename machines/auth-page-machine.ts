@@ -223,8 +223,8 @@ const authPageMachine = createMachine<
     // -------------------------------------------------------------------
     states: {
       [fs.erroreus]: {
-        //
-        //
+        // IN THIS STATE ERROR MESSAGE SHOULD B SHOWN
+        // BUT I THINK THAT FORMS SHOULDN'T BE DISABLED
       },
 
       [fs.off_auth]: {
@@ -241,6 +241,14 @@ const authPageMachine = createMachine<
         //
         states: {
           //
+          [fs.idle]: {
+            //
+          },
+          [fs.leaving_page]: {
+            // WE SHOULD DO CLEANUP IN HERE I THINK
+            entry: [ac.resetContext, ac.navigateOfThePage],
+            type: "final",
+          },
         },
       },
       [fs.on_auth]: {
@@ -274,14 +282,14 @@ const authPageMachine = createMachine<
                 invoke: {
                   id: "signin-request",
                   src: (ctx, _) => {
-                    return fetcher("/signin", ctx.data);
+                    return fetcherSignIn("/signin", ctx.data);
                   },
                   onDone: {
-                    // target:
+                    target: fs["of_auth.leaving_page"],
                     // actions:
                   },
                   onError: {
-                    // target:
+                    target: fs.erroreus,
                     // actions:
                   },
                 },
@@ -314,14 +322,14 @@ const authPageMachine = createMachine<
                 invoke: {
                   id: "signup-request",
                   src: (ctx, _) => {
-                    return fetcher("/signup", ctx.data);
+                    return fetcherSignUp("/signup", ctx.data);
                   },
                   onDone: {
-                    // target
+                    target: fs["of_auth.leaving_page"],
                     // actions
                   },
                   onError: {
-                    // target
+                    target: fs.erroreus,
                     // actions
                   },
                 },
