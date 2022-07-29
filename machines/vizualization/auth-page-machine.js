@@ -174,7 +174,8 @@ const authPageMachine = createMachine(
                   },
 
                   [EV.MAKE_SIGNIN_REQUEST]: {
-                    target: fs.making_request,
+                    // target: fs.making_request,
+                    target: hashedIdDot + fs["on_auth.signin.making_request"],
                     actions: [ac.setSigninBodyData],
                   },
                 },
@@ -183,7 +184,7 @@ const authPageMachine = createMachine(
                 entry: [ac.performDisableForms],
                 //
                 invoke: {
-                  id: "signin-request",
+                  // id: "signin-request",
                   src: (ctx, _) => {
                     return fetcherSignIn("/signin", ctx.data);
                   },
@@ -222,11 +223,14 @@ const authPageMachine = createMachine(
                 //
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
-                    target: fs.signin,
+                    target:
+                      hashedIdDot + fs["on_auth"] + dot + fs["signin.idle"],
                   },
 
                   [EV.MAKE_SIGNUP_REQUEST]: {
-                    target: fs.making_request,
+                    // target: fs.making_request,
+                    target: hashedIdDot + fs["on_auth.signup.making_request"],
+
                     actions: [ac.setSignupBodyData],
                   },
                 },
@@ -236,7 +240,7 @@ const authPageMachine = createMachine(
 
                 //
                 invoke: {
-                  id: "signup-request",
+                  // id: "signup-request",
                   src: (ctx, _) => {
                     return fetcherSignUp("/signup", ctx.data);
                   },
