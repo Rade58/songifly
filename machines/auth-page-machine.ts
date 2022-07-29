@@ -342,16 +342,19 @@ const authPageMachine = createMachine<
         };
       }),
       [ac.navigateOfThePage]: () => {
+        // WE WILL CHANGE THIS ROUTE LATER
         router.push("/tryout");
       },
     },
   }
 );
 
-export const authPageService = interpret(authPageMachine);
+const authPageActor = interpret(authPageMachine);
 
-authPageService.onTransition((state, event) => {
+authPageActor.onTransition((state, event) => {
   //
   // console.log({ isDarkMode: state.context.isDarkMode });
   // console.log("TRANSITION");
 });
+
+export default authPageActor;
