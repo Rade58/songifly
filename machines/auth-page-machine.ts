@@ -251,8 +251,7 @@ const authPageMachine = createMachine<
                   },
 
                   [EV.MAKE_SIGNIN_REQUEST]: {
-                    // target: fs.making_request,
-                    target: hashedIdDot + fs["on_auth.signin.making_request"],
+                    target: fs.making_request,
                     actions: [ac.setSigninBodyData],
                   },
                 },
@@ -305,8 +304,7 @@ const authPageMachine = createMachine<
                   },
 
                   [EV.MAKE_SIGNUP_REQUEST]: {
-                    // target: fs.making_request,
-                    target: hashedIdDot + fs["on_auth.signup.making_request"],
+                    target: fs.making_request,
 
                     actions: [ac.setSignupBodyData],
                   },
