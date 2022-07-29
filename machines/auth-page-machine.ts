@@ -46,6 +46,23 @@ export const EV = {
   MAKE_SIGNIN_REQUEST: "MAKE_SIGNIN_REQUEST",
 } as const;
 
+/**
+ * @description actions
+ */
+const ac = {
+  resetContext: "resetContext",
+  performDisableForms: "performDisableForms",
+  performEnableForms: "performEnableForms",
+  markReqAsSuccess: "markReqAsSuccess",
+  markReqAssFailiure: "markReqAssFailiure",
+  // setNetworkError: "setNetworkError",
+  // wipeNetworkError: "wipeNetworkError",
+  setSignupSuccessData: "setSignupSuccessData",
+  setSigninSuccessData: "setSigninSuccessData",
+} as const;
+
+// --------------------------------------------------
+// --------------------------------------------------
 // TO BE USED AS GENERIC TYPES INSIDE STATE MACHINE DEFINISTION
 
 export interface MachineContextGenericI {
@@ -138,19 +155,20 @@ const authPageMachine = createMachine<
   MachineContextGenericI,
   machineEventsGenericType,
   machineFiniteStatesGenericType
->({
-  key: "auth",
-  initial: fs.off_auth,
-  context: {
-    // enable form only when you get inside on_auth
-    disableForms: true,
-    successfulRequest: false,
-    // networkError IS undefined on start (data also)
-  },
-  // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
-  // YOU CANDEFINE TRANSITION HERE TOO-----
-  on: {
-    /* 
+>(
+  {
+    key: "auth",
+    initial: fs.off_auth,
+    context: {
+      // enable form only when you get inside on_auth
+      disableForms: true,
+      successfulRequest: false,
+      // networkError IS undefined on start (data also)
+    },
+    // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
+    // YOU CANDEFINE TRANSITION HERE TOO-----
+    on: {
+      /* 
     [EV.CHECK_CURRENT_DARK_MODE]: {
       actions: [
         assign((ctx, event) => {
@@ -164,77 +182,135 @@ const authPageMachine = createMachine<
     },
     */
 
-    // THIS IS MY TRANSITION, NO MATTER IN WHICH STATE YOUR MACHINE IS
-    // THIS TRANSITION WILL HAPPEN ON THIS EVENT
-    [EV.BACK_TO_OFF_PAGE]: {
-      target: fs.off_auth,
-      // HERE SHOULD BE AN ACTIONS TO RESET THE CONTEXT
-      // AND ACTION TO NAVIGATE ON SOME AUTHENTICATED PAGE
-    },
-  },
-  // -------------------------------------------------------------------
-  states: {
-    [fs.off_auth]: {
-      on: {
-        [EV.PAGE_VISIT]: {
-          // ADDING DOT BEFORE IT BECAUSE I SAW IT LIKE THIS
-          // INSIDE DOCS
-          // THIS DOESN'T WORK
-          // target: `.${fs["on_auth.signin"]}`,
-          // THIS WORKS:
-          target: fs["on_auth.signin"],
-        },
+      // THIS IS MY TRANSITION, NO MATTER IN WHICH STATE YOUR MACHINE IS
+      // THIS TRANSITION WILL HAPPEN ON THIS EVENT
+      [EV.BACK_TO_OFF_PAGE]: {
+        target: fs.off_auth,
+        // HERE SHOULD BE AN ACTIONS TO RESET THE CONTEXT
+        // AND ACTION TO NAVIGATE ON SOME AUTHENTICATED PAGE
       },
     },
-    [fs.on_auth]: {
-      // COMPOUND STATES
-      // DON'T NEED INITIAL BECAUSE ON EVENT I AM JUMPING DIRECTLY
-      // TO SOME OF THESE STATES, YOU CAN SEE BY YOURSELF WHICH ONE
-      // AND ON WHAT EVENT THIS HAPPENS
-      // initial: fs.on_auth,
-      states: {
-        [fs.signin]: {
-          on: {
-            [EV.AUTH_MODE_TOGGLE]: {
-              target: fs.signup,
-            },
-          },
-          //
-          initial: fs.idle,
-          //
-          states: {
-            [fs.idle]: {
-              //
-            },
-            [fs.making_request]: {
-              //
-            },
-          },
+    // -------------------------------------------------------------------
+    states: {
+      [fs.erroreus]: {
+        //
+        //
+      },
 
-          //
-        },
-        [fs.signup]: {
-          on: {
-            [EV.AUTH_MODE_TOGGLE]: {
-              target: fs.signin,
-            },
+      [fs.off_auth]: {
+        on: {
+          [EV.PAGE_VISIT]: {
+            // ADDING DOT BEFORE IT BECAUSE I SAW IT LIKE THIS
+            // INSIDE DOCS
+            // BUT DOESN'T WORK
+            // target: `.${fs["on_auth.signin.idle"]}`,
+            // THIS WORKS (WITHOUT DOT ON THE FRONT):
+            target: fs["on_auth.signin.idle"],
           },
-          //
-          initial: fs.idle,
-          //
-          states: {
-            [fs.idle]: {
-              //
+        },
+      },
+      [fs.on_auth]: {
+        // COMPOUND STATES
+        // DON'T NEED INITIAL BECAUSE ON EVENT I AM JUMPING DIRECTLY
+        // TO SOME OF THESE STATES, YOU CAN SEE BY YOURSELF WHICH ONE
+        // AND ON WHAT EVENT THIS HAPPENS
+        // initial: fs.on_auth,
+        states: {
+          [fs.signin]: {
+            on: {
+              [EV.AUTH_MODE_TOGGLE]: {
+                target: fs.signup,
+              },
             },
-            [fs.making_request]: {
-              //
+            //
+            initial: fs.idle,
+            //
+            states: {
+              [fs.idle]: {
+                //
+                on: {
+                  [EV.MAKE_SIGNIN_REQUEST]: {
+                    target: fs.making_request,
+                  },
+                },
+              },
+              [fs.making_request]: {
+                //
+              },
+            },
+
+            //
+          },
+          [fs.signup]: {
+            on: {
+              [EV.AUTH_MODE_TOGGLE]: {
+                target: fs.signin,
+              },
+            },
+            //
+            initial: fs.idle,
+            //
+            states: {
+              [fs.idle]: {
+                //
+                on: {
+                  [EV.MAKE_SIGNUP_REQUEST]: {
+                    target: fs.making_request,
+                  },
+                },
+              },
+              [fs.making_request]: {
+                //
+              },
             },
           },
         },
       },
     },
   },
-});
+  {
+    actions: {
+      [ac.resetContext]: assign((_, __) => {
+        return {
+          data: undefined,
+          disableForms: false,
+          networkError: undefined,
+          successfulRequest: false,
+        };
+      }),
+      [ac.performEnableForms]: assign((_, __) => {
+        return { disableForms: false };
+      }),
+      [ac.performDisableForms]: assign((_, __) => {
+        return { disableForms: true };
+      }),
+      [ac.markReqAsSuccess]: assign((_, __) => {
+        return {
+          successfulRequest: true,
+        };
+      }),
+      [ac.markReqAssFailiure]: assign((_, __) => {
+        return {
+          successfulRequest: false,
+        };
+      }),
+      [ac.setSignupSuccessData]: assign((_, event) => {
+        if (event.type !== "MAKE_SIGNUP_REQUEST") return {};
+
+        return {
+          data: event.payload,
+        };
+      }),
+      [ac.setSigninSuccessData]: assign((_, event) => {
+        if (event.type !== "MAKE_SIGNIN_REQUEST") return {};
+
+        return {
+          data: event.payload,
+        };
+      }),
+    },
+  }
+);
 
 export const authPageService = interpret(authPageMachine);
 
