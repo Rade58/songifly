@@ -49,7 +49,8 @@ export const fs = {
   "signin.idle": "signin.idle",
   "signup.idle": "signup.idle",
   //--------------------------------------------------
-  erroreus: "erroreus", // show error message for few
+  // I DON'T NEED THIS
+  // erroreus: "erroreus", // show error message for few
   // seconds (after few seconds you can enable forms again)
   //
   //
@@ -74,13 +75,15 @@ const ac = {
   resetContext: "resetContext",
   performDisableForms: "performDisableForms",
   performEnableForms: "performEnableForms",
-  markReqAsSuccess: "markReqAsSuccess",
-  markReqAssFailiure: "markReqAssFailiure",
+  // markReqAsSuccess: "markReqAsSuccess",
+  // markReqAsFailiure: "markReqAsFailiure",
   // setNetworkError: "setNetworkError",
   // wipeNetworkError: "wipeNetworkError",
   setSignupBodyData: "setSignupBodyData",
   setSigninBodyData: "setSigninBodyData",
   navigateOfThePage: "navigateOfThePage",
+  //
+  clearError: "clearError",
 } as const;
 
 // --------------------------------------------------
@@ -89,7 +92,7 @@ const ac = {
 
 export interface MachineContextGenericI {
   disableForms: boolean;
-  successfulRequest: boolean; //navigate somewhere from out page if this becomes true (to some authorized page)
+  // successfulRequest: boolean; //navigate somewhere from out page if this becomes true (to some authorized page)
   networkError?: string;
   data?: {
     username?: string;
@@ -168,8 +171,8 @@ export type machineFiniteStatesGenericType =
   | {
       value: { [fs.on_auth]: { [fs.signin]: typeof fs.idle } };
       context: MachineContextGenericI & { disableForms: false };
-    }
-  | {
+    };
+/* | {
       value: typeof fs.erroreus;
       context: MachineContextGenericI & {
         disableForms: true;
@@ -177,7 +180,7 @@ export type machineFiniteStatesGenericType =
         networkError: string;
         data: undefined;
       };
-    };
+    } */
 
 // -----------------  MACHINE --------------------
 
@@ -192,7 +195,7 @@ const authPageMachine = createMachine<
     context: {
       // enable form only when you get inside on_auth
       disableForms: true,
-      successfulRequest: false,
+      // successfulRequest: false, // don't need this
       // networkError IS undefined on start (data also)
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
@@ -222,27 +225,29 @@ const authPageMachine = createMachine<
     },
     // -------------------------------------------------------------------
     states: {
-      [fs.erroreus]: {
-        // IN THIS STATE ERROR MESSAGE SHOULD B SHOWN
+      // DON'T NEED THIS
+      /* [fs.erroreus]: {
+        // IN THIS STATE ERROR MESSAGE SHOULD BE SHOWN
         // BUT I THINK THAT FORMS SHOULDN'T BE DISABLED
-      },
+        entry: [],
+      }, */
 
       [fs.off_auth]: {
-        on: {
-          [EV.PAGE_VISIT]: {
-            // ADDING DOT BEFORE IT BECAUSE I SAW IT LIKE THIS
-            // INSIDE DOCS
-            // BUT DOESN'T WORK
-            // target: `.${fs["on_auth.signin.idle"]}`,
-            // THIS WORKS (WITHOUT DOT ON THE FRONT):
-            target: fs["on_auth.signin.idle"],
-          },
-        },
         //
         states: {
           //
           [fs.idle]: {
             //
+            on: {
+              [EV.PAGE_VISIT]: {
+                // ADDING DOT BEFORE IT BECAUSE I SAW IT LIKE THIS
+                // INSIDE DOCS
+                // BUT DOESN'T WORK
+                // target: `.${fs["on_auth.signin.idle"]}`,
+                // THIS WORKS (WITHOUT DOT ON THE FRONT):
+                target: fs["on_auth.signin.idle"],
+              },
+            },
           },
           [fs.leaving_page]: {
             // WE SHOULD DO CLEANUP IN HERE I THINK
@@ -252,11 +257,12 @@ const authPageMachine = createMachine<
         },
       },
       [fs.on_auth]: {
+        entry: [ac.performEnableForms],
+
         // COMPOUND STATES
         // DON'T NEED INITIAL BECAUSE ON EVENT I AM JUMPING DIRECTLY
         // TO SOME OF THESE STATES, YOU CAN SEE BY YOURSELF WHICH ONE
         // AND ON WHAT EVENT THIS HAPPENS
-        // initial: fs.on_auth,
         states: {
           [fs.signin]: {
             on: {
@@ -269,6 +275,11 @@ const authPageMachine = createMachine<
             //
             states: {
               [fs.idle]: {
+                after: {
+                  "3600": {
+                    actions: [ac.clearError],
+                  },
+                },
                 //
                 on: {
                   [EV.MAKE_SIGNIN_REQUEST]: {
@@ -278,6 +289,7 @@ const authPageMachine = createMachine<
                 },
               },
               [fs.making_request]: {
+                entry: [ac.performDisableForms],
                 //
                 invoke: {
                   id: "signin-request",
@@ -289,8 +301,14 @@ const authPageMachine = createMachine<
                     // actions:
                   },
                   onError: {
-                    target: fs.erroreus,
-                    // actions:
+                    target: fs["idle"],
+                    // SET ERROR MESSAGE IN HERE
+                    actions: [
+                      assign((ctx, ev) => {
+                        return { networkError: ev.data.errors[0] };
+                      }),
+                      ac.performEnableForms,
+                    ],
                   },
                 },
               },
@@ -309,6 +327,11 @@ const authPageMachine = createMachine<
             //
             states: {
               [fs.idle]: {
+                after: {
+                  "3600": {
+                    actions: [ac.clearError],
+                  },
+                },
                 //
                 on: {
                   [EV.MAKE_SIGNUP_REQUEST]: {
@@ -318,6 +341,8 @@ const authPageMachine = createMachine<
                 },
               },
               [fs.making_request]: {
+                entry: [ac.performDisableForms],
+
                 //
                 invoke: {
                   id: "signup-request",
@@ -329,8 +354,14 @@ const authPageMachine = createMachine<
                     // actions
                   },
                   onError: {
-                    target: fs.erroreus,
-                    // actions
+                    target: fs["idle"],
+                    // SET ERROR MESSAGE IN HERE
+                    actions: [
+                      assign((ctx, ev) => {
+                        return { networkError: ev.data.errors[0] };
+                      }),
+                      ac.performEnableForms,
+                    ],
                   },
                 },
               },
@@ -356,16 +387,16 @@ const authPageMachine = createMachine<
       [ac.performDisableForms]: assign((_, __) => {
         return { disableForms: true };
       }),
-      [ac.markReqAsSuccess]: assign((_, __) => {
+      /* [ac.markReqAsSuccess]: assign((_, __) => {
         return {
           successfulRequest: true,
         };
-      }),
-      [ac.markReqAssFailiure]: assign((_, __) => {
+      }), */
+      /* [ac.markReqAsFailiure]: assign((_, __) => {
         return {
           successfulRequest: false,
         };
-      }),
+      }), */
       [ac.setSignupBodyData]: assign((_, event) => {
         if (event.type !== "MAKE_SIGNUP_REQUEST") return {};
 
@@ -379,6 +410,9 @@ const authPageMachine = createMachine<
         return {
           data: event.payload,
         };
+      }),
+      [ac.clearError]: assign((_, __) => {
+        return { networkError: undefined };
       }),
       [ac.navigateOfThePage]: navigateOfThePage,
     },
