@@ -89,10 +89,20 @@ const ac = {
 
 // -----------------  MACHINE --------------------
 
+const id = "auth-machine";
+const hashedId = `#${id}`;
+const dot = ".";
+const hashedIdDot = `${hashedId + dot}`;
+
 const authPageMachine = createMachine(
-  {
+  /* <
+  MachineContextGenericI,
+  machineEventsGenericType,
+  machineFiniteStatesGenericType
+> */ {
+    id: id,
     key: "auth",
-    initial: fs["of_auth.idle"],
+    initial: fs.off_auth,
     context: {
       // enable form only when you get inside on_auth
       disableForms: true,
@@ -100,19 +110,20 @@ const authPageMachine = createMachine(
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
-    on: {
-      // I THINK THIS EVENT I'MNOT GOING TO USE AT ALL
-      // THIS IS MY TRANSITION, NO MATTER IN WHICH STATE YOUR MACHINE IS
-      // THIS TRANSITION WILL HAPPEN ON THIS EVENT
-      // [EV.BACK_TO_OFF_PAGE]: {
-      // target: fs.off_auth,
-      // HERE SHOULD BE AN ACTIONS TO RESET THE CONTEXT
-      // AND ACTION TO NAVIGATE ON SOME AUTHENTICATED PAGE
-      // },
-    },
+    // on: {
+    // I THINK THIS EVENT I'MNOT GOING TO USE AT ALL
+    // THIS IS MY TRANSITION, NO MATTER IN WHICH STATE YOUR MACHINE IS
+    // THIS TRANSITION WILL HAPPEN ON THIS EVENT
+    // [EV.BACK_TO_OFF_PAGE]: {
+    // target: fs.off_auth,
+    // HERE SHOULD BE AN ACTIONS TO RESET THE CONTEXT
+    // AND ACTION TO NAVIGATE ON SOME AUTHENTICATED PAGE
+    // },
+    // },
     // -------------------------------------------------------------------
     states: {
       [fs.off_auth]: {
+        initial: fs.idle,
         //
         states: {
           //
@@ -125,7 +136,7 @@ const authPageMachine = createMachine(
                 // BUT DOESN'T WORK
                 // target: `.${fs["on_auth.signin.idle"]}`,
                 // THIS WORKS (WITHOUT DOT ON THE FRONT):
-                target: fs["on_auth.signin.idle"],
+                target: hashedIdDot + fs["on_auth.signin.idle"],
               },
             },
           },
@@ -158,7 +169,8 @@ const authPageMachine = createMachine(
                 //
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
-                    target: fs["signup.idle"],
+                    target:
+                      hashedIdDot + fs["on_auth"] + dot + fs["signup.idle"],
                   },
 
                   [EV.MAKE_SIGNIN_REQUEST]: {
@@ -176,11 +188,12 @@ const authPageMachine = createMachine(
                     return fetcherSignIn("/signin", ctx.data);
                   },
                   onDone: {
-                    target: fs["of_auth.leaving_page"],
+                    target: hashedIdDot + fs["of_auth.leaving_page"],
                     // actions:
                   },
                   onError: {
-                    target: fs["signin.idle"],
+                    target:
+                      hashedIdDot + fs["on_auth"] + dot + fs["signin.idle"],
                     // SET ERROR MESSAGE IN HERE
                     actions: [
                       assign((ctx, ev) => {
@@ -197,7 +210,7 @@ const authPageMachine = createMachine(
           },
           [fs.signup]: {
             //
-            initial: fs.idle,
+            // initial: fs.idle,
             //
             states: {
               [fs.idle]: {
@@ -228,11 +241,12 @@ const authPageMachine = createMachine(
                     return fetcherSignUp("/signup", ctx.data);
                   },
                   onDone: {
-                    target: fs["of_auth.leaving_page"],
+                    target: hashedIdDot + fs["of_auth.leaving_page"],
                     // actions
                   },
                   onError: {
-                    target: fs["signup.idle"],
+                    target:
+                      hashedIdDot + fs["on_auth"] + dot + fs["signup.idle"],
                     // SET ERROR MESSAGE IN HERE
                     actions: [
                       assign((ctx, ev) => {
