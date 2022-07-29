@@ -1,8 +1,19 @@
-import { createMachine, assign, interpret } from "xstate";
+import { createMachine, assign, interpret, Interpreter } from "xstate";
 
 import router from "next/router";
 
 import fetcher from "@/lib/fetcher";
+
+// I USED FETCHER LIKE THIS ONLY BECAUSE I WANT IT TO BE
+// EASIER TO MOCK WHEN I USE VISUALIZER
+// BECUSE I WANT TO TEST FAILIURE TOO
+const fetcherSignUp = fetcher;
+const fetcherSignIn = fetcher;
+
+const navigateOfThePage = () => {
+  // WE WILL CHANGE THIS ROUTE LATER
+  router.push("/tryout");
+};
 
 /**
  * @description finite states (not using enums because they are not supported in visualizer)
@@ -10,21 +21,23 @@ import fetcher from "@/lib/fetcher";
 export const fs = {
   // OF THE AUTH PAGE
   off_auth: "off_auth",
-  // ON THE AUTH PAGE
+  //
+  leaving_page: "leaving_page",
+  "of_auth.leaving_page": "of_auth.leaving_page",
+  "of_auth.idle": "of_auth.idle",
+  // ------------------------------------------------
+  //______ ON THE AUTH PAGE
   on_auth: "on_auth",
   // SUBSTATES (COMPOUND STATES) OF on_auth STATE
   // THIS ARE GOING TO BE TATES FOR MODES (TO SHOW signin OR signup FORM)
   signin: "signin",
   signup: "signup",
-  erroreus: "erroreus", // show error message for few
-  // seconds (after few seconds you can enable forms again)
   // EXPLICIT DEFINITION OF COMPOUND STATES
   "on_auth.signin": "on_auth.signin",
   "on_auth.signup": "on_auth.signup",
-  //  STATES FOR INVOKATIONS
+  // STATES FOR INVOKATIONS
   making_request: "making_request",
   // ANOTHER COMPOUND STATE INSIDE ALREADY COMPOUND STATE
-  idle: "idle",
   // ANOTHER EXPLICIT DEFINITION FOR COMPOUND STATES
   // I DON'T KNOW IF I'M GOING TO USE ALL OF THESE, PROBABLY NOT
   "on_auth.signin.making_request": "on_auth.signin.making_request",
@@ -35,6 +48,12 @@ export const fs = {
   //
   "signin.idle": "signin.idle",
   "signup.idle": "signup.idle",
+  //--------------------------------------------------
+  erroreus: "erroreus", // show error message for few
+  // seconds (after few seconds you can enable forms again)
+  //
+  //
+  idle: "idle",
 } as const;
 
 /**
@@ -111,17 +130,16 @@ export type machineFiniteStatesGenericType =
       };
     }
   | {
-      value: typeof fs.on_auth;
+      value: { [fs.off_auth]: typeof fs.idle };
       context: MachineContextGenericI;
     }
   | {
-      value: typeof fs.erroreus;
-      context: MachineContextGenericI & {
-        disableForms: true;
-        successfulRequest: false;
-        networkError: string;
-        data: undefined;
-      };
+      value: { [fs.off_auth]: typeof fs.leaving_page };
+      context: MachineContextGenericI;
+    }
+  | {
+      value: typeof fs.on_auth;
+      context: MachineContextGenericI;
     }
 
   // you need to do this for compound states to have better types
@@ -150,6 +168,15 @@ export type machineFiniteStatesGenericType =
   | {
       value: { [fs.on_auth]: { [fs.signin]: typeof fs.idle } };
       context: MachineContextGenericI & { disableForms: false };
+    }
+  | {
+      value: typeof fs.erroreus;
+      context: MachineContextGenericI & {
+        disableForms: true;
+        successfulRequest: false;
+        networkError: string;
+        data: undefined;
+      };
     };
 
 // -----------------  MACHINE --------------------
@@ -161,7 +188,7 @@ const authPageMachine = createMachine<
 >(
   {
     key: "auth",
-    initial: fs.off_auth,
+    initial: fs["of_auth.idle"],
     context: {
       // enable form only when you get inside on_auth
       disableForms: true,
@@ -210,6 +237,10 @@ const authPageMachine = createMachine<
             // THIS WORKS (WITHOUT DOT ON THE FRONT):
             target: fs["on_auth.signin.idle"],
           },
+        },
+        //
+        states: {
+          //
         },
       },
       [fs.on_auth]: {
@@ -341,10 +372,7 @@ const authPageMachine = createMachine<
           data: event.payload,
         };
       }),
-      [ac.navigateOfThePage]: () => {
-        // WE WILL CHANGE THIS ROUTE LATER
-        router.push("/tryout");
-      },
+      [ac.navigateOfThePage]: navigateOfThePage,
     },
   }
 );
