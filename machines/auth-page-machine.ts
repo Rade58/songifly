@@ -178,7 +178,7 @@ const authPageMachine = createMachine<
 >(
   {
     id: id,
-    key: "auth",
+    // key: "auth",
     initial: fs.off_auth,
     context: {
       // enable form only when you get inside on_auth
