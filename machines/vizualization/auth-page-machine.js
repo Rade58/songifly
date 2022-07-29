@@ -8,14 +8,10 @@ import { createMachine, assign, interpret, Interpreter } from "xstate";
 // EASIER TO MOCK WHEN I USE VISUALIZER
 // BECUSE I WANT TO TEST FAILIURE TOO
 const fetcherSignUp = () => {
-  return Promise.resolve({
-    email: "shiba@inu.com",
-    username: "Shiba Inu",
-    password: "password66",
-  });
+  return Promise.resolve();
 };
 const fetcherSignIn = () => {
-  return Promise.reject({ errors: ["Something went wrong"] });
+  return Promise.reject();
 };
 
 // THIS IS ONE OF THE ACTIONS
@@ -94,11 +90,7 @@ const ac = {
 // -----------------  MACHINE --------------------
 
 const authPageMachine = createMachine(
-  /* <
-  MachineContextGenericI,
-  machineEventsGenericType,
-  machineFiniteStatesGenericType
-> */ {
+  {
     key: "auth",
     initial: fs["of_auth.idle"],
     context: {
@@ -153,11 +145,6 @@ const authPageMachine = createMachine(
         // AND ON WHAT EVENT THIS HAPPENS
         states: {
           [fs.signin]: {
-            on: {
-              [EV.AUTH_MODE_TOGGLE]: {
-                target: fs.signup,
-              },
-            },
             //
             initial: fs.idle,
             //
@@ -170,6 +157,10 @@ const authPageMachine = createMachine(
                 },
                 //
                 on: {
+                  [EV.AUTH_MODE_TOGGLE]: {
+                    target: fs["signup.idle"],
+                  },
+
                   [EV.MAKE_SIGNIN_REQUEST]: {
                     target: fs.making_request,
                     actions: [ac.setSigninBodyData],
@@ -189,7 +180,7 @@ const authPageMachine = createMachine(
                     // actions:
                   },
                   onError: {
-                    target: fs["idle"],
+                    target: fs["signin.idle"],
                     // SET ERROR MESSAGE IN HERE
                     actions: [
                       assign((ctx, ev) => {
@@ -205,11 +196,6 @@ const authPageMachine = createMachine(
             //
           },
           [fs.signup]: {
-            on: {
-              [EV.AUTH_MODE_TOGGLE]: {
-                target: fs.signin,
-              },
-            },
             //
             initial: fs.idle,
             //
@@ -222,6 +208,10 @@ const authPageMachine = createMachine(
                 },
                 //
                 on: {
+                  [EV.AUTH_MODE_TOGGLE]: {
+                    target: fs.signin,
+                  },
+
                   [EV.MAKE_SIGNUP_REQUEST]: {
                     target: fs.making_request,
                     actions: [ac.setSignupBodyData],
@@ -242,7 +232,7 @@ const authPageMachine = createMachine(
                     // actions
                   },
                   onError: {
-                    target: fs["idle"],
+                    target: fs["signup.idle"],
                     // SET ERROR MESSAGE IN HERE
                     actions: [
                       assign((ctx, ev) => {
