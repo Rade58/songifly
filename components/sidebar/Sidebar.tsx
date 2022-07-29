@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 import Logo from "./Logo";
 
-import Playlists from "./Plylists";
+import Playlists from "./Playlists";
 
 import { mainLinks, otherLinks } from "@/constants/links";
 
