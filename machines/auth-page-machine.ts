@@ -11,11 +11,28 @@ export const fs = {
   // ON THE AUTH PAGE
   on_auth: "on_auth",
   // SUBSTATES (COMPOUND STATES) OF on_auth STATE
+  // THIS ARE GOING TO BE TATES FOR MODES (TO SHOW signin OR signup FORM)
   signin: "signin",
-  signout: "signout",
+  signup: "signup",
+  erroreus: "erroreus", // show error message for few
+  // seconds (after few seconds you can enable forms again)
   // EXPLICIT DEFINITION OF COMPOUND STATES
   "on_auth.signin": "on_auth.signin",
-  "on_auth.signout": "on_auth.signout",
+  "on_auth.signup": "on_auth.signup",
+  //  STATES FOR INVOKATIONS
+  making_request: "making_request",
+  // ANOTHER COMPOUND STATE INSIDE ALREADY COMPOUND STATE
+  idle: "idle",
+  // ANOTHER EXPLICIT DEFINITION FOR COMPOUND STATES
+  // I DON'T KNOW IF I'M GOING TO USE ALL OF THESE, PROBABLY NOT
+  "on_auth.signin.making_request": "on_auth.signin.making_request",
+  "on_auth.signup.making_request": "on_auth.signup.making_request",
+  //
+  "on_auth.signin.idle": "on_auth.signin.idle",
+  "on_auth.signup.idle": "on_auth.signup.idle",
+  //
+  "signin.idle": "signin.idle",
+  "signup.idle": "signup.idle",
 } as const;
 
 /**
@@ -25,46 +42,94 @@ export const EV = {
   PAGE_VISIT: "PAGE_VISIT",
   AUTH_MODE_TOGGLE: "AUTH_MODE_TOGGLE",
   BACK_TO_OFF_PAGE: "BACK_TO_OFF_PAGE",
+  MAKE_SIGNUP_REQUEST: "MAKE_SIGNUP_REQUEST",
+  MAKE_SIGNIN_REQUEST: "MAKE_SIGNIN_REQUEST",
 } as const;
 
 // TO BE USED AS GENERIC TYPES INSIDE STATE MACHINE DEFINISTION
 
 export interface MachineContextGenericI {
-  random: number;
+  disableForms: boolean;
+  successfulRequest: boolean; //navigate somewhere from out page if this becomes true (to some authorized page)
+  networkError?: string;
+  data?: {
+    username?: string;
+    email: string;
+    password: string;
+  };
 }
 
 export type machineEventsGenericType =
-  /* | {
-      type: EE.A;
-      payload: {
-        placeholder: number;
-      };
-    } 
-  |*/
   | {
       type: typeof EV.PAGE_VISIT;
     }
   | { type: typeof EV.AUTH_MODE_TOGGLE }
-  | { type: typeof EV.BACK_TO_OFF_PAGE };
+  | { type: typeof EV.BACK_TO_OFF_PAGE }
+  | {
+      type: typeof EV.MAKE_SIGNUP_REQUEST;
+      payload: {
+        username: string;
+        email: string;
+        password: string;
+      };
+    }
+  | {
+      type: typeof EV.MAKE_SIGNIN_REQUEST;
+      payload: {
+        email: string;
+        password: string;
+      };
+    };
 
 export type machineFiniteStatesGenericType =
   | {
       value: typeof fs.off_auth;
-      context: MachineContextGenericI;
+      context: MachineContextGenericI & {
+        disableForms: true;
+        successfulRequest: false;
+        networkError: undefined;
+      };
     }
   | {
       value: typeof fs.on_auth;
       context: MachineContextGenericI;
     }
+  | {
+      value: typeof fs.erroreus;
+      context: MachineContextGenericI & {
+        disableForms: true;
+        successfulRequest: false;
+        networkError: string;
+        data: undefined;
+      };
+    }
 
   // you need to do this for compound states to have better types
   | {
       value: { [fs.on_auth]: typeof fs.signin };
-      context: MachineContextGenericI;
+      context: MachineContextGenericI & { disableForms: false };
     }
   | {
-      value: { [fs.on_auth]: typeof fs.signout };
-      context: MachineContextGenericI;
+      value: { [fs.on_auth]: typeof fs.signup };
+      context: MachineContextGenericI & { disableForms: false };
+    }
+  //  even deeper compound states
+  | {
+      value: { [fs.on_auth]: { [fs.signup]: typeof fs["making_request"] } };
+      context: MachineContextGenericI & { disableForms: true };
+    }
+  | {
+      value: { [fs.on_auth]: { [fs.signin]: typeof fs["making_request"] } };
+      context: MachineContextGenericI & { disableForms: true };
+    }
+  //
+  | {
+      value: { [fs.on_auth]: { [fs.signup]: typeof fs.idle } };
+      context: MachineContextGenericI & { disableForms: false };
+    }
+  | {
+      value: { [fs.on_auth]: { [fs.signin]: typeof fs.idle } };
+      context: MachineContextGenericI & { disableForms: false };
     };
 
 // -----------------  MACHINE --------------------
@@ -77,7 +142,10 @@ const authPageMachine = createMachine<
   key: "auth",
   initial: fs.off_auth,
   context: {
-    random: 2,
+    // enable form only when you get inside on_auth
+    disableForms: true,
+    successfulRequest: false,
+    // networkError IS undefined on start (data also)
   },
   // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
   // YOU CANDEFINE TRANSITION HERE TOO-----
@@ -100,6 +168,8 @@ const authPageMachine = createMachine<
     // THIS TRANSITION WILL HAPPEN ON THIS EVENT
     [EV.BACK_TO_OFF_PAGE]: {
       target: fs.off_auth,
+      // HERE SHOULD BE AN ACTIONS TO RESET THE CONTEXT
+      // AND ACTION TO NAVIGATE ON SOME AUTHENTICATED PAGE
     },
   },
   // -------------------------------------------------------------------
@@ -126,14 +196,38 @@ const authPageMachine = createMachine<
         [fs.signin]: {
           on: {
             [EV.AUTH_MODE_TOGGLE]: {
-              target: fs.signout,
+              target: fs.signup,
             },
           },
+          //
+          initial: fs.idle,
+          //
+          states: {
+            [fs.idle]: {
+              //
+            },
+            [fs.making_request]: {
+              //
+            },
+          },
+
+          //
         },
-        [fs.signout]: {
+        [fs.signup]: {
           on: {
             [EV.AUTH_MODE_TOGGLE]: {
               target: fs.signin,
+            },
+          },
+          //
+          initial: fs.idle,
+          //
+          states: {
+            [fs.idle]: {
+              //
+            },
+            [fs.making_request]: {
+              //
             },
           },
         },
