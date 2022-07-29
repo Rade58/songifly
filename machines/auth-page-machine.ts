@@ -10,6 +10,7 @@ import fetcher from "@/lib/fetcher";
 const fetcherSignUp = fetcher;
 const fetcherSignIn = fetcher;
 
+// THIS IS ONE OF THE ACTIONS
 const navigateOfThePage = () => {
   // WE WILL CHANGE THIS ROUTE LATER
   router.push("/tryout");
@@ -49,9 +50,6 @@ export const fs = {
   "signin.idle": "signin.idle",
   "signup.idle": "signup.idle",
   //--------------------------------------------------
-  // I DON'T NEED THIS
-  // erroreus: "erroreus", // show error message for few
-  // seconds (after few seconds you can enable forms again)
   //
   //
   idle: "idle",
@@ -75,10 +73,6 @@ const ac = {
   resetContext: "resetContext",
   performDisableForms: "performDisableForms",
   performEnableForms: "performEnableForms",
-  // markReqAsSuccess: "markReqAsSuccess",
-  // markReqAsFailiure: "markReqAsFailiure",
-  // setNetworkError: "setNetworkError",
-  // wipeNetworkError: "wipeNetworkError",
   setSignupBodyData: "setSignupBodyData",
   setSigninBodyData: "setSigninBodyData",
   navigateOfThePage: "navigateOfThePage",
@@ -128,7 +122,6 @@ export type machineFiniteStatesGenericType =
       value: typeof fs.off_auth;
       context: MachineContextGenericI & {
         disableForms: true;
-        successfulRequest: false;
         networkError: undefined;
       };
     }
@@ -144,8 +137,6 @@ export type machineFiniteStatesGenericType =
       value: typeof fs.on_auth;
       context: MachineContextGenericI;
     }
-
-  // you need to do this for compound states to have better types
   | {
       value: { [fs.on_auth]: typeof fs.signin };
       context: MachineContextGenericI & { disableForms: false };
@@ -154,7 +145,7 @@ export type machineFiniteStatesGenericType =
       value: { [fs.on_auth]: typeof fs.signup };
       context: MachineContextGenericI & { disableForms: false };
     }
-  //  even deeper compound states
+  //
   | {
       value: { [fs.on_auth]: { [fs.signup]: typeof fs["making_request"] } };
       context: MachineContextGenericI & { disableForms: true };
@@ -172,15 +163,6 @@ export type machineFiniteStatesGenericType =
       value: { [fs.on_auth]: { [fs.signin]: typeof fs.idle } };
       context: MachineContextGenericI & { disableForms: false };
     };
-/* | {
-      value: typeof fs.erroreus;
-      context: MachineContextGenericI & {
-        disableForms: true;
-        successfulRequest: false;
-        networkError: string;
-        data: undefined;
-      };
-    } */
 
 // -----------------  MACHINE --------------------
 
@@ -195,43 +177,22 @@ const authPageMachine = createMachine<
     context: {
       // enable form only when you get inside on_auth
       disableForms: true,
-      // successfulRequest: false, // don't need this
       // networkError IS undefined on start (data also)
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
-    // YOU CANDEFINE TRANSITION HERE TOO-----
+    // YOU CAN DEFINE TRANSITION HERE TOO-----
     on: {
-      /* 
-    [EV.CHECK_CURRENT_DARK_MODE]: {
-      actions: [
-        assign((ctx, event) => {
-          const { isDark } = event.payload;
-
-          return {
-            isDarkMode: isDark,
-          };
-        }),
-      ],
-    },
-    */
-
+      // I THINK THIS EVENT I'MNOT GOING TO USE AT ALL
       // THIS IS MY TRANSITION, NO MATTER IN WHICH STATE YOUR MACHINE IS
       // THIS TRANSITION WILL HAPPEN ON THIS EVENT
-      [EV.BACK_TO_OFF_PAGE]: {
-        target: fs.off_auth,
-        // HERE SHOULD BE AN ACTIONS TO RESET THE CONTEXT
-        // AND ACTION TO NAVIGATE ON SOME AUTHENTICATED PAGE
-      },
+      // [EV.BACK_TO_OFF_PAGE]: {
+      // target: fs.off_auth,
+      // HERE SHOULD BE AN ACTIONS TO RESET THE CONTEXT
+      // AND ACTION TO NAVIGATE ON SOME AUTHENTICATED PAGE
+      // },
     },
     // -------------------------------------------------------------------
     states: {
-      // DON'T NEED THIS
-      /* [fs.erroreus]: {
-        // IN THIS STATE ERROR MESSAGE SHOULD BE SHOWN
-        // BUT I THINK THAT FORMS SHOULDN'T BE DISABLED
-        entry: [],
-      }, */
-
       [fs.off_auth]: {
         //
         states: {
@@ -387,16 +348,7 @@ const authPageMachine = createMachine<
       [ac.performDisableForms]: assign((_, __) => {
         return { disableForms: true };
       }),
-      /* [ac.markReqAsSuccess]: assign((_, __) => {
-        return {
-          successfulRequest: true,
-        };
-      }), */
-      /* [ac.markReqAsFailiure]: assign((_, __) => {
-        return {
-          successfulRequest: false,
-        };
-      }), */
+
       [ac.setSignupBodyData]: assign((_, event) => {
         if (event.type !== "MAKE_SIGNUP_REQUEST") return {};
 
@@ -422,9 +374,9 @@ const authPageMachine = createMachine<
 const authPageActor = interpret(authPageMachine);
 
 authPageActor.onTransition((state, event) => {
-  //
-  // console.log({ isDarkMode: state.context.isDarkMode });
-  // console.log("TRANSITION");
+  console.log({ authMachineCurrentState: state.value });
+
+  console.log({ networkError: state.context.networkError });
 });
 
 export default authPageActor;
