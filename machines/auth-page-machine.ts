@@ -24,8 +24,8 @@ export const fs = {
   off_auth: "off_auth",
   //
   leaving_page: "leaving_page",
-  "of_auth.leaving_page": "of_auth.leaving_page",
-  "of_auth.idle": "of_auth.idle",
+  "off_auth.leaving_page": "off_auth.leaving_page",
+  "off_auth.idle": "off_auth.idle",
   // ------------------------------------------------
   //______ ON THE AUTH PAGE
   on_auth: "on_auth",
@@ -239,7 +239,7 @@ const authPageMachine = createMachine<
             states: {
               [fs.idle]: {
                 after: {
-                  "3600": {
+                  3600: {
                     actions: [ac.clearError],
                   },
                 },
@@ -260,12 +260,12 @@ const authPageMachine = createMachine<
                 entry: [ac.performDisableForms],
                 //
                 invoke: {
-                  id: "signin-request",
+                  // id: "signin-request",
                   src: (ctx, _) => {
                     return fetcherSignIn("/signin", ctx.data);
                   },
                   onDone: {
-                    target: hashedIdDot + fs["of_auth.leaving_page"],
+                    target: hashedIdDot + fs["off_auth.leaving_page"],
                     // actions:
                   },
                   onError: {
@@ -292,14 +292,15 @@ const authPageMachine = createMachine<
             states: {
               [fs.idle]: {
                 after: {
-                  "3600": {
+                  3600: {
                     actions: [ac.clearError],
                   },
                 },
                 //
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
-                    target: fs.signin,
+                    target:
+                      hashedIdDot + fs["on_auth"] + dot + fs["signin.idle"],
                   },
 
                   [EV.MAKE_SIGNUP_REQUEST]: {
@@ -313,12 +314,12 @@ const authPageMachine = createMachine<
 
                 //
                 invoke: {
-                  id: "signup-request",
+                  // id: "signup-request",
                   src: (ctx, _) => {
                     return fetcherSignUp("/signup", ctx.data);
                   },
                   onDone: {
-                    target: hashedIdDot + fs["of_auth.leaving_page"],
+                    target: hashedIdDot + fs["off_auth.leaving_page"],
                     // actions
                   },
                   onError: {

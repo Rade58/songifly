@@ -188,7 +188,7 @@ const authPageMachine = createMachine(
                     return fetcherSignIn("/signin", ctx.data);
                   },
                   onDone: {
-                    target: hashedIdDot + fs["of_auth.leaving_page"],
+                    target: hashedIdDot + fs["off_auth.leaving_page"],
                     // actions:
                   },
                   onError: {
@@ -241,7 +241,7 @@ const authPageMachine = createMachine(
                     return fetcherSignUp("/signup", ctx.data);
                   },
                   onDone: {
-                    target: hashedIdDot + fs["of_auth.leaving_page"],
+                    target: hashedIdDot + fs["off_auth.leaving_page"],
                     // actions
                   },
                   onError: {
