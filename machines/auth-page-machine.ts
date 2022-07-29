@@ -170,6 +170,7 @@ const id = "auth-machine";
 const hashedId = `#${id}`;
 const dot = ".";
 const hashedIdDot = `${hashedId + dot}`;
+const hash = "#";
 
 const authPageMachine = createMachine<
   MachineContextGenericI,
@@ -200,6 +201,9 @@ const authPageMachine = createMachine<
     // -------------------------------------------------------------------
     states: {
       [fs.off_auth]: {
+        id: fs.off_auth,
+
+        //
         initial: fs.idle,
         //
         states: {
@@ -225,6 +229,8 @@ const authPageMachine = createMachine<
         },
       },
       [fs.on_auth]: {
+        id: fs.on_auth,
+
         entry: [ac.performEnableForms],
 
         // COMPOUND STATES
@@ -233,7 +239,9 @@ const authPageMachine = createMachine<
         // AND ON WHAT EVENT THIS HAPPENS
         states: {
           [fs.signin]: {
+            id: fs.signin,
             //
+
             initial: fs.idle,
             //
             states: {
@@ -247,7 +255,11 @@ const authPageMachine = createMachine<
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
                     target:
-                      hashedIdDot + fs["on_auth"] + dot + fs["signup.idle"],
+                      hashedIdDot +
+                      hash +
+                      fs["on_auth"] +
+                      hash +
+                      fs["signup.idle"],
                   },
 
                   [EV.MAKE_SIGNIN_REQUEST]: {
@@ -265,12 +277,23 @@ const authPageMachine = createMachine<
                     return fetcherSignIn("/signin", ctx.data);
                   },
                   onDone: {
-                    target: hashedIdDot + fs["off_auth.leaving_page"],
+                    target:
+                      hashedIdDot +
+                      hash +
+                      fs["off_auth"] +
+                      dot +
+                      fs["leaving_page"],
                     // actions:
                   },
                   onError: {
                     target:
-                      hashedIdDot + fs["on_auth"] + dot + fs["signin.idle"],
+                      hashedIdDot +
+                      hash +
+                      fs["on_auth"] +
+                      hash +
+                      fs["signin"] +
+                      dot +
+                      fs["idle"],
                     // SET ERROR MESSAGE IN HERE
                     actions: [
                       assign((ctx, ev) => {
@@ -286,6 +309,8 @@ const authPageMachine = createMachine<
             //
           },
           [fs.signup]: {
+            id: fs.signup,
+
             //
             // initial: fs.idle,
             //
@@ -300,7 +325,13 @@ const authPageMachine = createMachine<
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
                     target:
-                      hashedIdDot + fs["on_auth"] + dot + fs["signin.idle"],
+                      hashedIdDot +
+                      hash +
+                      fs["on_auth"] +
+                      hash +
+                      fs["signin"] +
+                      dot +
+                      fs["idle"],
                   },
 
                   [EV.MAKE_SIGNUP_REQUEST]: {
@@ -320,12 +351,23 @@ const authPageMachine = createMachine<
                     return fetcherSignUp("/signup", ctx.data);
                   },
                   onDone: {
-                    target: hashedIdDot + fs["off_auth.leaving_page"],
+                    target:
+                      hashedIdDot +
+                      hash +
+                      fs["off_auth"] +
+                      dot +
+                      fs["leaving_page"],
                     // actions
                   },
                   onError: {
                     target:
-                      hashedIdDot + fs["on_auth"] + dot + fs["signup.idle"],
+                      hashedIdDot +
+                      hash +
+                      fs["on_auth"] +
+                      hash +
+                      fs["signup"] +
+                      dot +
+                      fs["idle"],
                     // SET ERROR MESSAGE IN HERE
                     actions: [
                       assign((ctx, ev) => {
