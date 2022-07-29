@@ -240,6 +240,20 @@ const authPageMachine = createMachine<
               },
               [fs.making_request]: {
                 //
+                invoke: {
+                  id: "signin-request",
+                  src: (ctx, _) => {
+                    return fetcher("/signin", ctx.data);
+                  },
+                  onDone: {
+                    // target:
+                    // actions:
+                  },
+                  onError: {
+                    // target:
+                    // actions:
+                  },
+                },
               },
             },
 
@@ -266,6 +280,20 @@ const authPageMachine = createMachine<
               },
               [fs.making_request]: {
                 //
+                invoke: {
+                  id: "signup-request",
+                  src: (ctx, _) => {
+                    return fetcher("/signup", ctx.data);
+                  },
+                  onDone: {
+                    // target
+                    // actions
+                  },
+                  onError: {
+                    // target
+                    // actions
+                  },
+                },
               },
             },
           },
