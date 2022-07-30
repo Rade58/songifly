@@ -219,9 +219,9 @@ const authPageMachine = createMachine<
                 // THIS WORKS (WITHOUT DOT ON THE FRONT):
                 target:
                   hashedId +
-                  hash +
+                  dot +
                   fs["on_auth"] +
-                  hash +
+                  dot +
                   fs["signin"] +
                   dot +
                   fs["idle"],
@@ -262,11 +262,7 @@ const authPageMachine = createMachine<
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
                     target:
-                      hashedId +
-                      hash +
-                      fs["on_auth"] +
-                      hash +
-                      fs["signup.idle"],
+                      hashedId + dot + fs["on_auth"] + dot + fs["signup.idle"],
                   },
 
                   [EV.MAKE_SIGNIN_REQUEST]: {
@@ -286,7 +282,7 @@ const authPageMachine = createMachine<
                   onDone: {
                     target:
                       hashedId +
-                      hash +
+                      dot +
                       fs["off_auth"] +
                       dot +
                       fs["leaving_page"],
@@ -295,9 +291,9 @@ const authPageMachine = createMachine<
                   onError: {
                     target:
                       hashedId +
-                      hash +
+                      dot +
                       fs["on_auth"] +
-                      hash +
+                      dot +
                       fs["signin"] +
                       dot +
                       fs["idle"],
@@ -333,9 +329,9 @@ const authPageMachine = createMachine<
                   [EV.AUTH_MODE_TOGGLE]: {
                     target:
                       hashedId +
-                      hash +
+                      dot +
                       fs["on_auth"] +
-                      hash +
+                      dot +
                       fs["signin"] +
                       dot +
                       fs["idle"],
@@ -360,7 +356,7 @@ const authPageMachine = createMachine<
                   onDone: {
                     target:
                       hashedId +
-                      hash +
+                      dot +
                       fs["off_auth"] +
                       dot +
                       fs["leaving_page"],
@@ -369,9 +365,9 @@ const authPageMachine = createMachine<
                   onError: {
                     target:
                       hashedId +
-                      hash +
+                      dot +
                       fs["on_auth"] +
-                      hash +
+                      dot +
                       fs["signup"] +
                       dot +
                       fs["idle"],
