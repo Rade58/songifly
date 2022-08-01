@@ -8,6 +8,25 @@ import fetcher from "@/lib/fetcher";
 const fetcherSignUp = fetcher;
 const fetcherSignIn = fetcher;
 
+// I CASE OF NESTED STATES TARGET REFERENCING CAN BE A LITTLE BIT
+// COMPLICATED THEREFORE I AM GOING TO DEFINE A HELPER
+/**
+ *
+ * @param machineId
+ * @param states
+ * @returns string
+ * @description used in case of compound state, when you want to build a target
+ */
+const buildTarget = (
+  machineId: string,
+  ...states: (keyof typeof fs)[]
+): string => {
+  const dot = ".";
+  const id = "#" + machineId;
+  //
+  return id + states.map((state) => dot + state).join();
+};
+
 // THIS IS ONE OF THE ACTIONS
 const navigateOfThePage = () => {
   // WE WILL CHANGE THIS ROUTE LATER
@@ -34,19 +53,6 @@ export const fs = {
   making_request: "making_request",
   idle: "idle",
 } as const;
-
-// I CASE OF NESTED STATES TARGET REFERENCING CAN BE A LITTLE BIT
-// COMPLICATED THEREFORE I AM GOING TO DEFINE A HELPER
-
-const buildTarget = (
-  machineId: string,
-  ...states: (keyof typeof fs)[]
-): string => {
-  const dot = ".";
-  const id = "#" + machineId;
-  //
-  return id + states.map((state) => dot + state).join();
-};
 
 //
 /**
