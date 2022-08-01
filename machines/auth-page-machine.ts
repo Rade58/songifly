@@ -21,10 +21,8 @@ const buildTarget = (
   machineId: string,
   ...states: (keyof typeof fs)[]
 ): string => {
-  const dot = ".";
-  const id = "#" + machineId;
   //
-  return id + states.map((state) => dot + state).join();
+  return "#" + machineId + states.map((state) => "." + state).join("");
 };
 
 // THIS IS ONE OF THE ACTIONS

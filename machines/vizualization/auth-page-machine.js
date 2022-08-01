@@ -90,10 +90,8 @@ const ac = {
  * @description used in case of compound state, when you want to build a target
  */
 const buildTarget = (machineId, ...states) => {
-  const dot = ".";
-  const id = "#" + machineId;
   //
-  return id + states.map((state) => dot + state).join();
+  return "#" + machineId + states.map((state) => "." + state).join("");
 };
 
 // -----------------  MACHINE --------------------
