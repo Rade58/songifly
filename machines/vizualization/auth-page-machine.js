@@ -8,10 +8,14 @@ import { createMachine, assign, interpret } from "xstate";
 // EASIER TO MOCK WHEN I USE VISUALIZER
 // BECUSE I WANT TO TEST FAILIURE TOO
 const fetcherSignUp = () => {
-  return Promise.resolve();
+  return new Promise((res, rej) => {
+    setTimeout(res, 3000);
+  });
 };
 const fetcherSignIn = () => {
-  return Promise.reject();
+  return new Promise((res, rej) => {
+    setTimeout(rej, 3000);
+  });
 };
 
 // THIS IS ONE OF THE ACTIONS
