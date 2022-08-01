@@ -210,14 +210,6 @@ const authPageMachine = createMachine<
                 // BUT DOESN'T WORK
                 // target: `.${fs["on_auth.signin.idle"]}`,
                 // THIS WORKS (WITHOUT DOT ON THE FRONT):
-                /* target:
-                  hashedId +
-                  dot +
-                  fs["on_auth"] +
-                  dot +
-                  fs["signin"] +
-                  dot +
-                  fs["idle"], */
                 target: buildTarget(
                   machineId,
                   fs["on_auth"],
@@ -260,8 +252,6 @@ const authPageMachine = createMachine<
                 //
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
-                    /* target:
-                      hashedId + dot + fs["on_auth"] + dot + fs["signup.idle"], */
                     target: buildTarget(
                       machineId,
                       fs["on_auth"],
@@ -285,12 +275,6 @@ const authPageMachine = createMachine<
                     return fetcherSignIn("/signin", ctx.data);
                   },
                   onDone: {
-                    /* target:
-                      hashedId +
-                      dot +
-                      fs["off_auth"] +
-                      dot +
-                      fs["leaving_page"], */
                     target: buildTarget(
                       machineId,
                       fs["off_auth"],
@@ -299,14 +283,6 @@ const authPageMachine = createMachine<
                     // actions:
                   },
                   onError: {
-                    /* target:
-                      hashedId +
-                      dot +
-                      fs["on_auth"] +
-                      dot +
-                      fs["signin"] +
-                      dot +
-                      fs["idle"], */
                     target: buildTarget(
                       machineId,
                       fs["on_auth"],
@@ -343,14 +319,6 @@ const authPageMachine = createMachine<
                 //
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
-                    /* target:
-                      hashedId +
-                      dot +
-                      fs["on_auth"] +
-                      dot +
-                      fs["signin"] +
-                      dot +
-                      fs["idle"], */
                     target: buildTarget(
                       machineId,
                       fs["on_auth"],
@@ -376,12 +344,6 @@ const authPageMachine = createMachine<
                     return fetcherSignUp("/signup", ctx.data);
                   },
                   onDone: {
-                    /* target:
-                      hashedId +
-                      dot +
-                      fs["off_auth"] +
-                      dot +
-                      fs["leaving_page"], */
                     target: buildTarget(
                       machineId,
                       fs["off_auth"],
@@ -390,14 +352,6 @@ const authPageMachine = createMachine<
                     // actions
                   },
                   onError: {
-                    /* target:
-                      hashedId +
-                      dot +
-                      fs["on_auth"] +
-                      dot +
-                      fs["signup"] +
-                      dot +
-                      fs["idle"], */
                     target: buildTarget(
                       machineId,
                       fs["on_auth"],
