@@ -37,6 +37,7 @@ const navigateOfThePage = () => {
 // (TODO I GOT TO RENEW MY KNOLEDGE ON ACTOR MODEL)
 
 const machineId = "auth-machine";
+const key = "auth_machine_actor";
 // -------------------------------------------------------------
 // -------------------------------------------------------------
 // -------------------------------------------------------------
@@ -173,7 +174,7 @@ const authPageMachine = createMachine<
 >(
   {
     id: machineId,
-    key: "auth",
+    key,
     initial: fs.off_auth,
     context: {
       // enable form only when you get inside on_auth
