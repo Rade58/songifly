@@ -5,18 +5,22 @@ import { useEffect } from "react";
 // import type { NextPage as NP } from "next";
 import Router from "next/router";
 import type { GetServerSideProps } from "next";
-import type { NextPageWithLayout } from "@/pages/_app";
-
 import AuthLayout from "@/layouts/AuthLayout";
 
+import type { NextPageWithLayout } from "@/pages/_app";
+// REMOVE THIS ONE IF YOU USED THIS ONE YOU MADE INSIDE __app
+/* export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
+  getLayout?: (page: RE) => ReactNode;
+}; */
+
 interface PropsI {
-  placeholder: boolean;
+  placeholder: string;
 }
 
 export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
   return {
     props: {
-      placeholder: true,
+      placeholder: "something",
     },
   };
 };

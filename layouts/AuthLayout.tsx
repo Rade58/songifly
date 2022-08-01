@@ -6,8 +6,13 @@ interface Props {
   children?: ReactNode;
 }
 
-const AuthLayout: FC<Props> = () => {
-  return <section>Hello Auth Layout</section>;
+const AuthLayout: FC<Props> = ({ children }) => {
+  return (
+    <section>
+      Hello Auth Layout
+      {children}
+    </section>
+  );
 };
 
 export default AuthLayout;

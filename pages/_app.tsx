@@ -12,7 +12,7 @@ import themes from "../theme/daisy-themes";
 import PlayerLayout from "@/layouts/PlayerLayout";
 //
 
-export type NextPageWithLayout<P = any> = NP<P> & {
+export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
   getLayout?: (page: RE) => ReactNode;
 };
 
@@ -41,6 +41,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         defaultTheme={themes[0]}
         enableColorScheme={false}
       >
+        {/* THIS IS A LAYOUT AS YOU CAN SEE */}
         <PlayerLayout>{getLayout(<Component {...pageProps} />)}</PlayerLayout>
       </ThemeProvider>
     </>
