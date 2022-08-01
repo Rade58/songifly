@@ -23,6 +23,9 @@ const navigateOfThePage = () => {
   // router.push("/tryout");
 };
 
+const machineId = "auth-machine";
+const key = "auth_machine_actor";
+
 /**
  * @description finite states (not using enums because they are not supported in visualizer)
  */
@@ -31,8 +34,7 @@ export const fs = {
   off_auth: "off_auth",
   //
   leaving_page: "leaving_page",
-  "of_auth.leaving_page": "of_auth.leaving_page",
-  "of_auth.idle": "of_auth.idle",
+
   // ------------------------------------------------
   //______ ON THE AUTH PAGE
   on_auth: "on_auth",
@@ -41,21 +43,10 @@ export const fs = {
   signin: "signin",
   signup: "signup",
   // EXPLICIT DEFINITION OF COMPOUND STATES
-  "on_auth.signin": "on_auth.signin",
-  "on_auth.signup": "on_auth.signup",
+
   // STATES FOR INVOKATIONS
   making_request: "making_request",
-  // ANOTHER COMPOUND STATE INSIDE ALREADY COMPOUND STATE
-  // ANOTHER EXPLICIT DEFINITION FOR COMPOUND STATES
-  // I DON'T KNOW IF I'M GOING TO USE ALL OF THESE, PROBABLY NOT
-  "on_auth.signin.making_request": "on_auth.signin.making_request",
-  "on_auth.signup.making_request": "on_auth.signup.making_request",
-  //
-  "on_auth.signin.idle": "on_auth.signin.idle",
-  "on_auth.signup.idle": "on_auth.signup.idle",
-  //
-  "signin.idle": "signin.idle",
-  "signup.idle": "signup.idle",
+
   //--------------------------------------------------
   //
   //
@@ -87,13 +78,21 @@ const ac = {
   clearError: "clearError",
 }; /* as const */
 
-// -----------------  MACHINE --------------------
+/**
+ *
+ * @param machineId
+ * @param states
+ * @returns string
+ * @description used in case of compound state, when you want to build a target
+ */
+const buildTarget = (machineId, ...states) => {
+  const dot = ".";
+  const id = "#" + machineId;
+  //
+  return id + states.map((state) => dot + state).join();
+};
 
-const id = "auth-machine";
-const hashedId = `#${id}`;
-const dot = ".";
-// const hashedIdDot = `${hashedId + dot}`;
-const hash = "#";
+// -----------------  MACHINE --------------------
 
 const authPageMachine = createMachine(
   /* <
@@ -101,8 +100,8 @@ const authPageMachine = createMachine(
   machineEventsGenericType,
   machineFiniteStatesGenericType
 > */ {
-    id: id,
-    // key: "auth",
+    id: machineId,
+    key,
     initial: fs.off_auth,
     context: {
       // enable form only when you get inside on_auth
@@ -140,14 +139,13 @@ const authPageMachine = createMachine(
                 // BUT DOESN'T WORK
                 // target: `.${fs["on_auth.signin.idle"]}`,
                 // THIS WORKS (WITHOUT DOT ON THE FRONT):
-                target:
-                  hashedId +
-                  dot +
-                  fs["on_auth"] +
-                  dot +
-                  fs["signin"] +
-                  dot +
-                  fs["idle"],
+
+                target: buildTarget(
+                  machineId,
+                  fs["on_auth"],
+                  fs["signin"],
+                  fs["idle"]
+                ),
               },
             },
           },
@@ -184,8 +182,14 @@ const authPageMachine = createMachine(
                 //
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
-                    target:
-                      hashedId + dot + fs["on_auth"] + dot + fs["signup.idle"],
+                    /* target:
+                      hashedId + dot + fs["on_auth"] + dot + fs["signup.idle"], */
+                    target: buildTarget(
+                      machineId,
+                      fs["on_auth"],
+                      fs["signup"],
+                      fs["idle"]
+                    ),
                   },
 
                   [EV.MAKE_SIGNIN_REQUEST]: {
@@ -203,23 +207,20 @@ const authPageMachine = createMachine(
                     return fetcherSignIn("/signin", ctx.data);
                   },
                   onDone: {
-                    target:
-                      hashedId +
-                      dot +
-                      fs["off_auth"] +
-                      dot +
-                      fs["leaving_page"],
+                    target: buildTarget(
+                      machineId,
+                      fs["off_auth"],
+                      fs["leaving_page"]
+                    ),
                     // actions:
                   },
                   onError: {
-                    target:
-                      hashedId +
-                      dot +
-                      fs["on_auth"] +
-                      dot +
-                      fs["signin"] +
-                      dot +
-                      fs["idle"],
+                    target: buildTarget(
+                      machineId,
+                      fs["on_auth"],
+                      fs["signin"],
+                      fs["idle"]
+                    ),
                     // SET ERROR MESSAGE IN HERE
                     actions: [
                       assign((ctx, ev) => {
@@ -250,14 +251,12 @@ const authPageMachine = createMachine(
                 //
                 on: {
                   [EV.AUTH_MODE_TOGGLE]: {
-                    target:
-                      hashedId +
-                      dot +
-                      fs["on_auth"] +
-                      dot +
-                      fs["signin"] +
-                      dot +
-                      fs["idle"],
+                    target: buildTarget(
+                      machineId,
+                      fs["on_auth"],
+                      fs["signin"],
+                      fs["idle"]
+                    ),
                   },
 
                   [EV.MAKE_SIGNUP_REQUEST]: {
@@ -277,23 +276,20 @@ const authPageMachine = createMachine(
                     return fetcherSignUp("/signup", ctx.data);
                   },
                   onDone: {
-                    target:
-                      hashedId +
-                      dot +
-                      fs["off_auth"] +
-                      dot +
-                      fs["leaving_page"],
+                    target: buildTarget(
+                      machineId,
+                      fs["off_auth"],
+                      fs["leaving_page"]
+                    ),
                     // actions
                   },
                   onError: {
-                    target:
-                      hashedId +
-                      dot +
-                      fs["on_auth"] +
-                      dot +
-                      fs["signup"] +
-                      dot +
-                      fs["idle"],
+                    target: buildTarget(
+                      machineId,
+                      fs["on_auth"],
+                      fs["signup"],
+                      fs["idle"]
+                    ),
                     // SET ERROR MESSAGE IN HERE
                     actions: [
                       assign((ctx, ev) => {
