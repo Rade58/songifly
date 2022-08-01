@@ -12,7 +12,7 @@ import themes from "../theme/daisy-themes";
 import PlayerLayout from "@/layouts/PlayerLayout";
 //
 
-export type NextPageWithLayout = NP & {
+export type NextPageWithLayout<P = any> = NP<P> & {
   getLayout?: (page: RE) => ReactNode;
 };
 
