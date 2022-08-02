@@ -12,8 +12,8 @@ const Toggler: FC<Props> = () => {
   const [state] = useAuthActor();
 
   return (
-    <div className="border border-rose-600 w-full flex justify-around">
-      <h1 className="self-center justify-self-center mx-auto border border-zinc-600">
+    <div className="border-0 border-rose-600 w-full flex justify-around mb-8">
+      <h1 className="self-center justify-self-center ml-auto mr-auto border-0 border-zinc-600 text-xl">
         Log In
       </h1>
       <span className="justify-self-end">

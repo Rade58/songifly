@@ -12,7 +12,14 @@ interface Props {
 }
 
 const AuthForm: FC<Props> = () => {
-  const [{ value, context }, dispatch] = useAuthActor();
+  const [{ value }] = useAuthActor();
+
+  console.log({ value });
+
+  // @ts-ignore
+  if (!value["on_auth"]) {
+    return null;
+  }
 
   return (
     <form className="w-full flex flex-col justify-center items-center pt-20">
