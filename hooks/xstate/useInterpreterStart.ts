@@ -22,8 +22,6 @@ const authPageActor: Interpreter<
   >
 >; */
 
-let a: Interpreter = authPageMachine;
-
 const useInterpreterStart = (path: string, interpreter: any) => {
   //
   //
