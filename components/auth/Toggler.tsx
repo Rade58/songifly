@@ -12,11 +12,11 @@ const Toggler: FC<Props> = () => {
   const [state, dispatch] = useAuthActor();
 
   // @ts-ignore
-  const text = state.value["on_auth"]["signin"]
+  const text = state.value["on_auth"]["signup"]
     ? "Create New Account"
     : "Sign In To Your Account";
   // @ts-ignore
-  const otherText = !state.value["on_auth"]["signin"] ? "Sign Up" : "Log In";
+  const otherText = state.value["on_auth"]["signin"] ? "Sign Up" : "Log In";
 
   return (
     <div className="border-0 border-rose-600 w-full flex justify-around mb-8">
