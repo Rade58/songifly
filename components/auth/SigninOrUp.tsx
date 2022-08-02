@@ -122,7 +122,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
           <input
             onClick={handleSubmit}
             value={"Sign Up"}
-            className="btn btn-primary mt-6 ml-auto"
+            className={`btn btn-primary mt-6 ml-auto loading`}
             type="submit"
             disabled={disableForms}
           />
@@ -130,7 +130,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
           <input
             onClick={handleSubmit}
             value={"Log In"}
-            className="btn btn-primary mt-6 ml-auto"
+            className={`btn btn-primary mt-6 ml-auto loading`}
             type="submit"
             disabled={disableForms}
           />
