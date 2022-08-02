@@ -28,7 +28,7 @@ const buildTarget = (
 // THIS IS ONE OF THE ACTIONS
 const navigateOfThePage = () => {
   // WE WILL CHANGE THIS ROUTE LATER
-  router.push("/tryout");
+  // router.push("/tryout");
 };
 
 // MACHINE ID AND (key IS MARKING MACHINE AS AN ACTOR)

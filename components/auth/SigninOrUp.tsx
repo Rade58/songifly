@@ -27,6 +27,8 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
     dispatch,
   ] = useAuthActor();
 
+  console.log({ value, disableForms, isLoading, networkError });
+
   const [{ email, password, username }, setState] = useState<{
     email: string;
     password: string;
@@ -66,7 +68,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
     }
   }, [email, password, username, dispatch, signup, signin]);
 
-  console.log({ email, password, username });
+  // console.log({ email, password, username });
 
   return (
     <>
