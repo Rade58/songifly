@@ -1,6 +1,6 @@
 import { createMachine, assign, interpret } from "xstate";
 import router from "next/router";
-import fetcher from "@/lib/fetcher";
+import fetcher from "@/lib/xstate-fetcher/auth-fetcher";
 
 // I USED FETCHER LIKE THIS ONLY BECAUSE I WANT IT TO BE
 // EASIER TO MOCK WHEN I USE VISUALIZER
@@ -366,6 +366,8 @@ const authPageMachine = createMachine<
                       fs["leaving_page"]
                     ),
                     actions: [ac.turnOffLoader],
+                    // WE NEED GUARDED TRANSITION IN HERE
+                    //
                   },
                   onError: {
                     target: buildTarget(
