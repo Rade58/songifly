@@ -16,7 +16,7 @@ const AuthForm: FC<Props> = () => {
   return (
     <>
       <SigninOrUpForm signup />
-      <button
+      {/*    <button
         onClick={() => {
           dispatch("AUTH_MODE_TOGGLE");
         }}
@@ -24,7 +24,7 @@ const AuthForm: FC<Props> = () => {
       >
         Auth
       </button>
-      <div>{JSON.stringify({ value })}</div>
+      <div>{JSON.stringify({ value })}</div> */}
     </>
   );
 };

@@ -34,10 +34,12 @@ const AuthPage: NextPageWithLayout<PropsI> = ({ placeholder }) => {
 
   } */
 
+  return null;
+
   return (
     <div>
-      Sign-in/up
-      {placeholder}
+      {/* Sign-in/up */}
+      {/* {placeholder} */}
     </div>
   );
 };

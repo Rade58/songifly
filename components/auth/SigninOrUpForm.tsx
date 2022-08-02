@@ -18,7 +18,7 @@ interface PrTwo extends Props {
 
 const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signin, signup }) => {
   return (
-    <form className="w-full flex flex-col justify-center items-center">
+    <form className="w-full flex flex-col justify-center items-center pt-20">
       <h1>{signin ? "Sign In" : "Sign Up"}</h1>
       <div className="form-control w-full max-w-xs">
         <label className="label" htmlFor="email">
