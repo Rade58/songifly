@@ -14,8 +14,8 @@ const AuthForm: FC<Props> = () => {
   const [{ value, context }, dispatch] = useAuthActor();
 
   return (
-    <>
-      <h1>Signup</h1>
+    <form className="w-full flex flex-col justify-center items-center pt-20">
+      {/* <h1>Signup</h1> */}
 
       <SigninOrUp signup />
       {/*    <button
@@ -27,7 +27,7 @@ const AuthForm: FC<Props> = () => {
         Auth
       </button>
       <div>{JSON.stringify({ value })}</div> */}
-    </>
+    </form>
   );
 };
 
