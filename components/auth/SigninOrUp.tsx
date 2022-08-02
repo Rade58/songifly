@@ -22,7 +22,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
   const [
     {
       value,
-      context: { disableForms, isLoading },
+      context: { disableForms, isLoading, networkError },
     },
     dispatch,
   ] = useAuthActor();
@@ -122,17 +122,17 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
           <input
             onClick={handleSubmit}
             value={"Sign Up"}
-            className={`btn btn-primary mt-6 ml-auto loading`}
+            className={`btn btn-primary mt-6 ml-auto`}
             type="submit"
-            disabled={disableForms}
+            // disabled={disableForms}
           />
         ) : (
           <input
             onClick={handleSubmit}
             value={"Log In"}
-            className={`btn btn-primary mt-6 ml-auto loading`}
+            className={`btn btn-primary mt-6 ml-auto`}
             type="submit"
-            disabled={disableForms}
+            // disabled={disableForms}
           />
         )}
       </div>
