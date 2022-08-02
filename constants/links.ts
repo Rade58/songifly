@@ -48,10 +48,10 @@ export const otherLinks: OtherLink[] = [
     icon: MdFavorite,
     isLink: true,
   },
-  {
+  /* {
     name: "Signup/in",
     route: "/auth",
     icon: MdPerson,
     isLink: true,
-  },
+  }, */
 ];

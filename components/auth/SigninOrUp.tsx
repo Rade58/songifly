@@ -83,7 +83,9 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
           name="email"
           type="email"
           placeholder="Email"
-          className="input input-bordered w-full max-w-xs"
+          className={`input input-bordered w-full max-w-xs ${
+            disableForms ? "input-disabled" : ""
+          }`.trim()}
           disabled={disableForms}
         />
       </div>
@@ -98,7 +100,9 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
           name="password"
           type="password"
           placeholder="Password"
-          className="input input-bordered w-full max-w-xs"
+          className={`input input-bordered w-full max-w-xs ${
+            disableForms ? "input-disabled" : ""
+          }`.trim()}
           disabled={disableForms}
         />
       </div>
@@ -114,7 +118,9 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
             name="username"
             type="text"
             placeholder="Username"
-            className="input input-bordered w-full max-w-xs"
+            className={`input input-bordered w-full max-w-xs ${
+              disableForms ? "input-disabled" : ""
+            }`.trim()}
             disabled={disableForms}
           />
         </div>
@@ -124,17 +130,21 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
           <input
             onClick={handleSubmit}
             value={"Sign Up"}
-            className={`btn btn-primary mt-6 ml-auto`}
+            className={`btn btn-primary mt-6 ml-auto ${
+              disableForms ? "input-disabled" : ""
+            }`}
             type="submit"
-            // disabled={disableForms}
+            disabled={disableForms}
           />
         ) : (
           <input
             onClick={handleSubmit}
             value={"Log In"}
-            className={`btn btn-primary mt-6 ml-auto`}
+            className={`btn btn-primary mt-6 ml-auto ${
+              disableForms ? "input-disabled" : ""
+            }`}
             type="submit"
-            // disabled={disableForms}
+            disabled={disableForms}
           />
         )}
       </div>

@@ -12,9 +12,17 @@ const fetcher = (...[url, data]: params) => {
         console.log({ data });
 
         if (data.errors) {
-          rej({ errors: data.errors });
+          setTimeout(() => {
+            rej({ errors: data.errors });
+          }, 3000);
+
+          // rej({ errors: data.errors });
         } else {
-          res(data.user);
+          setTimeout(() => {
+            res(data.user);
+          }, 3000);
+
+          // res(data.user);
         }
       })
       .catch(() => {
