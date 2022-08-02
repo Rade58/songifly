@@ -7,7 +7,7 @@ interface Props {
 }
 
 const AuthForm: FC<Props> = () => {
-  return null;
+  return <button>Signin</button>;
 };
 
 export default AuthForm;

@@ -4,6 +4,7 @@ import {
   MdLibraryMusic,
   MdPlaylistAdd,
   MdFavorite,
+  MdPerson,
 } from "react-icons/md";
 import type { IconType } from "react-icons";
 
@@ -45,6 +46,12 @@ export const otherLinks: OtherLink[] = [
     name: "Liked Songs",
     route: "/liked-songs",
     icon: MdFavorite,
+    isLink: true,
+  },
+  {
+    name: "Signup/in",
+    route: "/auth",
+    icon: MdPerson,
     isLink: true,
   },
 ];

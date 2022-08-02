@@ -2,19 +2,16 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import type { FC, ReactNode, ReactElement } from "react";
 import { useEffect } from "react";
-// import type { NextPage as NP } from "next";
 import Router from "next/router";
 import type { GetServerSideProps } from "next";
+
 import AuthLayout from "@/layouts/AuthLayout";
 
 import authPageActor from "@/machines/auth-page-machine";
 
+import useInterpreterStart from "@/hooks/xstate/useInterpreterStart";
+
 import type { NextPageWithLayout } from "@/pages/_app";
-import { Interpreter } from "xstate";
-// REMOVE THIS ONE IF YOU USED THIS ONE YOU MADE INSIDE __app
-/* export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
-  getLayout?: (page: RE) => ReactNode;
-}; */
 
 interface PropsI {
   placeholder: string;
@@ -31,22 +28,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 const AuthPage: NextPageWithLayout<PropsI> = ({ placeholder }) => {
   console.log({ placeholder });
 
-  useEffect(() => {
-    console.log("INSTANCE");
-    console.log(authPageActor instanceof Interpreter);
-    console.log("INSTANCE");
-
-    console.log("1. AUTH MOUNTED");
-    console.log({ RouterPath: Router.pathname });
-    console.log({ RouterPath: Router.asPath });
-    console.log("WINDOW");
-    console.log(window.location.pathname);
-    console.log(window.location.origin);
-
-    return () => {
-      console.log("2. AUTH UNMOUNTED");
-    };
-  }, []);
+  useInterpreterStart(Router.pathname, authPageActor);
 
   return <div>Sign-in/up {placeholder}</div>;
 };
