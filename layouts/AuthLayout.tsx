@@ -6,7 +6,7 @@ interface Props {
   children?: ReactNode;
 }
 
-// import AuthForm from "@/components/auth/AuthForm";
+import AuthForm from "@/components/auth/AuthForm";
 
 // DON'T FORGET TO PASS CHILDREN
 // IF YOU DON'T, YOUR PAGE WON'T BE RENDERED, JUST LAYOUT
@@ -14,7 +14,7 @@ const AuthLayout: FC<Props> = ({ children }) => {
   return (
     <section>
       Hello Auth Layout
-      {/* <AuthForm /> */}
+      <AuthForm />
       {children}
     </section>
   );

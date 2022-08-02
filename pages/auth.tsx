@@ -9,11 +9,9 @@ import AuthLayout from "@/layouts/AuthLayout";
 
 import authPageActor from "@/machines/auth-page-machine";
 
-import useInterpreterStart from "@/hooks/xstate/useInterpreterStart";
+import useInterpreterStartPerPage from "@/hooks/xstate/useInterpreterStartPerPage";
 
 import type { NextPageWithLayout } from "@/pages/_app";
-
-import AuthForm from "@/components/auth/AuthForm";
 
 interface PropsI {
   placeholder: string;
@@ -28,14 +26,17 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 };
 
 const AuthPage: NextPageWithLayout<PropsI> = ({ placeholder }) => {
-  console.log({ placeholder });
+  // console.log({ placeholder });
 
-  useInterpreterStart("/auth", authPageActor);
+  useInterpreterStartPerPage("/auth", authPageActor);
+
+  /* if(interpreter.initialized && typeof window === "object"){
+
+  } */
 
   return (
     <div>
       Sign-in/up
-      <AuthForm />
       {placeholder}
     </div>
   );

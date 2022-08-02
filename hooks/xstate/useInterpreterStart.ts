@@ -1,40 +1,32 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import { useEffect } from "react";
-
-import { useRouter } from "next/router";
-
 import { Interpreter } from "xstate";
 
 /**
  *
- * @param path to the page where you want to use machine
  * @param interpreter (pass machine here)
  */
-const useInterpreterStart = (path: string, interpreter: any) => {
-  const { pathname } = useRouter();
-
+const useInterpreterStart = (interpreter: any) => {
   useEffect(() => {
     //
     //
 
-    if (
-      interpreter instanceof Interpreter &&
-      pathname === path &&
-      interpreter.initialized
-    ) {
+    if (interpreter instanceof Interpreter && !interpreter.initialized) {
       interpreter.start();
+
+      // console.log(interpreter);
+
+      interpreter.send("PAGE_VISIT");
     }
 
     return () => {
-      if (
-        interpreter instanceof Interpreter &&
-        pathname === path &&
-        !interpreter.initialized
-      ) {
+      if (interpreter instanceof Interpreter && interpreter.initialized) {
         interpreter.stop();
       }
     };
-  }, [pathname]);
+  }, [interpreter]);
+
+  return interpreter as unknown as Interpreter<any>;
 };
 
 export default useInterpreterStart;
