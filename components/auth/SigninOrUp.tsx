@@ -18,8 +18,14 @@ interface PrTwo extends Props {
   signin?: false;
 }
 
-const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
-  const [state, dispatch] = useAuthActor();
+const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
+  const [
+    {
+      value,
+      context: { disableForms, isLoading },
+    },
+    dispatch,
+  ] = useAuthActor();
 
   const [{ email, password, username }, setState] = useState<{
     email: string;
@@ -36,8 +42,29 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
 
   const handleSubmit = useCallback(() => {
     //
-    console.log("SUBMITTING");
-  }, [email, password, username]);
+
+    if (signup) {
+      dispatch({
+        // @ts-ignore
+        type: "MAKE_SIGNUP_REQUEST",
+        payload: {
+          username,
+          email,
+          password,
+        },
+      });
+    }
+    if (signin) {
+      dispatch({
+        // @ts-ignore
+        type: "MAKE_SIGNIN_REQUEST",
+        payload: {
+          email,
+          password,
+        },
+      });
+    }
+  }, [email, password, username, dispatch, signup, signin]);
 
   console.log({ email, password, username });
 
@@ -55,6 +82,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
           type="email"
           placeholder="Email"
           className="input input-bordered w-full max-w-xs"
+          disabled={disableForms}
         />
       </div>
       <div className="form-control w-full max-w-xs">
@@ -69,6 +97,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
           type="password"
           placeholder="Password"
           className="input input-bordered w-full max-w-xs"
+          disabled={disableForms}
         />
       </div>
       {signup && (
@@ -84,6 +113,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
             type="text"
             placeholder="Username"
             className="input input-bordered w-full max-w-xs"
+            disabled={disableForms}
           />
         </div>
       )}
@@ -94,6 +124,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
             value={"Sign Up"}
             className="btn btn-primary mt-6 ml-auto"
             type="submit"
+            disabled={disableForms}
           />
         ) : (
           <input
@@ -101,6 +132,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
             value={"Log In"}
             className="btn btn-primary mt-6 ml-auto"
             type="submit"
+            disabled={disableForms}
           />
         )}
       </div>
