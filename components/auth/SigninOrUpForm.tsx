@@ -8,12 +8,12 @@ interface Props {
 
 interface PrOne extends Props {
   signin: true;
-  signup: false;
+  signup?: false;
 }
 
 interface PrTwo extends Props {
-  signin: false;
   signup: true;
+  signin?: false;
 }
 
 const SignInOrUpForm: FC<PrOne | PrTwo> = ({}) => {
