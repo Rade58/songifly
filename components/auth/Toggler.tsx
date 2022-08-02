@@ -12,9 +12,13 @@ const Toggler: FC<Props> = () => {
   const [state] = useAuthActor();
 
   return (
-    <div>
-      <button className="btn btn-link">Log In</button> /{" "}
-      <button className="btn btn-link">Sign Up</button>
+    <div className="border border-rose-600 w-full flex justify-around">
+      <h1 className="self-center justify-self-center mx-auto border border-zinc-600">
+        Log In
+      </h1>
+      <span className="justify-self-end">
+        or <button className="btn btn-link">Sign Up</button>
+      </span>
     </div>
   );
 };
