@@ -16,7 +16,7 @@ const useInterpreterStart = (interpreter: any) => {
 
       // console.log(interpreter);
 
-      interpreter.send("PAGE_VISIT");
+      // interpreter.send("PAGE_VISIT");
     }
 
     return () => {
