@@ -2,14 +2,13 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
-import type { Interpreter } from "xstate";
+import { useRouter } from "next/router";
+
+import type { Interpreter, ResolvedTypegenMeta } from "xstate";
 
 import authPageMachine from "@/machines/auth-page-machine";
 
-interface Props {
-  children?: ReactNode;
-}
-
+/* 
 const authPageActor: Interpreter<
   MachineContextGenericI,
   any,
@@ -21,7 +20,9 @@ const authPageActor: Interpreter<
     BaseActionObject,
     ServiceMap
   >
->;
+>; */
+
+let a: Interpreter = authPageMachine;
 
 const useInterpreterStart = (path: string, interpreter: any) => {
   //

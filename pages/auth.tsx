@@ -7,7 +7,10 @@ import Router from "next/router";
 import type { GetServerSideProps } from "next";
 import AuthLayout from "@/layouts/AuthLayout";
 
+import authPageActor from "@/machines/auth-page-machine";
+
 import type { NextPageWithLayout } from "@/pages/_app";
+import { Interpreter } from "xstate";
 // REMOVE THIS ONE IF YOU USED THIS ONE YOU MADE INSIDE __app
 /* export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
   getLayout?: (page: RE) => ReactNode;
@@ -29,6 +32,10 @@ const AuthPage: NextPageWithLayout<PropsI> = ({ placeholder }) => {
   console.log({ placeholder });
 
   useEffect(() => {
+    console.log("INSTANCE");
+    console.log(authPageActor instanceof Interpreter);
+    console.log("INSTANCE");
+
     console.log("1. AUTH MOUNTED");
     console.log({ RouterPath: Router.pathname });
     console.log({ RouterPath: Router.asPath });
