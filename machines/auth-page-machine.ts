@@ -77,6 +77,8 @@ const ac = {
   navigateOfThePage: "navigateOfThePage",
   //
   clearError: "clearError",
+  turnOnLoader: "turnOnLoader",
+  turnOffLoader: "turnOffLoader",
 } as const;
 
 // --------------------------------------------------
@@ -92,6 +94,7 @@ export interface MachineContextGenericI {
     email: string;
     password: string;
   };
+  isLoading: boolean;
 }
 
 export type machineEventsGenericType =
@@ -130,7 +133,7 @@ export type machineFiniteStatesGenericType =
     }
   | {
       value: { [fs.off_auth]: typeof fs.leaving_page };
-      context: MachineContextGenericI;
+      context: MachineContextGenericI & { isLoading: true };
     }
   | {
       value: typeof fs.on_auth;
@@ -147,20 +150,26 @@ export type machineFiniteStatesGenericType =
   //
   | {
       value: { [fs.on_auth]: { [fs.signup]: typeof fs["making_request"] } };
-      context: MachineContextGenericI & { disableForms: true };
+      context: MachineContextGenericI & { disableForms: true; isLoading: true };
     }
   | {
       value: { [fs.on_auth]: { [fs.signin]: typeof fs["making_request"] } };
-      context: MachineContextGenericI & { disableForms: true };
+      context: MachineContextGenericI & { disableForms: true; isLoading: true };
     }
   //
   | {
       value: { [fs.on_auth]: { [fs.signup]: typeof fs.idle } };
-      context: MachineContextGenericI & { disableForms: false };
+      context: MachineContextGenericI & {
+        disableForms: false;
+        isLoading: false;
+      };
     }
   | {
       value: { [fs.on_auth]: { [fs.signin]: typeof fs.idle } };
-      context: MachineContextGenericI & { disableForms: false };
+      context: MachineContextGenericI & {
+        disableForms: false;
+        isLoading: false;
+      };
     };
 
 // -----------------  MACHINE --------------------
@@ -178,6 +187,7 @@ const authPageMachine = createMachine<
       // enable form only when you get inside on_auth
       disableForms: true,
       // networkError IS undefined on start (data also)
+      isLoading: false,
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
@@ -221,7 +231,12 @@ const authPageMachine = createMachine<
           },
           [fs.leaving_page]: {
             // WE SHOULD DO CLEANUP IN HERE I THINK
-            entry: [ac.resetContext, ac.navigateOfThePage],
+            entry: [
+              ac.resetContext,
+              ac.turnOnLoader,
+              ac.performDisableForms,
+              ac.navigateOfThePage,
+            ],
             type: "final",
           },
         },
@@ -267,7 +282,7 @@ const authPageMachine = createMachine<
                 },
               },
               [fs.making_request]: {
-                entry: [ac.performDisableForms],
+                entry: [ac.performDisableForms, ac.turnOnLoader],
                 //
                 invoke: {
                   // id: "signin-request",
@@ -280,7 +295,7 @@ const authPageMachine = createMachine<
                       fs["off_auth"],
                       fs["leaving_page"]
                     ),
-                    // actions:
+                    actions: [ac.turnOffLoader],
                   },
                   onError: {
                     target: buildTarget(
@@ -295,6 +310,7 @@ const authPageMachine = createMachine<
                         return { networkError: ev.data.errors[0] };
                       }),
                       ac.performEnableForms,
+                      ac.turnOffLoader,
                     ],
                   },
                 },
@@ -335,7 +351,7 @@ const authPageMachine = createMachine<
                 },
               },
               [fs.making_request]: {
-                entry: [ac.performDisableForms],
+                entry: [ac.performDisableForms, ac.turnOnLoader],
 
                 //
                 invoke: {
@@ -349,7 +365,7 @@ const authPageMachine = createMachine<
                       fs["off_auth"],
                       fs["leaving_page"]
                     ),
-                    // actions
+                    actions: [ac.turnOffLoader],
                   },
                   onError: {
                     target: buildTarget(
@@ -364,6 +380,7 @@ const authPageMachine = createMachine<
                         return { networkError: ev.data.errors[0] };
                       }),
                       ac.performEnableForms,
+                      ac.turnOffLoader,
                     ],
                   },
                 },
@@ -381,7 +398,7 @@ const authPageMachine = createMachine<
           data: undefined,
           disableForms: false,
           networkError: undefined,
-          successfulRequest: false,
+          isLoading: false,
         };
       }),
       [ac.performEnableForms]: assign((_, __) => {
@@ -389,6 +406,12 @@ const authPageMachine = createMachine<
       }),
       [ac.performDisableForms]: assign((_, __) => {
         return { disableForms: true };
+      }),
+      [ac.turnOnLoader]: assign((_, __) => {
+        return { isLoading: true };
+      }),
+      [ac.turnOffLoader]: assign((_, __) => {
+        return { isLoading: false };
       }),
 
       [ac.setSignupBodyData]: assign((_, event) => {
