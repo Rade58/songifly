@@ -4,7 +4,7 @@ import type { FC, ReactNode } from "react";
 
 import useAuthActor from "@/hooks/xstate/actors/useAuthActor";
 
-import SigninOrUpForm from "./SigninOrUpForm";
+import SigninOrUp from "./SigninOrUp";
 
 interface Props {
   children?: ReactNode;
@@ -15,7 +15,9 @@ const AuthForm: FC<Props> = () => {
 
   return (
     <>
-      <SigninOrUpForm signup />
+      <h1>Signup</h1>
+
+      <SigninOrUp signup />
       {/*    <button
         onClick={() => {
           dispatch("AUTH_MODE_TOGGLE");
