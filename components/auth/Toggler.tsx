@@ -20,11 +20,11 @@ const Toggler: FC<Props> = () => {
 
   return (
     <div className="border-0 border-rose-600 w-full flex justify-around mb-8 mt-16">
-      <h1 className="self-center justify-self-center ml-auto mr-auto border-0 border-zinc-600 text-xl">
+      <h1 className="self-center justify-self-center ml-auto mr-12 border-0 border-zinc-600 text-xl">
         {text}
       </h1>
-      <span className="justify-self-end">
-        or{" "}
+      <span className="mr-auto">
+        or{""}
         <button
           className="btn btn-link"
           onClick={() => {

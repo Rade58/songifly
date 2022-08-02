@@ -1,6 +1,8 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
-import React, { ChangeEvent, useState } from "react";
-import type { FC, ReactNode } from "react";
+import React, { useState, useCallback } from "react";
+import type { FC, ReactNode, ChangeEvent } from "react";
+
+import useAuthActor from "@/hooks/xstate/actors/useAuthActor";
 
 interface Props {
   children?: ReactNode;
@@ -17,6 +19,8 @@ interface PrTwo extends Props {
 }
 
 const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
+  const [state, dispatch] = useAuthActor();
+
   const [{ email, password, username }, setState] = useState<{
     email: string;
     password: string;
@@ -30,10 +34,10 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
     setState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     //
     console.log("SUBMITTING");
-  };
+  }, [email, password, username]);
 
   console.log({ email, password, username });
 
