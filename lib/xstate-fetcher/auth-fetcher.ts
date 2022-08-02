@@ -14,7 +14,7 @@ const fetcher = (...[url, data]: params) => {
         if (data.errors) {
           rej({ errors: data.errors });
         } else {
-          res(data.data);
+          res(data.user);
         }
       })
       .catch(() => {
