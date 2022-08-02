@@ -1,5 +1,5 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import type { FC, ReactNode } from "react";
 
 interface Props {
@@ -16,7 +16,22 @@ interface PrTwo extends Props {
   signin?: false;
 }
 
-const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signin, signup }) => {
+const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
+  const [{ email, password, username }, setState] = useState<{
+    email: string;
+    password: string;
+    username?: string;
+  }>({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  console.log({ email, password, username });
+
   return (
     <>
       <div className="form-control w-full max-w-xs">
@@ -25,6 +40,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signin, signup }) => {
           {/* <span className="label-text-alt">Alt label</span> */}
         </label>
         <input
+          onChange={handleChange}
           id="email"
           name="email"
           type="email"
@@ -38,6 +54,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signin, signup }) => {
           {/* <span className="label-text-alt">Alt label</span> */}
         </label>
         <input
+          onChange={handleChange}
           id="password"
           name="password"
           type="password"
@@ -52,6 +69,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signin, signup }) => {
             {/* <span className="label-text-alt">Alt label</span> */}
           </label>
           <input
+            onChange={handleChange}
             id="username"
             name="username"
             type="text"
@@ -62,9 +80,17 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signin, signup }) => {
       )}
       <div className="border-0 border-gray-600 w-80 flex">
         {signup ? (
-          <button className="btn btn-primary mt-6 ml-auto">Sign Up</button>
+          <input
+            value={"Sign Up"}
+            className="btn btn-primary mt-6 ml-auto"
+            type="submit"
+          />
         ) : (
-          <button className="btn btn-primary mt-6 ml-auto">Log In</button>
+          <input
+            value={"Log In"}
+            className="btn btn-primary mt-6 ml-auto"
+            type="submit"
+          />
         )}
       </div>
     </>
