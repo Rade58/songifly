@@ -22,20 +22,43 @@ const AuthForm: FC<Props> = () => {
   }
 
   return (
-    <form className="w-full flex flex-col justify-center items-center pt-20">
-      {/* <h1>Signup</h1> */}
-      <Toggler />
-      <SigninOrUp signup />
-      {/*    <button
+    <>
+      <form
+        className="auth-form pt-10 border border-gray-500 h-full"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        {/* <h1>Signup</h1> */}
+        <Toggler />
+        <div className="w-full flex flex-col justify-center items-center pt-20">
+          {/* @ts-ignore */}
+          {value["on_auth"]["signup"] && <SigninOrUp signup />}
+          {/* @ts-ignore */}
+          {value["on_auth"]["signin"] && <SigninOrUp signin />}
+        </div>
+        {/*    <button
         onClick={() => {
           dispatch("AUTH_MODE_TOGGLE");
         }}
         className="btn btn-accent"
-      >
+        >
         Auth
-      </button>
+        </button>
       <div>{JSON.stringify({ value })}</div> */}
-    </form>
+      </form>
+      <style jsx>
+        {
+          /* css */ `
+            .auth-form {
+              border: crimson solid 1px;
+              height: calc(100vh - 4rem - 33px);
+              overflow: hidden;
+            }
+          `
+        }
+      </style>
+    </>
   );
 };
 

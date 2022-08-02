@@ -9,15 +9,28 @@ interface Props {
 }
 
 const Toggler: FC<Props> = () => {
-  const [state] = useAuthActor();
+  const [state, dispatch] = useAuthActor();
+
+  // @ts-ignore
+  const text = !state.value["on_auth"]["signin"] ? "Sign Up" : "Log In";
+  // @ts-ignore
+  const otherText = state.value["on_auth"]["signin"] ? "Sign Up" : "Log In";
 
   return (
     <div className="border-0 border-rose-600 w-full flex justify-around mb-8">
       <h1 className="self-center justify-self-center ml-auto mr-auto border-0 border-zinc-600 text-xl">
-        Log In
+        {text}
       </h1>
       <span className="justify-self-end">
-        or <button className="btn btn-link">Sign Up</button>
+        or{" "}
+        <button
+          className="btn btn-link"
+          onClick={() => {
+            dispatch("AUTH_MODE_TOGGLE");
+          }}
+        >
+          {otherText}
+        </button>
       </span>
     </div>
   );
