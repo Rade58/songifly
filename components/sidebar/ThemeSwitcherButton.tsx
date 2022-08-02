@@ -13,7 +13,7 @@ interface Props {
 const ThemeSwitcherButton: FC<Props> = () => {
   const { toggleTheme, theme } = useThemeSwitcher();
 
-  console.log({ theme, themes });
+  // console.log({ theme, themes });
 
   // @ts-ignore
   const color = theme !== themes[0] ? "#f0d50c" : "#151d33";

@@ -2,12 +2,28 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
+import useAuthActor from "@/hooks/xstate/actors/useAuthActor";
+
 interface Props {
   children?: ReactNode;
 }
 
 const AuthForm: FC<Props> = () => {
-  return <button>Signin</button>;
+  const [{ value, context }, dispatch] = useAuthActor();
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          dispatch("AUTH_MODE_TOGGLE");
+        }}
+        className="btn btn-accent"
+      >
+        Auth
+      </button>
+      <div>{JSON.stringify({ value })}</div>
+    </>
+  );
 };
 
 export default AuthForm;

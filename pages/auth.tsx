@@ -13,6 +13,8 @@ import useInterpreterStart from "@/hooks/xstate/useInterpreterStart";
 
 import type { NextPageWithLayout } from "@/pages/_app";
 
+import AuthForm from "@/components/auth/AuthForm";
+
 interface PropsI {
   placeholder: string;
 }
@@ -28,9 +30,15 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 const AuthPage: NextPageWithLayout<PropsI> = ({ placeholder }) => {
   console.log({ placeholder });
 
-  useInterpreterStart(Router.pathname, authPageActor);
+  useInterpreterStart("/auth", authPageActor);
 
-  return <div>Sign-in/up {placeholder}</div>;
+  return (
+    <div>
+      Sign-in/up
+      <AuthForm />
+      {placeholder}
+    </div>
+  );
 };
 
 AuthPage.getLayout = (page: ReactElement) => {
