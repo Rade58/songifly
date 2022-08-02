@@ -30,6 +30,11 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
     setState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleSubmit = () => {
+    //
+    console.log("SUBMITTING");
+  };
+
   console.log({ email, password, username });
 
   return (
@@ -81,12 +86,14 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup }) => {
       <div className="border-0 border-gray-600 w-80 flex">
         {signup ? (
           <input
+            onClick={handleSubmit}
             value={"Sign Up"}
             className="btn btn-primary mt-6 ml-auto"
             type="submit"
           />
         ) : (
           <input
+            onClick={handleSubmit}
             value={"Log In"}
             className="btn btn-primary mt-6 ml-auto"
             type="submit"
