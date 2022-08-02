@@ -23,11 +23,11 @@ const authPageActor: Interpreter<
   >
 >;
 
-const useMachineMount = (path: string, interpreter: any) => {
+const useInterpreterStart = (path: string, interpreter: any) => {
   //
   //
   //
   //
 };
 
-export default useMachineMount;
+export default useInterpreterStart;
