@@ -27,7 +27,7 @@ const PlayerLayout: FC<Props> = ({ children }) => {
             .cont {
               width: calc(100vw - 14rem);
               margin-left: 14rem;
-              border: crimson solid 1px;
+              border: crimson solid 0px;
               box-sizing: border-box;
               margin-bottom: 6rem;
             }

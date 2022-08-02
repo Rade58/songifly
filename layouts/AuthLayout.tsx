@@ -12,11 +12,11 @@ import AuthForm from "@/components/auth/AuthForm";
 // IF YOU DON'T, YOUR PAGE WON'T BE RENDERED, JUST LAYOUT
 const AuthLayout: FC<Props> = ({ children }) => {
   return (
-    <section>
+    <main className="block border-0 border-rose-100 h-full w-full mt-14">
       Hello Auth Layout
       <AuthForm />
       {children}
-    </section>
+    </main>
   );
 };
 
