@@ -60,6 +60,13 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signin, signup }) => {
           />
         </div>
       )}
+      <div className="border-0 border-gray-600 w-80 flex">
+        {signup ? (
+          <button className="btn btn-primary mt-6 ml-auto">Sign Up</button>
+        ) : (
+          <button className="btn btn-primary mt-6 ml-auto">Log In</button>
+        )}
+      </div>
     </>
   );
 };
