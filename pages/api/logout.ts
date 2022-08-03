@@ -1,11 +1,13 @@
 /* eslint import/no-anonymous-default-export: 0 */
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse, NextApiHandler } from "next";
 
 import cookie from "cookie";
 
 import { SONGIFY_ACCESS_TOKEN } from "@/constants/token";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log(req.cookies);
+
   // CLEARING THE COOKIE
   const serializedCookie = cookie.serialize(SONGIFY_ACCESS_TOKEN, "", {
     httpOnly: true,
