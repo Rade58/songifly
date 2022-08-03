@@ -1,3 +1,7 @@
+// THIS IS NOT EDGE MIDDLEWARE; JUST POINTING THAT OUT
+// THIS IS SOMETHING SIMILAR YOU WOULD DO IN EXPRESSJS BUT IT IS
+// MORE ABSTRACTED OUT FOR YOU
+
 import jwt from "jsonwebtoken";
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from "next";
 
