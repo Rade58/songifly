@@ -1,5 +1,6 @@
 import fetcher from "../fetcher";
 
+// DON'T KNOW IF I USED THIS ANYWHERE
 /**
  *
  * @description call this on signup or signin
