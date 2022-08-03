@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   res.setHeader("Set-Cookie", serializedCookie);
 
-  res.writeHead(302, { Location: "/" });
+  res.writeHead(302, { Location: "/auth" });
 
   return res.end();
 };
