@@ -1,4 +1,4 @@
-// THIS IS INDTENDED FOR SWR
+// THIS IS INTENDED FOR SWR
 /**
  *
  * @param url string
