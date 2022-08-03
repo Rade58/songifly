@@ -1,16 +1,20 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import React from "react";
 import type { FC, ReactNode } from "react";
+import usePlaylists from "@/hooks/usePlaylists";
 
 interface Props {
   children?: ReactNode;
 }
 
 const Playlists: FC<Props> = () => {
+  const { playlists } = usePlaylists();
+
   return (
     <>
       <ul className="playlists-menu border-0 border-indigo-900 py-1.5 bg-base-300">
-        {new Array(50).fill("Foo world playlist").map((val, i) => {
+        {/* {new Array(50).fill("Foo world playlist").map((val, i) => { */}
+        {playlists.map((val: string, i: number) => {
           return (
             <li key={val + i} className="ml-5 mr-4 my-3 text-sm">
               <a

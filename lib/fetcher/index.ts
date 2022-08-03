@@ -5,6 +5,7 @@
  * @param data any
  * @returns Promise<Response>
  * @description fetcher argument for useSWR hook; but also can be used for sign in/up
+ * @deprecated use other fetcher I made inside ./fetcher.ts
  */
 const fetcher = function <T = undefined>(
   url: string,

@@ -1,5 +1,6 @@
-import fetcher from "@/lib/fetcher";
 import useSWR from "swr";
+// import fetcher from "@/lib/fetcher";
+import fetcher from "@/lib/fetcher/my_fetcher";
 
 const useCurrentUser = () => {
   // FIRST ARGUMENT IS KEY FOR LOCAL STORAGE
