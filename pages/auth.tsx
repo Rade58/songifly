@@ -15,10 +15,13 @@ import useInterpreterStartPerPage from "@/hooks/xstate/useInterpreterStartPerPag
 
 import type { NextPageWithLayout } from "@/pages/_app";
 
-interface PropsI {
+/* interface PropsI {
   placeholder: string;
-}
+} */
 
+// I AM NOT GOING TO USE THIS FUNCTION HERE
+// BECAUSE I'M GOING TO USE EDGE FUNCTION (_middleware) TO MAKE A REDIRRECT
+/* 
 export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
   const {
     req: { cookies },
@@ -41,8 +44,9 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
     },
   };
 };
+ */
 
-const AuthPage: NextPageWithLayout<PropsI> = ({ placeholder }) => {
+const AuthPage: NextPageWithLayout /* <PropsI> */ = (/* { placeholder } */) => {
   useInterpreterStartPerPage("/auth", authPageActor);
 
   return (
