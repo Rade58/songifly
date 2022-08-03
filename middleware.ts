@@ -11,7 +11,8 @@ export function middleware(req: NextRequest) {
     const token = req.cookies.get("SONGIFY_ACCESS_TOKEN");
 
     if (!token) {
-      return NextResponse.redirect("/auth");
+      // YOU NEED ABSOLUTE URLS FOR REDIRECT
+      return NextResponse.redirect(`${req.nextUrl.origin}/auth`);
     }
   }
 }
