@@ -1,5 +1,5 @@
 import useSWR from "swr";
-// import fetcher from "@/lib/fetcher";
+import type { User } from "@prisma/client";
 import fetcher from "@/lib/fetcher/my_fetcher";
 
 const useCurrentUser = () => {
@@ -15,7 +15,7 @@ const useCurrentUser = () => {
   // THIS IS ALSO MAKE EASIER INSPECTION OF LOCAL STORAGE
   // WHEN WE LOOK TO LOCAL STORAGE WE
 
-  const { data, error } = useSWR("/current-user", fetcher);
+  const { data, error } = useSWR<User>("/current-user", fetcher);
 
   return {
     isLoading: !data && !error,
