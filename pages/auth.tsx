@@ -1,8 +1,7 @@
 /* eslint react/react-in-jsx-scope: 0 */
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import type { FC, ReactNode, ReactElement } from "react";
-import { useEffect } from "react";
-import Router from "next/router";
+
 import type { GetServerSideProps } from "next";
 
 import AuthLayout from "@/layouts/AuthLayout";
@@ -26,26 +25,20 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 };
 
 const AuthPage: NextPageWithLayout<PropsI> = ({ placeholder }) => {
-  // console.log({ placeholder });
-
   useInterpreterStartPerPage("/auth", authPageActor);
-
-  /* if(interpreter.initialized && typeof window === "object"){
-
-  } */
 
   return null;
 
-  return (
-    <div>
-      {/* Sign-in/up */}
-      {/* {placeholder} */}
-    </div>
-  );
+  return <div></div>;
 };
 
 AuthPage.getLayout = (page: ReactElement) => {
   return <AuthLayout>{page}</AuthLayout>;
 };
+
+// SEE WHAT I DID HERE
+// I ADDED THIS PROPERTY (IT IS NOT SOMETHING BUILT IN
+// I MADE UP THIS PROPERTY)
+AuthPage.isAuth = true;
 
 export default AuthPage;
