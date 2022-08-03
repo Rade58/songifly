@@ -17,6 +17,21 @@ interface PropsI {
 }
 
 export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
+  const {
+    req: { cookies },
+  } = ctx;
+
+  console.log({ cookies });
+
+  if (cookies.SONGIFY_ACCESS_TOKEN) {
+    return {
+      redirect: {
+        statusCode: 302,
+        destination: "/",
+      },
+    };
+  }
+
   return {
     props: {
       placeholder: "something",
