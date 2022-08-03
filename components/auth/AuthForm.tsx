@@ -19,7 +19,7 @@ const AuthForm: FC<Props> = () => {
     },
   ] = useAuthActor();
 
-  console.log({ value });
+  // console.log({ value });
 
   // @ts-ignore
   if (!value["on_auth"]) {
@@ -77,7 +77,7 @@ const AuthForm: FC<Props> = () => {
         {
           /* css */ `
             .auth-form {
-              border: crimson solid 1px;
+              border: crimson solid 0px;
               height: calc(100vh - 4rem - 33px);
               overflow: hidden;
             }

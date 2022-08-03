@@ -28,7 +28,7 @@ const buildTarget = (
 // THIS IS ONE OF THE ACTIONS
 const navigateOfThePage = () => {
   // WE WILL CHANGE THIS ROUTE LATER
-  // router.push("/tryout");
+  router.push("/");
 };
 
 // MACHINE ID AND (key IS MARKING MACHINE AS AN ACTOR)
@@ -441,6 +441,7 @@ const authPageMachine = createMachine<
 const authPageActor = interpret(authPageMachine);
 
 authPageActor.onTransition((state, event) => {
+  console.log("FROM on TRANSITION");
   console.log({ authMachineCurrentState: state.value });
 
   console.log({ networkError: state.context.networkError });
