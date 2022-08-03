@@ -74,7 +74,7 @@ const Sidebar: FC<Props> = () => {
 
           {/* ------ */}
         </ul>
-        <div className="bg-base-300 mb-0 shadow-xl -mt-1 drop-shadow-sm shadow-base-100">
+        <div className="bg-base-300 mb-0 shadow-2xl shadow-base-100">
           <div className="divider ml-5 mr-6 my-0 relative top-1.5"></div>
         </div>
         {/* --------- */}
