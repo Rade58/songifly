@@ -31,13 +31,24 @@ export const validateRoute = (handler: NextApiHandler) => {
           if (!user) {
             throw new Error("Not a real user!");
           }
+
+          // SINCE THIS IS GOING TO BE MIDDLEWARE
+          // YOU CAN PASS ADDITIONAL ARGUMENT
+          // (SEE HOW I'M GOING TO USE THIS MIDDLEWARE
+          // HERE
+          // AND IT IS GOING TO BE CLEAR TO YOU WHY I DID PASS A user)
+
+          return handler(req, res);
         }
       } catch (err) {
         if (err instanceof Error) {
           res.status(401);
-          res.json({ errors: [err.message] });
+          return res.json({ errors: [err.message] });
         }
       }
     }
+
+    res.status(401);
+    return res.json({ errors: ["Not Authorized!"] });
   };
 };
