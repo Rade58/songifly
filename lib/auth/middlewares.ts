@@ -6,7 +6,9 @@ import prisma from "@/lib/prisma";
 
 import { SONGIFY_ACCESS_TOKEN } from "@/constants/token";
 
-export const validateRoute = (handler: NextApiHandler) => {
+export const validateRoute = (
+  handler: (req: NextApiRequest, res: NextApiResponse, user: User) => any
+) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const token = req.cookies[SONGIFY_ACCESS_TOKEN];
 
@@ -35,10 +37,10 @@ export const validateRoute = (handler: NextApiHandler) => {
           // SINCE THIS IS GOING TO BE MIDDLEWARE
           // YOU CAN PASS ADDITIONAL ARGUMENT
           // (SEE HOW I'M GOING TO USE THIS MIDDLEWARE
-          // HERE
+          // HERE     pages/api/current-user.ts
           // AND IT IS GOING TO BE CLEAR TO YOU WHY I DID PASS A user)
 
-          return handler(req, res);
+          return handler(req, res, user);
         }
       } catch (err) {
         if (err instanceof Error) {
