@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 // PAGES WE WANT TO PROTECT
-const pagesToProtect = ["/", "/library", "/liked-songs"];
+const pagesToProtect = ["/", "/library", "/liked-songs", "/search"];
 
 // YOU DEFINE A NAMED IMPORT (NOT DEFAULT)
 
