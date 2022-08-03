@@ -18,6 +18,8 @@ const useCurrentUser = () => {
 
   return {
     isLoading: !data && !error,
+    error,
+    user: data,
   };
 };
 
