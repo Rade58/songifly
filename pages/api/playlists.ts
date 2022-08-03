@@ -1,21 +1,32 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse, NextApiHandler } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@/lib/prisma";
+import type { Playlist, User } from "@prisma/client";
 
-type Data = {
+import { validateRoute } from "@/lib/auth/middlewares";
+
+/* type Data = {
   name: string;
-};
+}; */
+type Data = Playlist[];
 
-const handler: NextApiHandler = async function handler(
+const handler = async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data>,
+  user: User
 ) {
   //
 
-  const playlists = await prisma.playlist.findMany({});
+  const playlists = await prisma.playlist.findMany({
+    where: {
+      user: {
+        id: user.id,
+      },
+    },
+  });
 
   res.status(200).json(playlists);
 };
 
-export default handler;
+export default validateRoute(handler);
