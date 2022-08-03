@@ -14,8 +14,8 @@ const AuthLayout: FC<Props> = ({ children }) => {
   return (
     <section className="block border-1 border-rose-100">
       {/* Hello Auth Layout */}
-      <AuthForm />
       {children}
+      <AuthForm />
     </section>
   );
 };

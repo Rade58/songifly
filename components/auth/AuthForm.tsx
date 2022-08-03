@@ -78,7 +78,7 @@ const AuthForm: FC<Props> = () => {
           /* css */ `
             .auth-form {
               border: crimson solid 0px;
-              height: calc(100vh - 4rem - 33px);
+              /* height: calc(100vh - 4rem - 33px); */
               overflow: hidden;
             }
           `

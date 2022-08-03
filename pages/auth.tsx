@@ -2,6 +2,9 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import type { FC, ReactNode, ReactElement } from "react";
 
+import Image from "next/image";
+import Link from "next/link";
+
 import type { GetServerSideProps } from "next";
 
 import AuthLayout from "@/layouts/AuthLayout";
@@ -21,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
     req: { cookies },
   } = ctx;
 
-  console.log({ cookies });
+  // console.log({ cookies });
 
   if (cookies.SONGIFY_ACCESS_TOKEN) {
     return {
@@ -42,9 +45,15 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 const AuthPage: NextPageWithLayout<PropsI> = ({ placeholder }) => {
   useInterpreterStartPerPage("/auth", authPageActor);
 
-  return null;
-
-  return <div></div>;
+  return (
+    <div className="flex justify-center">
+      <Link href="/">
+        <a>
+          <Image src="/logo.svg" height={122} width={236} alt="logo" />
+        </a>
+      </Link>
+    </div>
+  );
 };
 
 AuthPage.getLayout = (page: ReactElement) => {
