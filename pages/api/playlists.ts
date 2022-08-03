@@ -9,7 +9,10 @@ import { validateRoute } from "@/lib/auth/middlewares";
 /* type Data = {
   name: string;
 }; */
-type Data = Playlist[];
+export type Data = {
+  id: number;
+  name: string;
+}[];
 
 const handler = async function handler(
   req: NextApiRequest,
@@ -23,6 +26,10 @@ const handler = async function handler(
       user: {
         id: user.id,
       },
+    },
+    select: {
+      id: true,
+      name: true,
     },
   });
 

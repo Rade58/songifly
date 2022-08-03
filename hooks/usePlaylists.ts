@@ -1,10 +1,10 @@
 import useSWR from "swr";
 import fetcher from "@/lib/fetcher/my_fetcher";
 
-import type { Playlist } from "@prisma/client";
+import type { Data } from "@/pages/api/playlists";
 
 const usePlaylists = () => {
-  const { data, error } = useSWR<Playlist[]>("/playlists", fetcher);
+  const { data, error } = useSWR<Data>("/playlists", fetcher);
 
   return {
     isLoading: !data && !error,

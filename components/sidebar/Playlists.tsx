@@ -1,6 +1,9 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import React from "react";
 import type { FC, ReactNode } from "react";
+
+import Link from "next/link";
+
 import usePlaylists from "@/hooks/usePlaylists";
 
 interface Props {
@@ -14,17 +17,18 @@ const Playlists: FC<Props> = () => {
     <>
       <ul className="playlists-menu border-0 border-indigo-900 py-1.5 bg-base-300">
         {/* {new Array(50).fill("Foo world playlist").map((val, i) => { */}
-        {playlists.map(({ name }, i) => {
+        {playlists.map(({ name, id }, i) => {
           return (
             <li key={name + i} className="ml-5 mr-4 my-3 text-sm">
-              <a
-                href="http://google.com"
-                className="link no-underline opacity-70 hover:opacity-100 cursor-default"
-                target={"_blank"}
-                rel="noreferrer"
-              >
-                {name}
-              </a>
+              <Link href={`/playlist/${id}`}>
+                <a
+                  className="link no-underline opacity-70 hover:opacity-100 cursor-default"
+                  // target={"_blank"}
+                  // rel="noreferrer"
+                >
+                  {name}
+                </a>
+              </Link>
             </li>
           );
         })}
