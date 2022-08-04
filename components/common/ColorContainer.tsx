@@ -69,10 +69,10 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
 
   return (
     <section
-      className={`block shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
+      className={`block p-4 shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
     >
       <div className="avatar">
-        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 relative">
+        <div className="w-44 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 relative">
           {/* <img src="https://placeimg.com/192/192/people" /> */}
           <Image
             layout="fill"
