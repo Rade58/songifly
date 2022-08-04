@@ -97,9 +97,11 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
           />
         </div>
       </div>
-      <div className="self-end ml-6 border border-rose-500 flex flex-col items-stretch justify-evenly">
-        <p className="text-xs">{mode.toUpperCase()}</p>
+      <div className="self-end ml-6 border-0 border-rose-500 flex flex-col items-stretch justify-evenly">
+        <p className="text-xs font-bolder">{mode.toUpperCase()}</p>
         <h1 className="text-7xl font-extrabold">{title}</h1>
+        <p className="text-sm mt-6">{someData}</p>
+        {moreData && <p className="text-xs">{moreData}</p>}
       </div>
 
       {children}
