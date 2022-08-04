@@ -59,13 +59,13 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
     "bg-slate-900",
   ];
   const lightBgs = [
-    "bg-cyan-300",
-    "bg-emerald-300",
-    "bg-rose-300",
-    "bg-amber-300",
-    "bg-teal-300",
-    "bg-indigo-300",
-    "bg-slate-300",
+    "bg-cyan-100",
+    "bg-emerald-100",
+    "bg-rose-100",
+    "bg-amber-100",
+    "bg-teal-100",
+    "bg-indigo-100",
+    "bg-slate-100",
   ];
   if (customColor && !defaultColor) {
     if (useDarkBg) {

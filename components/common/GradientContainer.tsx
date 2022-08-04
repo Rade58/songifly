@@ -48,13 +48,13 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
     "bg-gradient-to-b from-slate-900 via-base-100 via-base-200 to-base-100",
   ];
   const lightGradients = [
-    "bg-gradient-to-b from-cyan-300 via-base-100 via-base-200 to-base-100",
-    "bg-gradient-to-b from-emerald-300 via-base-100 via-base-200 to-base-100",
-    "bg-gradient-to-b from-rose-300 via-base-100 via-base-200 to-base-100",
-    "bg-gradient-to-b from-amber-300 via-base-100 via-base-200 to-base-100",
-    "bg-gradient-to-b from-teal-300 via-base-100 via-base-200 to-base-100",
-    "bg-gradient-to-b from-indigo-300 via-base-100 via-base-200 to-base-100",
-    "bg-gradient-to-b from-slate-300 via-base-100 via-base-200 to-base-100",
+    "bg-gradient-to-b from-cyan-200 via-base-100 via-base-200 to-base-100",
+    "bg-gradient-to-b from-emerald-200 via-base-100 via-base-200 to-base-100",
+    "bg-gradient-to-b from-rose-200 via-base-100 via-base-200 to-base-100",
+    "bg-gradient-to-b from-amber-200 via-base-100 via-base-200 to-base-100",
+    "bg-gradient-to-b from-teal-200 via-base-100 via-base-200 to-base-100",
+    "bg-gradient-to-b from-indigo-200 via-base-100 via-base-200 to-base-100",
+    "bg-gradient-to-b from-slate-200 via-base-100 via-base-200 to-base-100",
   ];
   if (customGradient && !defaultGradient) {
     if (useDarkGradients) {

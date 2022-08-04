@@ -61,9 +61,9 @@ export const getServerSideProps: GetServerSideProps<
 
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
   return (
-    <GradientContainer variant={0} customGradient>
+    <GradientContainer variant={2} customGradient>
       <ColorContainer
-        variant={0}
+        variant={2}
         customColor
         mode="playlist"
         title="My Playlist"
