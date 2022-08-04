@@ -6,7 +6,6 @@ import type { GetServerSideProps, NextPage as NP } from "next";
 import type { Playlist } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
-import GradientLayout from "@/layouts/GradientLayout";
 import type { NextPageWithLayout } from "@/pages/_app";
 
 interface PropsI {
@@ -59,12 +58,6 @@ export const getServerSideProps: GetServerSideProps<
 
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
   return <div>{playlist?.name}</div>;
-};
-
-PlaylistPage.getLayout = (page: ReactElement) => {
-  // page.props
-
-  return <GradientLayout>{page}</GradientLayout>;
 };
 
 export default PlaylistPage;

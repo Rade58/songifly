@@ -6,9 +6,10 @@ import { useEffect } from "react";
 import Router from "next/router";
 import type { GetServerSideProps } from "next";
 
-import GradientLayout from "@/layouts/GradientLayout";
-
 import type { NextPageWithLayout } from "@/pages/_app";
+
+import GradientContainer from "@/components/common/GradientContainer";
+
 // REMOVE THIS ONE IF YOU USED THIS ONE YOU MADE INSIDE __app
 /* export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
   getLayout?: (page: RE) => ReactNode;
@@ -27,13 +28,11 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 };
 
 const IndexPage: NextPageWithLayout<PropsI> = () => {
-  return <div>Index Page</div>;
-};
-
-IndexPage.getLayout = (page: ReactElement) => {
-  // page.props
-
-  return <GradientLayout>{page}</GradientLayout>;
+  return (
+    <GradientContainer gradientVariant={0}>
+      <div>Index Page</div>;
+    </GradientContainer>
+  );
 };
 
 export default IndexPage;

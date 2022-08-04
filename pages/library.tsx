@@ -6,8 +6,6 @@ import { useEffect } from "react";
 import Router from "next/router";
 import type { GetServerSideProps } from "next";
 
-import GradientLayout from "@/layouts/GradientLayout";
-
 import type { NextPageWithLayout } from "@/pages/_app";
 // REMOVE THIS ONE IF YOU USED THIS ONE YOU MADE INSIDE __app
 /* export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
@@ -28,12 +26,6 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 
 const LibraryPage: NextPageWithLayout<PropsI> = () => {
   return <div>Library Page</div>;
-};
-
-LibraryPage.getLayout = (page: ReactElement) => {
-  // page.props
-
-  return <GradientLayout>{page}</GradientLayout>;
 };
 
 export default LibraryPage;
