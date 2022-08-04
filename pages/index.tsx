@@ -9,7 +9,7 @@ import type { GetServerSideProps } from "next";
 import type { NextPageWithLayout } from "@/pages/_app";
 
 import GradientContainer from "@/components/common/GradientContainer";
-
+import ColorContainer from "@/components/common/ColorContainer";
 // REMOVE THIS ONE IF YOU USED THIS ONE YOU MADE INSIDE __app
 /* export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
   getLayout?: (page: RE) => ReactNode;
@@ -29,7 +29,10 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 
 const IndexPage: NextPageWithLayout<PropsI> = () => {
   return (
-    <GradientContainer variant={0} customGradient>
+    <GradientContainer variant={2} customGradient>
+      <ColorContainer variant={2} customColor>
+        Hello
+      </ColorContainer>
       <div className="bg-">Index Page</div>
     </GradientContainer>
   );
