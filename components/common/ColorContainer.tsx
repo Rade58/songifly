@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import type { FC, ReactNode } from "react";
 
+import Image from "next/image";
+
 import useThemeSwitcher from "@/hooks/useThemeSwitcher";
 
 interface Props {
@@ -67,8 +69,19 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
 
   return (
     <section
-      className={`block border-6 from- border-rose-400 h-16 w-full ${currentBg}`.trim()}
+      className={`block border-6 from- border-rose-400 w-full ${currentBg}`.trim()}
     >
+      <div className="avatar">
+        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 relative">
+          {/* <img src="https://placeimg.com/192/192/people" /> */}
+          <Image
+            layout="fill"
+            src="https://placeimg.com/192/192/people"
+            alt="avatar"
+          />
+        </div>
+      </div>
+
       {children}
     </section>
   );
