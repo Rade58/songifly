@@ -5,6 +5,12 @@ import { useEffect } from "react";
 // import type { NextPage as NP } from "next";
 import Router from "next/router";
 import type { GetServerSideProps } from "next";
+import jwt from "jsonwebtoken";
+import type { User } from "@prisma/client";
+
+import prisma from "@/lib/prisma";
+
+import { SONGIFY_ACCESS_TOKEN } from "@/constants/token";
 
 import type { NextPageWithLayout } from "@/pages/_app";
 
@@ -16,24 +22,65 @@ import ColorContainer from "@/components/common/ColorContainer";
 }; */
 
 interface PropsI {
-  placeholder: string;
+  user: User & {
+    _count: {
+      playlists: number;
+    };
+  };
 }
 
+// @ts-ignore
 export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
-  return {
-    props: {
-      placeholder: "something",
+  const token = ctx.req.cookies[SONGIFY_ACCESS_TOKEN];
+
+  const payload = jwt.verify(
+    token || "",
+    process.env.NODE_ENV === "production"
+      ? (process.env.SECRET as string)
+      : "shibainu"
+  );
+
+  console.log({ payload });
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: typeof payload !== "string" ? payload.email : "none",
     },
-  };
+    include: {
+      _count: {
+        select: {
+          playlists: true,
+        },
+      },
+    },
+  });
+
+  if (user) {
+    return {
+      props: {
+        user: {
+          ...user,
+          password: "__password__",
+          createdAt: user.createdAt.toISOString(),
+          updatedAt: user.updatedAt.toISOString(),
+        },
+      },
+    };
+  }
 };
 
-const IndexPage: NextPageWithLayout<PropsI> = () => {
+const IndexPage: NextPageWithLayout<PropsI> = ({
+  user: {
+    _count: { playlists },
+    name,
+  },
+}) => {
   return (
     <GradientContainer defaultGradient>
       <ColorContainer
         defaultColor
         mode="profile"
-        title="RadeDev"
+        title={name}
         someData="4 Public Playlists"
       ></ColorContainer>
       <div>Index Page</div>

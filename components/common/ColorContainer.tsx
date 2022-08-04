@@ -77,11 +77,11 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
 
   return (
     <section
-      className={`flex pt-12 pb-5 pl-9 shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
+      className={`overflow-hidden flex pt-12 pb-5 pl-9 shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
     >
-      <div className="avatar">
+      <div className="avatar w-44">
         <div
-          className={`w-44 ${
+          className={`w-44 overflow-hidden border-0 border-rose-400 ${
             mode === "playlist"
               ? "rounded"
               : mode === "profile"
