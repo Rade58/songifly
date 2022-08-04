@@ -61,6 +61,7 @@ async function main() {
       return prisma.playlist.create({
         data: {
           name: `Playlist #${_ + i}`,
+          colorVariant: Math.round(Math.random() * 6),
           user: {
             connect: {
               id: user.id,

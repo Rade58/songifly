@@ -12,7 +12,7 @@ import GradientContainer from "@/components/common/GradientContainer";
 import ColorContainer from "@/components/common/ColorContainer";
 
 interface PropsI {
-  playlist?: Playlist | null;
+  playlist: Playlist;
 }
 
 type paramsType = {
@@ -60,10 +60,14 @@ export const getServerSideProps: GetServerSideProps<
 };
 
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
+  const { colorVariant } = playlist;
+
+  console.log(colorVariant);
+
   return (
-    <GradientContainer variant={2} customGradient>
+    <GradientContainer variant={colorVariant} customGradient>
       <ColorContainer
-        variant={2}
+        variant={colorVariant}
         customColor
         mode="playlist"
         title="My Playlist"

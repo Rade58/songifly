@@ -19,7 +19,7 @@ interface PropsOne extends Props {
 
 interface PropsTwo extends Props {
   customGradient: true;
-  variant: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  variant: number;
   defaultGradient?: never;
 }
 
