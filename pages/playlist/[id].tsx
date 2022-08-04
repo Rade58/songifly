@@ -1,5 +1,6 @@
 /* eslint react/react-in-jsx-scope: 0 */
 /* eslint jsx-a11y/anchor-is-valid: 1 */
+import type { ReactElement } from "react";
 import type { GetServerSideProps, NextPage as NP } from "next";
 
 import type { Playlist } from "@prisma/client";
