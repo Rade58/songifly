@@ -37,7 +37,7 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
 
   // let currentGradient =
   // leftToRight + "from-base-100 via-base-200 via-base-100 to-base-200";
-  let currentBg = "bg-base-100";
+  let currentBg = "bg-base-300";
 
   const darkBgs = [
     "bg-cyan-900",

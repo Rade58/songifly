@@ -35,10 +35,8 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
 
   const useDarkGradients = availableThemes[1] === theme;
 
-  // let currentGradient =
-  // leftToRight + "from-base-100 via-base-200 via-base-100 to-base-200";
   let currentGradient =
-    "bg-gradient-to-r from-base-100 via-cyan-200 via-base-100 to-base-200";
+    "bg-gradient-to-r from-base-100 via-base-200 via-base-100 to-base-200";
 
   const darkGradients = [
     "bg-gradient-to-b from-cyan-900 via-base-100 via-base-200 to-base-100",
