@@ -47,22 +47,22 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
     "bg-gradient-to-r from-base-100 via-cyan-200 via-base-100 to-base-200";
 
   const darkGradients = [
-    "bg-gradient-to-b from-cyan-900 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-emerald-900 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-rose-900 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-amber-900 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-teal-900 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-indigo-900 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-slate-900 via-base-200 via-base-100 to-base-200",
+    "bg-gradient-to-b from-cyan-900 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-emerald-900 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-rose-900 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-amber-900 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-teal-900 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-indigo-900 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-slate-900 via-base-100 via-base-300 to-base-100",
   ];
   const lightGradients = [
-    "bg-gradient-to-b from-cyan-300 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-emerald-300 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-rose-300 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-amber-300 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-teal-300 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-indigo-300 via-base-200 via-base-100 to-base-200",
-    "bg-gradient-to-b from-slate-300 via-base-200 via-base-100 to-base-200",
+    "bg-gradient-to-b from-cyan-300 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-emerald-300 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-rose-300 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-amber-300 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-teal-300 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-indigo-300 via-base-100 via-base-300 to-base-100",
+    "bg-gradient-to-b from-slate-300 via-base-100 via-base-300 to-base-100",
   ];
   if (customGradient && !defaultGradient) {
     if (useDarkGradients) {
