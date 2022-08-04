@@ -91,6 +91,7 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
         >
           {/* <img src="https://placeimg.com/192/192/people" /> */}
           <Image
+            priority
             layout="fill"
             src="https://placeimg.com/192/192/people"
             alt="avatar"
