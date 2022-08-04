@@ -12,12 +12,12 @@ const PlayerLayout: FC<Props> = ({ children }) => {
   return (
     <>
       <main className="border-0 border-rose-600 w-screen h-screen">
-        <aside className="sidebar-cont border border-rose-200 absolute top-0 h-screen w-56">
+        <aside className="sidebar-cont absolute top-0 h-screen w-56 border-r-1 border-x-base-100">
           <Sidebar />
         </aside>
 
         <section className="cont">{children}</section>
-        <footer className="border-2 border-teal-600 absolute w-screen h-24 bottom-0 left-0">
+        <footer className="border-0 border-teal-600 absolute w-screen h-24 bottom-0 left-0 bg-base-300 shadow-2xl shadow-black border-t-base-100 border-t">
           Player
         </footer>
       </main>

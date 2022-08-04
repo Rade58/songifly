@@ -23,7 +23,7 @@ const Sidebar: FC<Props> = () => {
     <>
       <div className="bg-base-300 sidebar-data border-0 border-gray-500 h-full">
         <Logo />
-        <ul className="nav-list menu menu-compact bg-base-300 w-full border-1 border-rose-800">
+        <ul className="nav-list menu menu-compact bg-base-300 w-full border-0 border-rose-800">
           {/* ------ */}
 
           {mainLinks.map(({ icon: Icon, name, route }, i) => {

@@ -36,18 +36,15 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
 
   const useDarkGradients = availableThemes[1] === theme;
 
-  let currentGradient = "from-base-300 to-base-100";
+  let currentGradient = "from-base-300 via-base-200 to-base-100";
 
-  const darkGradients = ["from-base-300 to-cyan-300"];
-  const lightGradients = ["from-base-300 to-cyan-100"];
+  const darkGradients = ["from-base-300 via-base-100 to-cyan-300"];
+  const lightGradients = ["from-base-300 via-base-100 to-cyan-100"];
 
   if (gradientVariant !== undefined) {
     if (useDarkGradients) {
-      console.log("THIS AND THAT");
       currentGradient = darkGradients[gradientVariant];
     } else {
-      console.log("THAT AND THIS");
-
       currentGradient = lightGradients[gradientVariant];
     }
   }
