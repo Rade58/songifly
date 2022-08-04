@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 
 const IndexPage: NextPageWithLayout<PropsI> = () => {
   return (
-    <GradientContainer gradientVariant={0}>
+    <GradientContainer defaultGradient>
       <div>Index Page</div>
     </GradientContainer>
   );

@@ -32,20 +32,23 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
   gradientVariant,
   defaultGradient,
 }) => {
+  const leftToRight = "bg-gradient-to-r ";
+  const topToBottom = "bg-gradient-to-b ";
+
   const { availableThemes, theme } = useThemeSwitcher();
 
   const useDarkGradients = availableThemes[1] === theme;
 
-  let currentGradient = "from-base-300 via-base-200 to-base-100";
+  let currentGradient = leftToRight + "from-base-100 via-base-300 to-base-100";
 
   const darkGradients = ["from-base-300 via-base-100 to-cyan-300"];
   const lightGradients = ["from-base-300 via-base-100 to-cyan-100"];
 
   if (gradientVariant !== undefined) {
     if (useDarkGradients) {
-      currentGradient = darkGradients[gradientVariant];
+      currentGradient = topToBottom + darkGradients[gradientVariant];
     } else {
-      currentGradient = lightGradients[gradientVariant];
+      currentGradient = topToBottom + lightGradients[gradientVariant];
     }
   }
 
@@ -53,7 +56,7 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
 
   return (
     <section
-      className={`block border-6 border-rose-400 h-screen bg-gradient-to-b ${currentGradient}`}
+      className={`block border-6 border-rose-400 h-screen ${currentGradient}`}
     >
       {children}
     </section>
