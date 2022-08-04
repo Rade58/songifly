@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps<
 };
 
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
-  const { colorVariant } = playlist;
+  const { colorVariant, name } = playlist;
 
   console.log(colorVariant);
 
@@ -70,7 +70,7 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
         variant={colorVariant}
         customColor
         mode="playlist"
-        title="My Playlist"
+        title={name}
         someData="Soft Jazz For All of your activities"
       ></ColorContainer>
       <div>Hello Playlist</div>
