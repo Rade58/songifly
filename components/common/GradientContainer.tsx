@@ -67,7 +67,7 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
   return (
     <>
       <section
-        className={`grad-cont block border border-rose-400 h-screen ${currentGradient}`.trim()}
+        className={`grad-cont block border-0 border-rose-400 h-screen ${currentGradient}`.trim()}
       >
         {children}
       </section>

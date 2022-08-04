@@ -12,6 +12,9 @@ import type { NextPageWithLayout } from "@/pages/_app";
   getLayout?: (page: RE) => ReactNode;
 }; */
 
+import GradientContainer from "@/components/common/GradientContainer";
+import ColorContainer from "@/components/common/ColorContainer";
+
 interface PropsI {
   placeholder: string;
 }
@@ -25,7 +28,14 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 };
 
 const LibraryPage: NextPageWithLayout<PropsI> = () => {
-  return <div>Library Page</div>;
+  return (
+    <GradientContainer variant={0} customGradient>
+      <ColorContainer variant={0} customColor>
+        Hello
+      </ColorContainer>
+      <div>Hello Library</div>
+    </GradientContainer>
+  );
 };
 
 export default LibraryPage;
