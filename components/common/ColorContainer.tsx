@@ -69,7 +69,7 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
 
   return (
     <section
-      className={`block shadow-sm shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
+      className={`block shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
     >
       <div className="avatar">
         <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 relative">
