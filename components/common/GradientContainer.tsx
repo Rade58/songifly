@@ -13,11 +13,13 @@ interface Props {
 
 interface PropsOne extends Props {
   defaultGradient: true;
-  gradientVariant?: never;
+  customGradient?: never;
+  color?: never;
 }
 
 interface PropsTwo extends Props {
-  gradientVariant: 0 | 1 | 2 | 3 | 4;
+  customGradient: true;
+  color?: string;
   defaultGradient?: never;
 }
 
@@ -29,8 +31,9 @@ const buildGradient = (color: string) => {
 
 const GradientContainer: FC<PropsOne | PropsTwo> = ({
   children,
-  gradientVariant,
+  customGradient,
   defaultGradient,
+  color,
 }) => {
   const leftToRight = "bg-gradient-to-r ";
   const topToBottom = "bg-gradient-to-b ";
@@ -39,16 +42,21 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
 
   const useDarkGradients = availableThemes[1] === theme;
 
-  let currentGradient = leftToRight + "from-base-100 via-base-300 to-base-100";
+  let currentGradient =
+    leftToRight + "from-base-100 via-base-200 via-base-100 to-base-200";
 
-  const darkGradients = ["from-base-300 via-base-100 to-cyan-300"];
-  const lightGradients = ["from-base-300 via-base-100 to-cyan-100"];
+  const darkGradient = `from-${
+    color ? `${color}-800` : "base-300"
+  } via-base-200 to-base-100`;
+  const lightGradient = `from-${
+    color ? `${color}-100` : "base-100"
+  } via-base-200 to-base-100`;
 
-  if (gradientVariant !== undefined) {
+  if (customGradient && !defaultGradient) {
     if (useDarkGradients) {
-      currentGradient = topToBottom + darkGradients[gradientVariant];
+      currentGradient = topToBottom + darkGradient;
     } else {
-      currentGradient = topToBottom + lightGradients[gradientVariant];
+      currentGradient = topToBottom + lightGradient;
     }
   }
 
@@ -56,7 +64,7 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
 
   return (
     <section
-      className={`block border-6 border-rose-400 h-screen ${currentGradient}`}
+      className={`block border-6 border-rose-400 h-screen ${currentGradient}`.trim()}
     >
       {children}
     </section>
