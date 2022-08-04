@@ -11,6 +11,7 @@ interface Props {
   // title: string;
   // description: string;
   // imageUrl: string;
+  pictureStyle: "circle" | "square";
 }
 
 interface PropsOne extends Props {
