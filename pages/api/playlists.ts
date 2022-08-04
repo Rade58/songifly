@@ -31,6 +31,9 @@ const handler = async function handler(
       id: true,
       name: true,
     },
+    orderBy: {
+      name: "asc",
+    },
   });
 
   res.status(200).json(playlists);
