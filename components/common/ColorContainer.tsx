@@ -12,6 +12,9 @@ interface Props {
   // description: string;
   // imageUrl: string;
   mode: "profile" | "playlist";
+  title: string;
+  someData: string;
+  moreData?: string;
 }
 
 interface PropsOne extends Props {
@@ -32,6 +35,9 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
   customColor,
   variant,
   mode,
+  title,
+  someData,
+  moreData,
 }) => {
   const { availableThemes, theme } = useThemeSwitcher();
 
@@ -71,7 +77,7 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
 
   return (
     <section
-      className={`block pt-12 pb-5 pl-9 shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
+      className={`flex pt-12 pb-5 pl-9 shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
     >
       <div className="avatar">
         <div
@@ -91,6 +97,7 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
           />
         </div>
       </div>
+      <div className="border border-rose-500"></div>
 
       {children}
     </section>

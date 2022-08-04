@@ -62,7 +62,13 @@ export const getServerSideProps: GetServerSideProps<
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
   return (
     <GradientContainer variant={0} customGradient>
-      <ColorContainer variant={0} customColor mode="playlist"></ColorContainer>
+      <ColorContainer
+        variant={0}
+        customColor
+        mode="playlist"
+        title="My Playlist"
+        someData="Soft Jazz For All of your activities"
+      ></ColorContainer>
       <div>Hello Playlist</div>
     </GradientContainer>
   );
