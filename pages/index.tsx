@@ -71,7 +71,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 
 const IndexPage: NextPageWithLayout<PropsI> = ({
   user: {
-    _count: { playlists },
+    _count: { playlists: playlistNumber },
     name,
   },
 }) => {
@@ -81,7 +81,9 @@ const IndexPage: NextPageWithLayout<PropsI> = ({
         defaultColor
         mode="profile"
         title={name}
-        someData="4 Public Playlists"
+        someData={`${playlistNumber} Public Playlist${
+          playlistNumber > 1 ? "s" : ""
+        }`}
       ></ColorContainer>
       <div>Index Page</div>
     </GradientContainer>
