@@ -36,26 +36,23 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
 
   const useDarkGradients = availableThemes[1] === theme;
 
-  const [currentGradient, setCurrentGradient] = useState<string>(
-    "from-base-300 to-base-100"
-  );
+  let currentGradient = "from-base-300 to-base-100";
 
-  useEffect(() => {
-    const darkGradients = ["from-base-300 to-cyan-300"];
+  const darkGradients = ["from-base-300 to-cyan-300"];
+  const lightGradients = ["from-base-300 to-cyan-100"];
 
-    const lightGradients = ["from-base-300 to-cyan-100"];
+  if (gradientVariant !== undefined) {
     if (useDarkGradients) {
-      console.log({ useDarkGradients });
-
-      console.log(darkGradients[gradientVariant]);
-
-      setCurrentGradient(darkGradients[gradientVariant]);
+      console.log("THIS AND THAT");
+      currentGradient = darkGradients[gradientVariant];
     } else {
-      setCurrentGradient(lightGradients[gradientVariant]);
-    }
-  }, [useDarkGradients, gradientVariant, setCurrentGradient]);
+      console.log("THAT AND THIS");
 
-  // console.log({ currentGradient, gradientVariant, useDarkGradients });
+      currentGradient = lightGradients[gradientVariant];
+    }
+  }
+
+  console.log({ currentGradient });
 
   return (
     <section
