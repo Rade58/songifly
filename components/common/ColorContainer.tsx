@@ -11,7 +11,7 @@ interface Props {
   // title: string;
   // description: string;
   // imageUrl: string;
-  pictureStyle: "circle" | "square";
+  mode: "profile" | "playlist";
 }
 
 interface PropsOne extends Props {
@@ -31,7 +31,7 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
   defaultColor,
   customColor,
   variant,
-  pictureStyle,
+  mode,
 }) => {
   const { availableThemes, theme } = useThemeSwitcher();
 
@@ -76,9 +76,11 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
       <div className="avatar">
         <div
           className={`w-44 ${
-            pictureStyle === "square"
+            mode === "playlist"
               ? "rounded"
-              : "rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
+              : mode === "profile"
+              ? "rounded-full"
+              : ""
           }  relative`}
         >
           {/* <img src="https://placeimg.com/192/192/people" /> */}

@@ -28,14 +28,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 };
 
 const LibraryPage: NextPageWithLayout<PropsI> = () => {
-  return (
-    <GradientContainer variant={0} customGradient>
-      <ColorContainer variant={0} customColor pictureStyle="square">
-        Hello
-      </ColorContainer>
-      <div>Hello Library</div>
-    </GradientContainer>
-  );
+  return <div>Library</div>;
 };
 
 export default LibraryPage;

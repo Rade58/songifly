@@ -30,9 +30,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 const IndexPage: NextPageWithLayout<PropsI> = () => {
   return (
     <GradientContainer defaultGradient>
-      <ColorContainer defaultColor pictureStyle="circle">
-        Hello
-      </ColorContainer>
+      <ColorContainer defaultColor mode="profile"></ColorContainer>
       <div>Index Page</div>
     </GradientContainer>
   );

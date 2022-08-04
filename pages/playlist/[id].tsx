@@ -8,6 +8,9 @@ import prisma from "@/lib/prisma";
 
 import type { NextPageWithLayout } from "@/pages/_app";
 
+import GradientContainer from "@/components/common/GradientContainer";
+import ColorContainer from "@/components/common/ColorContainer";
+
 interface PropsI {
   playlist?: Playlist | null;
 }
@@ -57,7 +60,12 @@ export const getServerSideProps: GetServerSideProps<
 };
 
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
-  return <div>{playlist?.name}</div>;
+  return (
+    <GradientContainer variant={0} customGradient>
+      <ColorContainer variant={0} customColor mode="playlist"></ColorContainer>
+      <div>Hello Playlist</div>
+    </GradientContainer>
+  );
 };
 
 export default PlaylistPage;
