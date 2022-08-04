@@ -4,11 +4,17 @@ import type { FC, ReactNode } from "react";
 
 interface Props {
   children?: ReactNode;
+  // title: string;
+  // description: string;
+  // imageUrl: string;
 }
 
 const GradientLayout: FC<Props> = ({ children }) => {
   return (
-    <section className="block border-1 border-rose-100">{children}</section>
+    <section className="block border-1 border-rose-100">
+      Gradient Layout
+      {children}
+    </section>
   );
 };
 
