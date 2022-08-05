@@ -106,7 +106,7 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
         customColor
         mode="playlist"
         title={name}
-        someData="Soft Jazz For All of your activities"
+        someData={`${songs.length} songs`}
       ></ColorContainer>
       <div>
         <pre>{JSON.stringify({ playlist }, null, 2)}</pre>
