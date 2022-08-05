@@ -39,9 +39,13 @@ export const getServerSideProps: GetServerSideProps<
 
   if (params) {
     // FETCH PLAYLIST
-    const playlist = await prisma.playlist.findUnique({
+    const playlist = await prisma.playlist.findFirst({
       where: {
         id: parseInt(params.id),
+        user: {
+          // @ts-ignore
+          id: data.id,
+        },
       },
       include: {
         songs: true,
