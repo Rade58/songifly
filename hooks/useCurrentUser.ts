@@ -21,6 +21,8 @@ const useCurrentUser = () => {
     isLoading: !data && !error,
     error,
     user: data,
+    // MADE SOME MISTAKES (I DID THIS TO FIX THINGS QUICKLY
+    // JECK API ROUTE OR FETCHER BECAUSE DATA COMES AS user.user)
     // @ts-ignore
     userData: data ? data.user : {},
   };
