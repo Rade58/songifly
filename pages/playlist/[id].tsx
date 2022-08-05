@@ -41,7 +41,8 @@ export const getServerSideProps: GetServerSideProps<
     // FETCH PLAYLIST
     const playlist = await prisma.playlist.findFirst({
       where: {
-        id: parseInt(params.id),
+        // id: parseInt(params.id),
+        id: +params.id,
         user: {
           // @ts-ignore
           id: data.id,
