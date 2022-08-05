@@ -20,7 +20,7 @@ const Artists: FC<Props> = ({ artists }) => {
         {artists.map(({ name }) => (
           <div
             key={name}
-            className="h-64 bg-base-300 card flex flex-col justify-evenly items-center relative border-0 border-rose-200"
+            className="shadow-xs shadow-black h-64 bg-base-300 card flex flex-col justify-evenly items-center relative border-0 border-rose-200"
           >
             <div className="avatar w-44">
               <div
@@ -35,8 +35,8 @@ const Artists: FC<Props> = ({ artists }) => {
                 />
               </div>
             </div>
-            <h2>{name}</h2>
-            <p>artist</p>
+            <h2 className="font-bold text-sm mr-auto ml-4">{name}</h2>
+            <p className="font-bolder text-xs mr-auto ml-4">Artist</p>
           </div>
         ))}
       </div>

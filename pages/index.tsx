@@ -89,9 +89,10 @@ const IndexPage: NextPageWithLayout<PropsI> = ({
   artists,
 }) => {
   return (
-    <GradientContainer defaultGradient>
+    <GradientContainer variant={2} customGradient>
       <ColorContainer
-        defaultColor
+        variant={2}
+        customColor
         mode="profile"
         title={name}
         someData={`${playlistNumber} Public Playlist${
