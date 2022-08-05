@@ -11,6 +11,8 @@ import type { NextPageWithLayout } from "@/pages/_app";
 import GradientContainer from "@/components/common/GradientContainer";
 import ColorContainer from "@/components/common/ColorContainer";
 
+import { verifyUser } from "@/lib/auth/util";
+
 interface PropsI {
   playlist: Playlist & {
     songs: Song[];
@@ -26,6 +28,19 @@ export const getServerSideProps: GetServerSideProps<
   PropsI,
   paramsType
 > = async (ctx) => {
+  const user = await verifyUser(ctx.req);
+
+  if (!user) {
+    await fetch("/api/logout");
+
+    return {
+      redirect: {
+        statusCode: 302,
+        destination: "/auth",
+      },
+    };
+  }
+
   const { params } = ctx;
 
   if (params) {
