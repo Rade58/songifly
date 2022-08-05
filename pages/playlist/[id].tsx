@@ -52,11 +52,11 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  return {
+  /* return {
     props: {
       playlist: undefined,
     },
-  };
+  }; */
 };
 
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
