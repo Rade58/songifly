@@ -50,7 +50,16 @@ export const getServerSideProps: GetServerSideProps<
         },
       },
       include: {
-        songs: true,
+        songs: {
+          include: {
+            artist: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
 
