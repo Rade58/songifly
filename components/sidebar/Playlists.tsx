@@ -20,7 +20,15 @@ const Playlists: FC<Props> = () => {
         {playlists.map(({ name, id }, i) => {
           return (
             <li key={name + i} className="ml-5 mr-4 my-3 text-sm">
-              <Link href={`/playlist/${id}`}>
+              {/* <Link href={`/playlist/${id}`}> */}
+              <Link
+                href={{
+                  pathname: "/playlist/[id]",
+                  query: {
+                    id: id,
+                  },
+                }}
+              >
                 <a
                   className="link no-underline opacity-70 hover:opacity-100 cursor-default"
                   // target={"_blank"}

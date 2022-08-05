@@ -3,7 +3,7 @@
 import type { ReactElement } from "react";
 import type { GetServerSideProps, NextPage as NP } from "next";
 
-import type { Playlist } from "@prisma/client";
+import type { Playlist, Song } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
 import type { NextPageWithLayout } from "@/pages/_app";
@@ -12,7 +12,9 @@ import GradientContainer from "@/components/common/GradientContainer";
 import ColorContainer from "@/components/common/ColorContainer";
 
 interface PropsI {
-  playlist: Playlist;
+  playlist: Playlist & {
+    songs: Song[];
+  };
 }
 
 type paramsType = {
@@ -31,6 +33,9 @@ export const getServerSideProps: GetServerSideProps<
     const playlist = await prisma.playlist.findUnique({
       where: {
         id: parseInt(params.id),
+      },
+      include: {
+        songs: true,
       },
     });
 
