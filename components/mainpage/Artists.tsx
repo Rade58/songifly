@@ -20,12 +20,11 @@ const Artists: FC<Props> = ({ artists }) => {
         {artists.map(({ name }) => (
           <div
             key={name}
-            className="bg-base-300 rounded relative w-56 border border-rose-200"
+            className="h-64 bg-base-300 card flex flex-col justify-evenly items-center relative border-0 border-rose-200"
           >
-            Hello world
             <div className="avatar w-44">
               <div
-                className={`w-44 overflow-hidden border-0 border-rose-400 rounded-full relative`}
+                className={`w-36 mx-auto overflow-hidden border-0 border-rose-400 rounded-full relative`}
               >
                 {/* <img src="https://placeimg.com/192/192/people" /> */}
                 <Image
