@@ -1,4 +1,6 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
+/* eslint jsx-a11y/no-noninteractive-tabindex: 1 */
+/* eslint jsx-a11y/label-has-associated-control: 1 */
 import React from "react";
 import type { FC, ReactNode } from "react";
 
@@ -21,13 +23,13 @@ const Logout: FC<Props> = () => {
           />
         </div>
         <div className="dropdown dropdown-end">
-          <label tabindex="0" className="btn btn-ghost btn-circle avatar">
+          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="https://placeimg.com/80/80/people" />
+              <img src="https://placeimg.com/80/80/people" alt="logout-menu" />
             </div>
           </label>
           <ul
-            tabindex="0"
+            tabIndex={0}
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
