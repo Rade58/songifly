@@ -22,7 +22,7 @@ const useCurrentUser = () => {
     error,
     user: data,
     // @ts-ignore
-    userData: data.user,
+    userData: data ? data.user : {},
   };
 };
 

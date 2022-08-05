@@ -3,7 +3,7 @@
 /* eslint jsx-a11y/label-has-associated-control: 1 */
 import React, { useState, useCallback } from "react";
 import type { FC, ReactNode } from "react";
-
+import Router from "next/router";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 interface Props {
@@ -20,7 +20,9 @@ const Logout: FC<Props> = () => {
 
     setDisabled(true);
 
-    fetch("/api/logout");
+    fetch("/api/logout").then(() => {
+      Router.push("/auth");
+    });
   }, [disabled, setDisabled]);
 
   return (
