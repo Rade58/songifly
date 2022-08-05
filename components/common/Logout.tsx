@@ -1,7 +1,7 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 /* eslint jsx-a11y/no-noninteractive-tabindex: 1 */
 /* eslint jsx-a11y/label-has-associated-control: 1 */
-import React from "react";
+import React, { useState, useCallback } from "react";
 import type { FC, ReactNode } from "react";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -13,7 +13,15 @@ interface Props {
 const Logout: FC<Props> = () => {
   const { userData, isLoading } = useCurrentUser();
 
-  console.log({ userData });
+  const [disabled, setDisabled] = useState(false);
+
+  const handleLogout = useCallback(() => {
+    if (disabled) return;
+
+    setDisabled(true);
+
+    fetch("/api/logout");
+  }, [disabled, setDisabled]);
 
   return (
     <div className="absolute top-4 right-9 dropdown dropdown-end">
@@ -42,7 +50,7 @@ const Logout: FC<Props> = () => {
           <a>Settings</a>
         </li> */}
         <li>
-          <a>Logout</a>
+          <button onClick={handleLogout}>Logout</button>
         </li>
       </ul>
     </div>
