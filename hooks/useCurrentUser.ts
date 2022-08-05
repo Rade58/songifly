@@ -21,6 +21,8 @@ const useCurrentUser = () => {
     isLoading: !data && !error,
     error,
     user: data,
+    // @ts-ignore
+    userData: data.user,
   };
 };
 

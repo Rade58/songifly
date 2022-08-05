@@ -6,6 +6,8 @@ import Image from "next/image";
 
 import useThemeSwitcher from "@/hooks/useThemeSwitcher";
 
+import Logout from "@/components/common/Logout";
+
 interface Props {
   children?: ReactNode;
   // title: string;
@@ -77,8 +79,9 @@ const ColorContainer: FC<PropsOne | PropsTwo> = ({
 
   return (
     <section
-      className={`overflow-hidden flex pt-12 pb-5 pl-9 shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
+      className={`relative overflow-hidden flex pt-12 pb-5 pl-9 shadow-xs shadow-base-300 border-rose-400 w-full ${currentBg}`.trim()}
     >
+      <Logout />
       <div className="avatar w-56">
         <div
           className={`w-56 overflow-hidden border-0 border-rose-400 ${
