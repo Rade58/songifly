@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <ThemeProvider
         enableSystem={false}
         attribute="data-theme"
-        defaultTheme={themes[0]}
+        defaultTheme={themes[1]}
         enableColorScheme={false}
       >
         {/* HERE AS YOU CAN SE I DID CONDITIONAL RENDERING */}
