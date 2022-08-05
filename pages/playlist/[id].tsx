@@ -108,7 +108,9 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
         title={name}
         someData="Soft Jazz For All of your activities"
       ></ColorContainer>
-      <div>Hello Playlist</div>
+      <div>
+        <pre>{JSON.stringify({ playlist }, null, 2)}</pre>
+      </div>
     </GradientContainer>
   );
 };
