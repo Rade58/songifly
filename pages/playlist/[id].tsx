@@ -45,6 +45,8 @@ export const getServerSideProps: GetServerSideProps<
         user: {
           // @ts-ignore
           id: data.id,
+          // @ts-ignore
+          email: data.email,
         },
       },
       include: {
