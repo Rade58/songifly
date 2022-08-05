@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import Router from "next/router";
 import type { GetServerSideProps } from "next";
 import jwt from "jsonwebtoken";
-import type { User } from "@prisma/client";
+import type { User, Artist } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
 
@@ -16,6 +16,8 @@ import type { NextPageWithLayout } from "@/pages/_app";
 
 import GradientContainer from "@/components/common/GradientContainer";
 import ColorContainer from "@/components/common/ColorContainer";
+import Artists from "@/components/mainpage/Artists";
+
 // REMOVE THIS ONE IF YOU USED THIS ONE YOU MADE INSIDE __app
 /* export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
   getLayout?: (page: RE) => ReactNode;
@@ -27,6 +29,9 @@ interface PropsI {
       playlists: number;
     };
   };
+  artists: {
+    name: string;
+  }[];
 }
 
 // @ts-ignore
@@ -55,6 +60,12 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
     },
   });
 
+  const artists = await prisma.artist.findMany({
+    select: {
+      name: true,
+    },
+  });
+
   if (user) {
     return {
       props: {
@@ -64,6 +75,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
           createdAt: user.createdAt.toISOString(),
           updatedAt: user.updatedAt.toISOString(),
         },
+        artists,
       },
     };
   }
@@ -74,6 +86,7 @@ const IndexPage: NextPageWithLayout<PropsI> = ({
     _count: { playlists: playlistNumber },
     name,
   },
+  artists,
 }) => {
   return (
     <GradientContainer defaultGradient>
@@ -85,7 +98,7 @@ const IndexPage: NextPageWithLayout<PropsI> = ({
           playlistNumber > 1 ? "s" : ""
         }`}
       ></ColorContainer>
-      <div>Index Page</div>
+      <Artists artists={artists} />
     </GradientContainer>
   );
 };
