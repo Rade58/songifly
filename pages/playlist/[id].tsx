@@ -3,7 +3,7 @@
 import type { ReactElement } from "react";
 import type { GetServerSideProps, NextPage as NP } from "next";
 
-import type { Playlist, Song } from "@prisma/client";
+import type { Playlist, Song, User } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
 import type { NextPageWithLayout } from "@/pages/_app";
@@ -28,17 +28,11 @@ export const getServerSideProps: GetServerSideProps<
   PropsI,
   paramsType
 > = async (ctx) => {
-  const user = await verifyUser(ctx.req);
+  const data = await verifyUser(ctx.req, ctx.res);
 
-  if (!user) {
-    await fetch("/api/logout");
-
-    return {
-      redirect: {
-        statusCode: 302,
-        destination: "/auth",
-      },
-    };
+  // @ts-ignore
+  if (!data.email) {
+    return data;
   }
 
   const { params } = ctx;
@@ -60,6 +54,11 @@ export const getServerSideProps: GetServerSideProps<
           ...playlist,
           createdAt: playlist?.createdAt.toISOString(),
           updatedAt: playlist?.updatedAt.toISOString(),
+          songs: playlist?.songs.map((song) => ({
+            ...song,
+            updatedAt: song.updatedAt.toISOString(),
+            createdAt: song.createdAt.toISOString(),
+          })),
         },
       },
     };
@@ -80,7 +79,7 @@ export const getServerSideProps: GetServerSideProps<
 };
 
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
-  const { colorVariant, name } = playlist;
+  const { colorVariant, name, songs } = playlist;
 
   // console.log(colorVariant);
 

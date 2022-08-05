@@ -1,6 +1,6 @@
-import type { IncomingMessage } from "http";
+import type { IncomingMessage, ServerResponse } from "http";
 import jwt from "jsonwebtoken";
-
+import cookie from "cookie";
 // import type { User } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
@@ -12,12 +12,18 @@ export const verifyUser = async (
     cookies: Partial<{
       [key: string]: string;
     }>;
-  }
+  },
+  res: ServerResponse
 ) => {
   const token = req.cookies[SONGIFY_ACCESS_TOKEN];
 
   if (!token) {
-    return null;
+    return {
+      redirect: {
+        statusCode: 302,
+        destination: "/auth",
+      },
+    };
   }
 
   const payload = jwt.verify(
@@ -32,6 +38,28 @@ export const verifyUser = async (
       email: typeof payload !== "string" ? payload.email : "none",
     },
   });
+
+  if (!user) {
+    const serializedCookie = cookie.serialize(SONGIFY_ACCESS_TOKEN, "", {
+      httpOnly: true,
+      // I SETTED THIS
+      maxAge: 0,
+      sameSite: "lax",
+      secure:
+        process.env.NODE_ENV !== "development" &&
+        process.env.NODE_ENV !== "test",
+      path: "/",
+    });
+
+    res.setHeader("Set-Cookie", serializedCookie);
+
+    return {
+      redirect: {
+        statusCode: 302,
+        destination: "/auth",
+      },
+    };
+  }
 
   return user;
 };
