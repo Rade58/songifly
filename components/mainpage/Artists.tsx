@@ -13,7 +13,7 @@ interface Props {
 
 const Artists: FC<Props> = ({ artists }) => {
   return (
-    <section className="mb-11 mx-4 overflow-hidden pt-8">
+    <section className="mb-11 mx-8 overflow-hidden pt-8">
       <h2 className="font-bold text-xl">Top Artists This Mounth</h2>
       <p className="font-normal text-sm mt-8">Only visible to you</p>
       <div className="mt-16 flex flex-wrap gap-4 items-between justify-evenly border-0 border-rose-500">
