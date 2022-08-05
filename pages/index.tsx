@@ -98,6 +98,7 @@ const IndexPage: NextPageWithLayout<PropsI> = ({
           playlistNumber > 1 ? "s" : ""
         }`}
       ></ColorContainer>
+
       <Artists artists={artists} />
     </GradientContainer>
   );

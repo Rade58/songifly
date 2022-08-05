@@ -67,7 +67,7 @@ const GradientContainer: FC<PropsOne | PropsTwo> = ({
   return (
     <>
       <section
-        className={`grad-cont relative block border-0 border-rose-400 h-screen ${currentGradient}`.trim()}
+        className={`overflow-y-auto grad-cont relative block border-0 border-rose-400 h-screen ${currentGradient}`.trim()}
       >
         {children}
       </section>
