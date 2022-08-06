@@ -14,7 +14,7 @@ const PlayerBar: FC<Props> = () => {
     <section className="flex border border-rose-600 h-full w-full justify-evenly items-center">
       <div className="flex mr-auto">Song</div>
       <div className="player flex">Player</div>
-      <div className="place-holder ml-auto">Placeholder</div>
+      <div className="volume ml-auto">volume</div>
     </section>
   );
 };
