@@ -36,7 +36,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
           <thead className="border-b border-base-300">
             <tr>
               <th>
-                #
+                <span className="ml-4">#</span>
                 {/* <label>
                 <input type="checkbox" className="checkbox" />
               </label> */}
@@ -59,7 +59,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
                   {/* <label>
                     <input type="checkbox" className="checkbox" />
                   </label> */}
-                  <span className="num-of-song">{i + 1}</span>
+                  <span className="num-of-song ml-4">{i + 1}</span>
                   <span className="play-icon hidden">
                     <button className="btn btn-ghost btn-xs">
                       <IoIosPlay size={19} />
