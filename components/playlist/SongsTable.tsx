@@ -67,7 +67,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
                     </div>
                     <div>
                       <div className="font-bold">{name}</div>
-                      <div className="text-sm opacity-50">{artist}</div>
+                      <div className="text-sm opacity-80">{artist}</div>
                     </div>
                   </div>
                 </td>
