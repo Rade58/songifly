@@ -23,7 +23,14 @@ interface Props {
 const SongsTable: FC<Props> = ({ songs }) => {
   return (
     <>
-      <div className="overflow-x-auto mx-12 mt-16">
+      <div className="relative">
+        <span className="absolute -top-16 -mt-3 left-9">
+          <button className="my-large-btn btn btn-circle btn-lg btn-success">
+            <IoIosPlay size={32} />
+          </button>
+        </span>
+      </div>
+      <div className="overflow-x-auto mx-12 mt-24">
         <table className="songs-table table-compact w-full">
           {/* <!-- head --> */}
           <thead className="border-b border-base-300">
