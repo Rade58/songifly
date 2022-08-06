@@ -22,8 +22,8 @@ const CurrentSong: FC<Props> = () => {
         </div>
       </div>
       <div>
-        <div>Song Name</div>
-        <div>Artist Name</div>
+        <div className="text-sm">Song Name</div>
+        <div className="current-artist opacity-60 mt-1">Artist Name</div>
       </div>
     </>
   );
