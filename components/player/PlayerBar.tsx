@@ -4,6 +4,7 @@ import type { FC, ReactNode } from "react";
 import useThemeSwitcher from "@/hooks/useThemeSwitcher";
 
 import CurrentSong from "./CurrentSong";
+import Player from "./Player";
 
 interface Props {
   children?: ReactNode;
@@ -18,7 +19,7 @@ const PlayerBar: FC<Props> = () => {
         <CurrentSong />
       </div>
       <div className="player border border-teal-500 flex flex-col w-1/3">
-        Player
+        <Player />
       </div>
       <div className="volume ml-auto border border-teal-500 w-1/6">Volume</div>
     </section>

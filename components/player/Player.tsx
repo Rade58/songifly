@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Player: FC<Props> = () => {
-  return <div>Player</div>;
+  return <>Player</>;
 };
 
 export default Player;
