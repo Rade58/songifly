@@ -53,7 +53,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
           </thead>
           <tbody>
             {/* <!-- row 1 --> */}
-            {songs.map(({ name, artist: { name: artist } }, i) => (
+            {songs.map(({ name, artist: { name: artist }, duration }, i) => (
               <tr key={name} className="song-row">
                 <td className="border-0 border-rose-200 w-14">
                   {/* <label>
@@ -99,7 +99,10 @@ const SongsTable: FC<Props> = ({ songs }) => {
                 </td>
 
                 <td className="font-normal text-opacity-40">
-                  <span className="opacity-60">3:66</span>
+                  {/* <span className="opacity-60">3:66</span> */}
+                  <span className="opacity-60">
+                    {(duration / 100).toString().replace(".", ":")}
+                  </span>
                 </td>
               </tr>
             ))}
