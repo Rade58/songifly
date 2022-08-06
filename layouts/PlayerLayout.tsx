@@ -4,6 +4,8 @@ import type { FC, ReactNode } from "react";
 
 import Sidebar from "@/components/sidebar/Sidebar";
 
+import PlayerBar from "@/components/player/PlayerBar";
+
 interface Props {
   children?: ReactNode;
 }
@@ -18,7 +20,7 @@ const PlayerLayout: FC<Props> = ({ children }) => {
 
         <section className="cont">{children}</section>
         <footer className="border-0 border-teal-600 absolute w-screen h-24 bottom-0 left-0 bg-base-300 shadow-xl shadow-black border-t-base-100 border-t-2">
-          Player
+          <PlayerBar />
         </footer>
       </main>
       <style jsx>
