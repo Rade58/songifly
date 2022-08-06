@@ -56,7 +56,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
-                      <div className="mask mask-square w-8 h-8">
+                      <div className="mask mask-square w-9 h-9">
                         <Image
                           priority
                           layout="fill"
@@ -67,20 +67,26 @@ const SongsTable: FC<Props> = ({ songs }) => {
                     </div>
                     <div>
                       <div className="font-bold">{name}</div>
-                      <div className="text-sm opacity-80">{artist}</div>
+                      <div className="text-sm text-opacity-10 opacity-70">
+                        {artist}
+                      </div>
                     </div>
                   </div>
                 </td>
-                <td>
-                  Tool lookalike
+                <td className="font-normal text-opacity-40">
+                  <span className="opacity-60">Tool lookalike</span>
+
                   {/* <br /> */}
                   {/* <span className="badge badge-ghost badge-sm">
                     Desktop Support 
                   </span> */}
                 </td>
-                <td>9 hours ago</td>
-                <td>
-                  <button className="btn btn-ghost btn-xs">3:66</button>
+                <td className="font-normal text-opacity-40">
+                  <span className="opacity-60">9 hours ago</span>
+                </td>
+
+                <td className="font-normal text-opacity-40">
+                  <span className="opacity-60">3:66</span>
                 </td>
               </tr>
             ))}
