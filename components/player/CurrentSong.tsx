@@ -2,6 +2,8 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
+import Image from "next/image";
+
 interface Props {
   children?: ReactNode;
 }
@@ -9,7 +11,16 @@ interface Props {
 const CurrentSong: FC<Props> = () => {
   return (
     <>
-      <div>Image</div>
+      <div className="avatar ml-4 mr-4">
+        <div className="mask mask-square w-14 h-14">
+          <Image
+            priority
+            layout="fill"
+            src="https://placeimg.com/192/192/people"
+            alt="song"
+          />
+        </div>
+      </div>
       <div>
         <div>Song Name</div>
         <div>Artist Name</div>

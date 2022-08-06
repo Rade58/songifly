@@ -14,7 +14,7 @@ const PlayerBar: FC<Props> = () => {
 
   return (
     <section className="flex border border-rose-600 h-full w-full justify-evenly items-center">
-      <div className="current-song flex mr-auto border border-teal-500">
+      <div className="current-song flex items-center mr-auto border border-teal-500">
         <CurrentSong />
       </div>
       <div className="player border border-teal-500 flex flex-col">Player</div>
