@@ -6,6 +6,8 @@ import Image from "next/image";
 
 import { IoIosPlay } from "react-icons/io";
 
+import { AiOutlineClockCircle } from "react-icons/ai";
+
 import type { Song } from "@prisma/client";
 
 interface Props {
@@ -35,7 +37,11 @@ const SongsTable: FC<Props> = ({ songs }) => {
               <th>title</th>
               <th>album</th>
               <th>date added</th>
-              <th>time icon</th>
+              <th>
+                <span>
+                  <AiOutlineClockCircle size={19} />
+                </span>
+              </th>
             </tr>
           </thead>
           <tbody>
