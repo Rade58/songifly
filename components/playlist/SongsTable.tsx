@@ -19,10 +19,10 @@ interface Props {
 const SongsTable: FC<Props> = ({ songs }) => {
   return (
     <>
-      <div className="overflow-x-auto w-full">
+      <div className="overflow-x-auto mx-12 mt-16">
         <table className="songs-table table-compact w-full">
           {/* <!-- head --> */}
-          <thead>
+          <thead className="border-b border-base-300">
             <tr>
               <th>
                 #
@@ -40,7 +40,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
             {/* <!-- row 1 --> */}
             {songs.map(({ name, artist: { name: artist } }, i) => (
               <tr key={name} className="song-row">
-                <td className="border border-rose-200 w-14">
+                <td className="border-0 border-rose-200 w-14">
                   {/* <label>
                     <input type="checkbox" className="checkbox" />
                   </label> */}
@@ -50,12 +50,12 @@ const SongsTable: FC<Props> = ({ songs }) => {
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
-                      <div className="mask mask-square w-12 h-12">
+                      <div className="mask mask-square w-8 h-8">
                         <Image
                           priority
                           layout="fill"
                           src="https://placeimg.com/192/192/people"
-                          alt="avatar"
+                          alt="song"
                         />
                       </div>
                     </div>
@@ -74,26 +74,24 @@ const SongsTable: FC<Props> = ({ songs }) => {
                 </td>
                 <td>9 hours ago</td>
                 <td>
-                  <button className="btn btn-ghost btn-xs">details</button>
+                  <button className="btn btn-ghost btn-xs">3:66</button>
                 </td>
               </tr>
             ))}
           </tbody>
           {/* <!-- foot --> */}
-          <tfoot>
+          {/* <tfoot>
             <tr>
               <th>
                 #
-                {/* <label>
-                <input type="checkbox" className="checkbox" />
-              </label> */}
+               
               </th>
               <th>title</th>
               <th>album</th>
               <th>date added</th>
               <th>time icon</th>
             </tr>
-          </tfoot>
+          </tfoot> */}
         </table>
       </div>
       <style jsx>{/* css */ ``}</style>
