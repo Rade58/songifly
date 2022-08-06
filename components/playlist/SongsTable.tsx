@@ -20,7 +20,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
   return (
     <>
       <div className="overflow-x-auto w-full">
-        <table className="table-compact w-full">
+        <table className="songs-table table-compact w-full">
           {/* <!-- head --> */}
           <thead>
             <tr>

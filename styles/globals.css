@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 
-
+.songs-table th {
+  @apply text-left !important;
+}
 
 .song-row {
   @apply bg-transparent;
