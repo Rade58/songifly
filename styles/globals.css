@@ -4,7 +4,7 @@
 
 
 .songs-table th {
-  @apply text-left !important;
+  @apply text-left;
 }
 
 .song-row {
