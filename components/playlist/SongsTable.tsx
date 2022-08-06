@@ -12,6 +12,8 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 
 import type { Song } from "@prisma/client";
 
+import { formatTime, formatDate } from "@/util/formatters";
+
 interface Props {
   children?: ReactNode;
   songs: (Song & {
@@ -98,16 +100,20 @@ const SongsTable: FC<Props> = ({ songs }) => {
                   </span> */}
                   </td>
                   <td className="font-normal text-opacity-40">
-                    <span className="opacity-60">
+                    {/* <span className="opacity-60">
                       {moment(new Date(updatedAt)).startOf("day").fromNow()}
+                    </span> */}
+                    <span className="opacity-60">
+                      {formatDate(new Date(updatedAt))}
                     </span>
                   </td>
 
                   <td className="font-normal text-opacity-40">
                     {/* <span className="opacity-60">3:66</span> */}
-                    <span className="opacity-60">
+                    {/* <span className="opacity-60">
                       {(duration / 100).toString().replace(".", ":")}
-                    </span>
+                    </span> */}
+                    <span className="opacity-60">{formatTime(duration)}</span>
                   </td>
                 </tr>
               )
