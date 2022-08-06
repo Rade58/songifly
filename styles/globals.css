@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+.song-row:hover > * {
+  @apply bg-base-300;
+}
+
+.song-row:hover span.num-of-song {
+  @apply hidden;
+
+}
+
+.song-row:hover span.play-icon {
+
+  @apply inline;
+}
+
+
 /* html,
 body {
   padding: 0;

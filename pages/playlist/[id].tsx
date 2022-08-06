@@ -11,11 +11,18 @@ import type { NextPageWithLayout } from "@/pages/_app";
 import GradientContainer from "@/components/common/GradientContainer";
 import ColorContainer from "@/components/common/ColorContainer";
 
+import SongsTable from "@/components/playlist/SongsTable";
+
 import { verifyUser } from "@/lib/auth/util";
 
 interface PropsI {
   playlist: Playlist & {
-    songs: Song[];
+    songs: (Song & {
+      artist: {
+        name: string;
+        id: number;
+      };
+    })[];
   };
 }
 
@@ -109,7 +116,8 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
         someData={`${songs.length} songs`}
       ></ColorContainer>
       <div>
-        <pre>{JSON.stringify({ playlist }, null, 2)}</pre>
+        {/* <pre>{JSON.stringify({ playlist }, null, 2)}</pre> */}
+        <SongsTable songs={songs} />
       </div>
     </GradientContainer>
   );
