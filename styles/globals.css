@@ -29,7 +29,7 @@
 
 .song-row:hover span.play-icon {
 
-  @apply inline;
+  @apply block;
 }
 
 

@@ -4,6 +4,8 @@ import type { FC, ReactNode } from "react";
 
 import Image from "next/image";
 
+import { IoIosPlay } from "react-icons/io";
+
 import type { Song } from "@prisma/client";
 
 interface Props {
@@ -45,7 +47,11 @@ const SongsTable: FC<Props> = ({ songs }) => {
                     <input type="checkbox" className="checkbox" />
                   </label> */}
                   <span className="num-of-song">{i + 1}</span>
-                  <span className="play-icon hidden">play icon</span>
+                  <span className="play-icon hidden">
+                    <button className="btn btn-ghost btn-xs">
+                      <IoIosPlay size={19} />
+                    </button>
+                  </span>
                 </td>
                 <td>
                   <div className="flex items-center space-x-3">
