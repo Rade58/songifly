@@ -2,6 +2,8 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
+import Image from "next/image";
+
 import type { Song } from "@prisma/client";
 
 interface Props {
@@ -18,7 +20,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
   return (
     <>
       <div className="overflow-x-auto w-full">
-        <table className="table w-full">
+        <table className="table-compact w-full">
           {/* <!-- head --> */}
           <thead>
             <tr>
@@ -28,61 +30,68 @@ const SongsTable: FC<Props> = ({ songs }) => {
                 <input type="checkbox" className="checkbox" />
               </label> */}
               </th>
-              <th>Title</th>
-              <th>Title</th>
-              <th>Favorite Color</th>
-              <th></th>
+              <th>title</th>
+              <th>album</th>
+              <th>date added</th>
+              <th>time icon</th>
             </tr>
           </thead>
           <tbody>
             {/* <!-- row 1 --> */}
-            {songs.map(({ name }, i) => (
+            {songs.map(({ name, artist: { name: artist } }, i) => (
               <tr key={name} className="song-row">
-                <th>
+                <td className="border border-rose-200 w-14">
                   {/* <label>
                     <input type="checkbox" className="checkbox" />
                   </label> */}
                   <span className="num-of-song">{i + 1}</span>
                   <span className="play-icon hidden">play icon</span>
-                </th>
+                </td>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img
-                          src="/tailwind-css-component-profile-2@56w.png"
-                          alt="Avatar Tailwind CSS Component"
+                      <div className="mask mask-square w-12 h-12">
+                        <Image
+                          priority
+                          layout="fill"
+                          src="https://placeimg.com/192/192/people"
+                          alt="avatar"
                         />
                       </div>
                     </div>
                     <div>
-                      <div className="font-bold">Hart Hagerty</div>
-                      <div className="text-sm opacity-50">United States</div>
+                      <div className="font-bold">{name}</div>
+                      <div className="text-sm opacity-50">{artist}</div>
                     </div>
                   </div>
                 </td>
                 <td>
-                  Zemlak, Daniel and Leannon
-                  <br />
-                  <span className="badge badge-ghost badge-sm">
-                    Desktop Support Technician
-                  </span>
+                  Tool lookalike
+                  {/* <br /> */}
+                  {/* <span className="badge badge-ghost badge-sm">
+                    Desktop Support 
+                  </span> */}
                 </td>
-                <td>Purple</td>
-                <th>
+                <td>9 hours ago</td>
+                <td>
                   <button className="btn btn-ghost btn-xs">details</button>
-                </th>
+                </td>
               </tr>
             ))}
           </tbody>
           {/* <!-- foot --> */}
           <tfoot>
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-              <th></th>
+              <th>
+                #
+                {/* <label>
+                <input type="checkbox" className="checkbox" />
+              </label> */}
+              </th>
+              <th>title</th>
+              <th>album</th>
+              <th>date added</th>
+              <th>time icon</th>
             </tr>
           </tfoot>
         </table>

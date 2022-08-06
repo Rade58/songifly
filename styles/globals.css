@@ -4,8 +4,18 @@
 
 
 
+
+.song-row {
+  @apply bg-transparent;
+}
+
+.song-row > * {
+  @apply bg-transparent;
+}
+
 .song-row:hover > * {
   @apply bg-base-300;
+  user-select: none;
 }
 
 .song-row:hover span.num-of-song {
