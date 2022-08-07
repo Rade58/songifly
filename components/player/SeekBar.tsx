@@ -9,13 +9,14 @@ interface Props {
 }
 
 const SeekBar: FC<Props> = () => {
-  const [seekVal, setSeekVal] = useState(50);
-  // const [seekPressed, setseekPresed] = useState(false);
-  const [seekValueForHowler, setSeekValueForHowler] = useState(50);
+  // INTENDED JUST FOR THE COMPONENT
+  const [seekVal, setSeekVal] = useState<number>(0);
+
+  // INTENDED FOR THE HOWLER (ONLY TIME IT IS GOING TO CHANGE
+  // IS ON mouseup EVENT OF TH RANGE INPUT)
+  const [seekValueForHowler, setSeekValueForHowler] = useState(0);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log("seek called");
-
     setSeekVal(+e.target.value);
   };
 
