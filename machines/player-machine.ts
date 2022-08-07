@@ -39,7 +39,7 @@ const key = "player_machine_actor";
  */
 export const fs = {
   // OF THE AUTH PAGE
-  non_idle: "non_idle",
+  no_active_song: "no_song",
   idle: "idle",
 } as const;
 
@@ -48,8 +48,8 @@ export const fs = {
  * @description EVENTS
  */
 export const EV = {
-  GIVE_ACTIVE_SONGS: "GIVE_ACTIVE_SONGS",
-  GIVE_SINGLE_ACTIVE_SONG: "GIVE_SINGLE_ACTIVE_SONG",
+  GIVE_SONGS: "GIVE_SONGS",
+  GIVE_ACTIVE_SONG: "GIVE_ACTIVE_SONG",
   GIVE_VOLUME: "GIVE_VOLUME",
   MUTE: "MUTE",
   TOGGLE_PLAY: "TOGGLE_PLAY",
@@ -60,11 +60,11 @@ export const EV = {
  */
 const ac = {
   resetContext: "resetContext",
-  removeActiveSongs: "removeActiveSongs",
-  removeSingleActiveSong: "removeSingleActiveSong",
+  removeSongs: "removeSongs",
+  removeActiveSong: "removeActiveSong",
   //
-  setSingleActiveSong: "setSingleActiveSong",
-  setActiveSongs: "setActiveSongs",
+  setActiveSong: "setActiveSong",
+  setSongs: "setSongs",
   setVolume: "setVolume",
   setVolumeToZero: "setVolumeToZero",
   checkIfMuted: "checkIfMuted",
@@ -79,9 +79,9 @@ export interface MachineContextGenericI {
   // THIS IS GOING TO BE CURRENT PLAYLIS I THINK (I DON'T KNOW HOW WOULD THIS WORK
   // MAYBE IF A USER VISITS PLAYLIST PAGE, LIST OF ACTIVE SONGS SHOULD
   // BE LOADED INTO THIS CONTEXT PROPERTY)
-  activeSongs: SongType[];
+  songs: SongType[];
   // SONG THAT WE ARE CURRENTLY USING WITH OUR PLAYER
-  activeSingleSong: SongType | null;
+  activeSong: SongType | null;
   //
   volume: number;
   mute: boolean;
@@ -90,13 +90,13 @@ export interface MachineContextGenericI {
 
 export type machineEventsGenericType =
   | {
-      type: typeof EV.GIVE_ACTIVE_SONGS;
+      type: typeof EV.GIVE_SONGS;
       payload: {
         songs: SongType[];
       };
     }
   | {
-      type: typeof EV.GIVE_SINGLE_ACTIVE_SONG;
+      type: typeof EV.GIVE_ACTIVE_SONG;
       payload: {
         song: SongType;
       };
@@ -120,7 +120,7 @@ export type machineFiniteStatesGenericType =
       context: MachineContextGenericI;
     }
   | {
-      value: typeof fs.non_idle;
+      value: typeof fs.no_active_song;
       context: MachineContextGenericI;
     };
 
@@ -136,8 +136,8 @@ const authPageMachine = createMachine<
     key,
     initial: fs.idle,
     context: {
-      activeSongs: [],
-      activeSingleSong: null,
+      songs: [],
+      activeSong: null,
       volume: 50,
       mute: false,
       isPlaying: false,
@@ -156,11 +156,11 @@ const authPageMachine = createMachine<
     states: {
       [fs.idle]: {
         on: {
-          [EV.GIVE_ACTIVE_SONGS]: {
-            actions: [ac.setActiveSongs],
+          [EV.GIVE_SONGS]: {
+            actions: [ac.setSongs],
           },
-          [EV.GIVE_SINGLE_ACTIVE_SONG]: {
-            actions: [ac.setSingleActiveSong],
+          [EV.GIVE_ACTIVE_SONG]: {
+            actions: [ac.setActiveSong],
           },
           [EV.GIVE_VOLUME]: {
             actions: [ac.setVolume, ac.checkIfMuted],
@@ -173,7 +173,7 @@ const authPageMachine = createMachine<
           },
         },
       },
-      [fs.non_idle]: {},
+      [fs.no_active_song]: {},
     },
   },
   {
@@ -187,29 +187,29 @@ const authPageMachine = createMachine<
           mute: false,
         };
       }),
-      [ac.removeActiveSongs]: assign((_, __) => {
+      [ac.removeSongs]: assign((_, __) => {
         return {
-          activeSongs: [],
+          songs: [],
         };
       }),
-      [ac.removeSingleActiveSong]: assign((_, __) => {
+      [ac.removeActiveSong]: assign((_, __) => {
         return {
-          activeSingleSong: null,
+          activeSong: null,
         };
       }),
-      [ac.setActiveSongs]: assign((_, ev) => {
-        if (ev.type === "GIVE_ACTIVE_SONGS") {
+      [ac.setSongs]: assign((_, ev) => {
+        if (ev.type === "GIVE_SONGS") {
           return {
-            activeSongs: ev.payload.songs,
+            songs: ev.payload.songs,
           };
         } else {
           return {};
         }
       }),
-      [ac.setSingleActiveSong]: assign((_, ev) => {
-        if (ev.type === "GIVE_SINGLE_ACTIVE_SONG") {
+      [ac.setActiveSong]: assign((_, ev) => {
+        if (ev.type === "GIVE_ACTIVE_SONG") {
           return {
-            activeSingleSong: ev.payload.song,
+            activeSong: ev.payload.song,
           };
         } else {
           return {};
@@ -259,10 +259,10 @@ const playerActor = interpret(authPageMachine);
 
 playerActor.onTransition((state, event) => {
   console.log("FROM on TRANSITION");
-  console.log({ authMachineCurrentState: state.value });
+  console.log({ playerMachineCurrentState: state.value });
 
-  console.log({ activeSongs: state.context.activeSongs });
-  console.log({ activeSingleSong: state.context.activeSingleSong });
+  console.log({ loadedSongs: state.context.songs });
+  console.log({ activeSingleSong: state.context.activeSong });
 });
 
 export default playerActor;
