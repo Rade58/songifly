@@ -50,6 +50,8 @@ export const fs = {
 export const EV = {
   GIVE_ACTIVE_SONGS: "GIVE_ACTIVE_SONGS",
   GIVE_SINGLE_ACTIVE_SONG: "GIVE_SINGLE_ACTIVE_SONG",
+  GIVE_VOLUME: "GIVE_VOLUME",
+  MUTE: "MUTE",
 } as const;
 
 /**
@@ -62,6 +64,8 @@ const ac = {
   //
   setSingleActiveSong: "setSingleActiveSong",
   setActiveSongs: "setActiveSongs",
+  setVolume: "setVolume",
+  setVolumeToZero: "setVolumeToZero",
 } as const;
 
 // --------------------------------------------------
@@ -75,6 +79,8 @@ export interface MachineContextGenericI {
   activeSongs: SongType[];
   // SONG THAT WE ARE CURRENTLY USING WITH OUR PLAYER
   activeSingleSong: SongType | null;
+  //
+  volume: number;
 }
 
 export type machineEventsGenericType =
@@ -89,6 +95,15 @@ export type machineEventsGenericType =
       payload: {
         song: SongType;
       };
+    }
+  | {
+      type: typeof EV.GIVE_VOLUME;
+      payload: {
+        volume: number;
+      };
+    }
+  | {
+      type: typeof EV.MUTE;
     };
 
 export type machineFiniteStatesGenericType =
@@ -115,6 +130,7 @@ const authPageMachine = createMachine<
     context: {
       activeSongs: [],
       activeSingleSong: null,
+      volume: 50,
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
@@ -136,6 +152,12 @@ const authPageMachine = createMachine<
           [EV.GIVE_SINGLE_ACTIVE_SONG]: {
             actions: [ac.setSingleActiveSong],
           },
+          [EV.GIVE_VOLUME]: {
+            actions: [ac.setVolume],
+          },
+          [EV.MUTE]: {
+            actions: [ac.setVolumeToZero],
+          },
         },
       },
       [fs.non_idle]: {},
@@ -147,6 +169,7 @@ const authPageMachine = createMachine<
         return {
           activeSingleSong: null,
           activeSongs: [],
+          volume: 50,
         };
       }),
       [ac.removeActiveSongs]: assign((_, __) => {
@@ -172,6 +195,24 @@ const authPageMachine = createMachine<
         if (ev.type === "GIVE_SINGLE_ACTIVE_SONG") {
           return {
             activeSingleSong: ev.payload.song,
+          };
+        } else {
+          return {};
+        }
+      }),
+      [ac.setVolume]: assign((_, ev) => {
+        if (ev.type === "GIVE_VOLUME") {
+          return {
+            volume: ev.payload.volume,
+          };
+        } else {
+          return {};
+        }
+      }),
+      [ac.setVolumeToZero]: assign((_, ev) => {
+        if (ev.type === "MUTE") {
+          return {
+            volume: 0,
           };
         } else {
           return {};
