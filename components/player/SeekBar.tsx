@@ -9,8 +9,15 @@ interface Props {
 }
 
 const SeekBar: FC<Props> = () => {
-  // INTENDED JUST FOR THE COMPONENT
+  // HOWLER VALUE (TODO) (THIS IS JUST TEMPORARRY)
+  const howlerValue = 20;
+  //
+
+  // INTENDED JUST FOR THE RANGE
   const [seekVal, setSeekVal] = useState<number>(0);
+
+  // TO DETERMINE IF WE ARE GOING TO LOAD HOWLER VALUE OR NOT
+  const [useHowlerSeekValue, setUseHowlerSeekValue] = useState(true);
 
   // INTENDED FOR THE HOWLER (ONLY TIME IT IS GOING TO CHANGE
   // IS ON mouseup EVENT OF TH RANGE INPUT)
@@ -20,13 +27,18 @@ const SeekBar: FC<Props> = () => {
     setSeekVal(+e.target.value);
   };
 
-  const handleMouseUp = () => {
-    setSeekValueForHowler(seekVal);
+  const handleMouseDown = () => {
+    setUseHowlerSeekValue(false);
   };
 
-  /* const handleMouseDown = () => {
-    setseekPresed(true);
-  }; */
+  const handleMouseUp = () => {
+    setSeekValueForHowler(seekVal);
+    setUseHowlerSeekValue(true);
+  };
+
+  // BUT ALSO A HOWLER SHOULD CHANGE THE PROGRESS AND A RANGE
+  // BUT WE NEED TO STOP FEEDING THAT STATE TO OUR RANGE AND PROGRE
+  // WHEN WE CLICK ON THE RANGE
 
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
@@ -35,18 +47,19 @@ const SeekBar: FC<Props> = () => {
         <div className="hidden input-range-cont">
           <input
             onMouseUp={handleMouseUp}
+            onMouseDown={handleMouseDown}
             onChange={handleChange}
             type="range"
             min={0}
             max={100}
-            value={seekVal}
+            value={!useHowlerSeekValue ? seekVal : howlerValue}
             className="range range-xs range-secondary"
           />
         </div>
         <div className="progress-cont flex">
           <progress
             className="progress progress-secondary progress-xs w-full"
-            value={seekValueForHowler}
+            value={!useHowlerSeekValue ? seekVal : howlerValue}
             max="100"
           ></progress>
         </div>
