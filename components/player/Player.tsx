@@ -14,9 +14,9 @@ const Player: FC<Props> = () => {
         <button className="btn btn-xs">Button</button>
         <button className="btn btn-xs">Button</button>
       </div>
-      <div className="relative flex w-full border border-rose-600 justify-between items-center">
+      <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
         <div>1:24</div>
-        <div className="player-progress-cont flex flex-col border border-rose-600 w-10/12">
+        <div className="player-progress-cont flex flex-col border-0 border-rose-600 w-10/12">
           <div className="hidden input-range-cont">
             <input
               type="range"

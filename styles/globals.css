@@ -51,7 +51,7 @@
 }
 
 .progress-cont progress {
-  @apply h-1.5;
+  @apply h-1;
 
 }
 
