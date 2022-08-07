@@ -2,9 +2,10 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 import { IoIosPlay } from "react-icons/io";
-
 import { BiShuffle, BiSkipNext, BiSkipPrevious } from "react-icons/bi";
 import { TbRepeat } from "react-icons/tb";
+
+import ReactHowler from "react-howler";
 
 interface Props {
   children?: ReactNode;
