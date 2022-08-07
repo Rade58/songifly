@@ -19,13 +19,19 @@ const Player: FC<Props> = () => {
           <BiShuffle size={16} />
         </button>
         <button className="btn btn-ghost btn-sm btn-circle">
-          <BiSkipPrevious size={34} />
+          <div className="-mt-0.5">
+            <BiSkipPrevious size={34} />
+          </div>
         </button>
         <button className="play-btn btn btn-circle btn-sm scale-110">
-          <IoIosPlay size={22} />
+          <div className="ml-0.5">
+            <IoIosPlay size={22} />
+          </div>
         </button>
         <button className="btn btn-ghost btn-sm btn-circle">
-          <BiSkipNext size={34} />
+          <div className="-mt-0.5">
+            <BiSkipNext size={34} />
+          </div>
         </button>
         <button className="btn btn-ghost btn-sm btn-circle">
           <TbRepeat size={16} />
