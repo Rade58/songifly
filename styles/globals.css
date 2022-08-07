@@ -71,6 +71,10 @@
 
 }
 
+.my-large-btn {
+  transform: scale(0.9);
+}
+
 
 /* html,
 body {

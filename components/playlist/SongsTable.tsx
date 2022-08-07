@@ -30,7 +30,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
       <div className="relative">
         <span className="absolute -top-16 -mt-3 left-12">
           <button className="my-large-btn btn btn-circle btn-lg btn-success">
-            <IoIosPlay size={32} />
+            <IoIosPlay size={42} />
           </button>
         </span>
       </div>
