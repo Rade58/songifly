@@ -20,7 +20,7 @@ const Player: FC<Props> = () => {
         <button className="btn btn-ghost btn-sm btn-circle">
           <BiSkipPrevious size={34} />
         </button>
-        <button className="play-btn btn btn-circle btn-sm">
+        <button className="play-btn btn btn-circle btn-sm scale-110">
           <IoIosPlay size={22} />
         </button>
         <button className="btn btn-ghost btn-sm btn-circle">
