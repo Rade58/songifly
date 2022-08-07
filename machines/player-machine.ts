@@ -52,6 +52,7 @@ export const EV = {
   GIVE_SINGLE_ACTIVE_SONG: "GIVE_SINGLE_ACTIVE_SONG",
   GIVE_VOLUME: "GIVE_VOLUME",
   MUTE: "MUTE",
+  TOGGLE_PLAY: "TOGGLE_PLAY",
 } as const;
 
 /**
@@ -67,6 +68,7 @@ const ac = {
   setVolume: "setVolume",
   setVolumeToZero: "setVolumeToZero",
   checkIfMuted: "checkIfMuted",
+  setPlayingStatus: "setPlayingStatus",
 } as const;
 
 // --------------------------------------------------
@@ -83,6 +85,7 @@ export interface MachineContextGenericI {
   //
   volume: number;
   mute: boolean;
+  isPlaying: boolean;
 }
 
 export type machineEventsGenericType =
@@ -106,6 +109,9 @@ export type machineEventsGenericType =
     }
   | {
       type: typeof EV.MUTE;
+    }
+  | {
+      type: typeof EV.TOGGLE_PLAY;
     };
 
 export type machineFiniteStatesGenericType =
@@ -134,6 +140,7 @@ const authPageMachine = createMachine<
       activeSingleSong: null,
       volume: 50,
       mute: false,
+      isPlaying: false,
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
@@ -161,6 +168,9 @@ const authPageMachine = createMachine<
           [EV.MUTE]: {
             actions: [ac.setVolumeToZero, ac.checkIfMuted],
           },
+          [EV.TOGGLE_PLAY]: {
+            actions: [ac.setPlayingStatus],
+          },
         },
       },
       [fs.non_idle]: {},
@@ -173,6 +183,8 @@ const authPageMachine = createMachine<
           activeSingleSong: null,
           activeSongs: [],
           volume: 50,
+          isPlaying: false,
+          mute: false,
         };
       }),
       [ac.removeActiveSongs]: assign((_, __) => {
@@ -230,6 +242,13 @@ const authPageMachine = createMachine<
           return {
             mute: true,
           };
+        }
+      }),
+      [ac.setPlayingStatus]: assign((ctx, ev) => {
+        if (ev.type === "TOGGLE_PLAY") {
+          return !ctx.isPlaying;
+        } else {
+          return {};
         }
       }),
     },
