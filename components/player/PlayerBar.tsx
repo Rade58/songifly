@@ -1,7 +1,7 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import React from "react";
 import type { FC, ReactNode } from "react";
-import useThemeSwitcher from "@/hooks/useThemeSwitcher";
+// import useThemeSwitcher from "@/hooks/useThemeSwitcher";
 
 import CurrentSong from "./CurrentSong";
 import Player from "./Player";
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const PlayerBar: FC<Props> = () => {
-  const { theme } = useThemeSwitcher();
+  // const { theme } = useThemeSwitcher();
 
   return (
     <section className="flex border-0 border-rose-600 h-full w-full justify-evenly items-center">
