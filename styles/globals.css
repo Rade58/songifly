@@ -43,6 +43,19 @@
 }
 
 
+.player-progress-cont:hover .input-range-cont{
+  @apply flex;
+}
+.player-progress-cont:hover .progress-cont{
+  @apply hidden;
+}
+
+.progress-cont progress {
+  @apply h-1.5;
+
+}
+
+
 
 /* html,
 body {

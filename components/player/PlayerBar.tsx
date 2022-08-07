@@ -15,13 +15,13 @@ const PlayerBar: FC<Props> = () => {
 
   return (
     <section className="flex border-0 border-rose-600 h-full w-full justify-evenly items-center">
-      <div className="current-song flex items-center mr-auto border-0 border-teal-500 w-1/6">
+      <div className="current-song flex items-center mr-auto border-0 border-teal-500 w-2/12">
         <CurrentSong />
       </div>
-      <div className="player border border-teal-500 flex flex-col w-1/3">
+      <div className="player border border-teal-500 flex flex-col w-5/12">
         <Player />
       </div>
-      <div className="volume ml-auto border border-teal-500 w-1/6">Volume</div>
+      <div className="volume ml-auto border border-teal-500 w-2/12">Volume</div>
     </section>
   );
 };
