@@ -8,6 +8,9 @@ import themes from "../theme/daisy-themes";
 //
 import PlayerLayout from "@/layouts/PlayerLayout";
 
+import useInterpreterStart from "@/hooks/xstate/useInterpreterStart";
+import playerActor from "@/machines/player-machine";
+
 export type NextPageWithLayout<P = any, IP = any> = NP<P, IP> & {
   getLayout?: (page: RE) => ReactNode;
   // I ADDED THE TYPE HERE BECAUSE IF YOU DON'T DO THIS
@@ -21,6 +24,8 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
+
+  useInterpreterStart(playerActor);
 
   return (
     <>
