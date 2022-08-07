@@ -9,18 +9,24 @@ interface Props {
 }
 
 const SeekBar: FC<Props> = () => {
-  // HOWLER VALUE (TODO) (THIS IS JUST TEMPORARRY)
-  const howlerValue = 20;
-  //
+  // -- HOWLER VALUE (TODO) (THIS IS JUST TEMPORARRY)]
+  // -- TODO- WE ARE GOING TO BRING THIS HERE FROM THE MACHINE
+  const howlerSeekValue = 20;
+  // ------------------------------------------------
+  // ------------------------------------------------
 
-  // INTENDED JUST FOR THE RANGE
+  // FOT CONTROLED RANGE INPUT
   const [seekVal, setSeekVal] = useState<number>(0);
 
-  // TO DETERMINE IF WE ARE GOING TO LOAD HOWLER VALUE OR NOT
+  // TO DETERMINE IF WE ARE GOING TO
+  // FEED INPUT WITH HOWLER SEEK VALUUE OR LOCAL STATE VALUE
   const [useHowlerSeekValue, setUseHowlerSeekValue] = useState(true);
 
   // INTENDED FOR THE HOWLER (ONLY TIME IT IS GOING TO CHANGE
-  // IS ON mouseup EVENT OF TH RANGE INPUT)
+  // IS ON mouseup EVENT OF TH RANGE INPUT (WE DON'T WANT
+  // TO CHANGE HOWLER VALUE onchange BECAUSE YOU WOULD
+  // HAVE TOO MUCH ANOYING RERENDERING AS YOU SLIDE
+  // RANGE ELEMENT))
   const [seekValueForHowler, setSeekValueForHowler] = useState(0);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,14 +58,18 @@ const SeekBar: FC<Props> = () => {
             type="range"
             min={0}
             max={100}
-            value={!useHowlerSeekValue ? seekVal : howlerValue}
+            //
+            value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
+            //
             className="range range-xs range-secondary"
           />
         </div>
         <div className="progress-cont flex">
           <progress
             className="progress progress-secondary progress-xs w-full"
-            value={!useHowlerSeekValue ? seekVal : howlerValue}
+            //
+            value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
+            //
             max="100"
           ></progress>
         </div>
