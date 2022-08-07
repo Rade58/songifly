@@ -42,6 +42,11 @@
   font-size: 0.7em;
 }
 
+.player-progress-cont:hover input {
+  @apply cursor-default;
+}
+
+
 
 .player-progress-cont:hover .input-range-cont{
   @apply flex;
@@ -59,6 +64,13 @@
 
   /* @apply h-1; */
 }
+
+.music-controls:hover button:not(.play-btn) {
+
+  @apply cursor-default;
+
+}
+
 
 /* html,
 body {

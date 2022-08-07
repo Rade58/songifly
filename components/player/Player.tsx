@@ -1,6 +1,10 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import React from "react";
 import type { FC, ReactNode } from "react";
+import { IoIosPlay } from "react-icons/io";
+
+import { BiShuffle, BiSkipNext, BiSkipPrevious } from "react-icons/bi";
+import { TbRepeat } from "react-icons/tb";
 
 interface Props {
   children?: ReactNode;
@@ -9,14 +13,26 @@ interface Props {
 const Player: FC<Props> = () => {
   return (
     <>
-      <div className="btn-group mx-auto mb-2">
-        <button className="btn btn-active btn-xs">Button</button>
-        <button className="btn btn-xs">Button</button>
-        <button className="btn btn-xs">Button</button>
+      <div className="music-controls flex mx-auto mb-2 border-0 border-rose-200 w-56 justify-between items-center">
+        <button className="btn btn-ghost btn-sm btn-circle">
+          <BiShuffle size={16} />
+        </button>
+        <button className="btn btn-ghost btn-sm btn-circle">
+          <BiSkipPrevious size={34} />
+        </button>
+        <button className="play-btn btn btn-circle btn-sm">
+          <IoIosPlay size={22} />
+        </button>
+        <button className="btn btn-ghost btn-sm btn-circle">
+          <BiSkipNext size={34} />
+        </button>
+        <button className="btn btn-ghost btn-sm btn-circle">
+          <TbRepeat size={16} />
+        </button>
       </div>
       <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
-        <div>1:24</div>
-        <div className="player-progress-cont flex h-6 justify-center flex-col border border-rose-600 w-10/12">
+        <div className="text-sm font-light opacity-75">1:24</div>
+        <div className="player-progress-cont flex h-6 justify-center flex-col border-0 border-rose-600 w-10/12">
           <div className="hidden input-range-cont">
             <input
               type="range"
@@ -34,7 +50,7 @@ const Player: FC<Props> = () => {
             ></progress>
           </div>
         </div>
-        <div>2:24</div>
+        <div className="text-sm font-light opacity-75">2:24</div>
       </div>
     </>
   );
