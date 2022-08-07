@@ -1,6 +1,8 @@
 import { createMachine, assign, interpret } from "xstate";
 import router from "next/router";
 
+import type { Song } from "@prisma/client";
+
 // I CASE OF NESTED STATES TARGET REFERENCING CAN BE A LITTLE BIT
 // COMPLICATED THEREFORE I AM GOING TO DEFINE A HELPER
 /**
@@ -60,8 +62,12 @@ const ac = {
 // TO BE USED AS GENERIC TYPES INSIDE STATE MACHINE DEFINISTION
 
 export interface MachineContextGenericI {
-  networkError?: string;
-  isLoading: boolean;
+  // THIS IS GOING TO BE CURRENT PLAYLIS I THINK (I DON'T KNOW HOW WOULD THIS WORK
+  // MAYBE IF A USER VISITS PLAYLIST PAGE, LIST OF ACTIVE SONGS SHOULD
+  // BE LOADED INTO THIS CONTEXT PROPERTY)
+  activeSongs: Song[];
+  // SONG THAT WE ARE CURRENTLY USING WITH OUR PLAYER
+  activeSong?: Song;
 }
 
 export type machineEventsGenericType =
@@ -73,10 +79,7 @@ export type machineEventsGenericType =
 export type machineFiniteStatesGenericType =
   | {
       value: typeof fs.idle;
-      context: MachineContextGenericI & {
-        disableForms: true;
-        networkError: undefined;
-      };
+      context: MachineContextGenericI;
     }
   | {
       value: typeof fs.non_idle;
@@ -95,8 +98,7 @@ const authPageMachine = createMachine<
     key,
     initial: fs.idle,
     context: {
-      networkError: "",
-      isLoading: false,
+      activeSongs: [],
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
@@ -118,23 +120,22 @@ const authPageMachine = createMachine<
     actions: {
       [ac.resetContext]: assign((_, __) => {
         return {
-          data: undefined,
-          disableForms: false,
-          networkError: undefined,
-          isLoading: false,
+          activeSong: undefined,
+          activeSongs: [],
         };
       }),
     },
   }
 );
 
-const authPageActor = interpret(authPageMachine);
+const playerActor = interpret(authPageMachine);
 
-authPageActor.onTransition((state, event) => {
+playerActor.onTransition((state, event) => {
   console.log("FROM on TRANSITION");
   console.log({ authMachineCurrentState: state.value });
 
-  console.log({ networkError: state.context.networkError });
+  console.log({ activeSongs: state.context.activeSongs });
+  console.log({ activeSong: state.context.activeSong });
 });
 
-export default authPageActor;
+export default playerActor;
