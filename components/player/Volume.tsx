@@ -19,7 +19,7 @@ const Volume: FC<Props> = () => {
         min="0"
         max="100"
         // value="50"
-        className="range range-secondary range-xs"
+        className="range range-secondary range-xs cursor-default"
       />
     </div>
   );

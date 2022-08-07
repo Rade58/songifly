@@ -6,7 +6,7 @@ import moment from "moment";
 
 import Image from "next/image";
 
-import { IoIosPlay } from "react-icons/io";
+import { IoIosPlay, IoIosPause } from "react-icons/io";
 
 import { AiOutlineClockCircle } from "react-icons/ai";
 
@@ -30,8 +30,11 @@ const SongsTable: FC<Props> = ({ songs }) => {
       <div className="relative">
         <span className="absolute -top-16 -mt-3 left-12">
           <button className="my-large-btn btn btn-circle btn-lg btn-success">
-            <div className="ml-1">
+            {/* <div className="ml-1">
               <IoIosPlay size={42} />
+            </div> */}
+            <div className="">
+              <IoIosPause size={42} />
             </div>
           </button>
         </span>

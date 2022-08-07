@@ -2,7 +2,7 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
-import { IoIosPlay } from "react-icons/io";
+import { IoIosPlay, IoIosPause } from "react-icons/io";
 import { BiShuffle, BiSkipNext, BiSkipPrevious } from "react-icons/bi";
 import { TbRepeat } from "react-icons/tb";
 
@@ -24,8 +24,11 @@ const Controls: FC<Props> = () => {
         </div>
       </button>
       <button className="play-btn btn btn-circle btn-sm scale-110">
-        <div className="ml-0.5">
+        {/* <div className="ml-0.5">
           <IoIosPlay size={22} />
+        </div> */}
+        <div className="">
+          <IoIosPause size={22} />
         </div>
       </button>
       <button className="btn btn-ghost btn-sm btn-circle">
