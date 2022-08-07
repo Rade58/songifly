@@ -66,6 +66,7 @@ const ac = {
   setActiveSongs: "setActiveSongs",
   setVolume: "setVolume",
   setVolumeToZero: "setVolumeToZero",
+  checkIfMuted: "checkIfMuted",
 } as const;
 
 // --------------------------------------------------
@@ -81,6 +82,7 @@ export interface MachineContextGenericI {
   activeSingleSong: SongType | null;
   //
   volume: number;
+  mute: boolean;
 }
 
 export type machineEventsGenericType =
@@ -131,6 +133,7 @@ const authPageMachine = createMachine<
       activeSongs: [],
       activeSingleSong: null,
       volume: 50,
+      mute: false,
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
@@ -153,10 +156,10 @@ const authPageMachine = createMachine<
             actions: [ac.setSingleActiveSong],
           },
           [EV.GIVE_VOLUME]: {
-            actions: [ac.setVolume],
+            actions: [ac.setVolume, ac.checkIfMuted],
           },
           [EV.MUTE]: {
-            actions: [ac.setVolumeToZero],
+            actions: [ac.setVolumeToZero, ac.checkIfMuted],
           },
         },
       },
@@ -216,6 +219,17 @@ const authPageMachine = createMachine<
           };
         } else {
           return {};
+        }
+      }),
+      [ac.checkIfMuted]: assign((ctx, _) => {
+        if (ctx.volume === 0) {
+          return {
+            mute: true,
+          };
+        } else {
+          return {
+            mute: true,
+          };
         }
       }),
     },
