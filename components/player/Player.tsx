@@ -16,19 +16,19 @@ const Player: FC<Props> = () => {
       </div>
       <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
         <div>1:24</div>
-        <div className="player-progress-cont flex flex-col border-0 border-rose-600 w-10/12">
+        <div className="player-progress-cont flex h-6 justify-center flex-col border border-rose-600 w-10/12">
           <div className="hidden input-range-cont">
             <input
               type="range"
               min={0}
               max={100}
               // value={40}
-              className="range range-xs"
+              className="range range-xs range-secondary"
             />
           </div>
           <div className="progress-cont flex">
             <progress
-              className="progress progress-xs w-full"
+              className="progress progress-secondary progress-xs w-full"
               value="70"
               max="100"
             ></progress>

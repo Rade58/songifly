@@ -55,7 +55,10 @@
 
 }
 
+.input-range-cont input[type=range] {
 
+  /* @apply h-1; */
+}
 
 /* html,
 body {
