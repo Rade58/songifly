@@ -55,6 +55,11 @@ export const EV = {
   TOGGLE_PLAY: "TOGGLE_PLAY",
   GIVE_VOLUME: "GIVE_VOLUME",
   MUTE: "MUTE",
+  //
+  GIVE_SEEK_VAL: "GIVE_SEEK_VAL",
+  //
+  SKIP_LEFT: "SKIP_LEFT",
+  SKIP_RIGHT: "SKIP_RIGHT",
 } as const;
 
 /**
@@ -74,6 +79,8 @@ const ac = {
   //
   playSong: "playSong",
   pauseSong: "pauseSong",
+  //
+  setSeekVal: "setSeekVal",
 } as const;
 
 // --------------------------------------------------
@@ -86,11 +93,14 @@ export interface MachineContextGenericI {
   // BE LOADED INTO THIS CONTEXT PROPERTY)
   songs: SongType[];
   // SONG THAT WE ARE CURRENTLY USING WITH OUR PLAYER
-  activeSong: SongType | null;
+  // INDEX OF THE CTIVE SONG FROM THE sangs ARRAY SHOULD BE INCLUDED
+  // BECAUSE OF SKIP LEFT AND SKIP RIGHT BUTTONS
+  activeSong: { data: SongType; songIndex: number } | null;
   //
   volume: number;
   mute: boolean;
   isPlaying: boolean;
+  seekValue: number;
 }
 
 export type machineEventsGenericType =
@@ -103,7 +113,7 @@ export type machineEventsGenericType =
   | {
       type: typeof EV.GIVE_ACTIVE_SONG;
       payload: {
-        song: SongType;
+        song: { data: SongType; songIndex: number };
       };
     }
   | {
@@ -117,6 +127,18 @@ export type machineEventsGenericType =
     }
   | {
       type: typeof EV.TOGGLE_PLAY;
+    }
+  | {
+      type: typeof EV.PAUSE;
+    }
+  | {
+      type: typeof EV.PLAY;
+    }
+  | {
+      type: typeof EV.GIVE_SEEK_VAL;
+      payload: {
+        seekValue: number;
+      };
     };
 
 export type machineFiniteStatesGenericType =
@@ -146,6 +168,7 @@ const authPageMachine = createMachine<
       volume: 50,
       mute: false,
       isPlaying: false,
+      seekValue: 0,
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
@@ -186,6 +209,9 @@ const authPageMachine = createMachine<
         on: {
           [EV.TOGGLE_PLAY]: {
             actions: [ac.togglePlayingStatus],
+          },
+          [EV.GIVE_SEEK_VAL]: {
+            actions: [ac.setSeekVal],
           },
         },
       },
@@ -268,6 +294,15 @@ const authPageMachine = createMachine<
       }),
       [ac.playSong]: assign((_, __) => ({ isPlaying: true })),
       [ac.pauseSong]: assign((_, __) => ({ isPlaying: false })),
+      [ac.setSeekVal]: assign((_, ev) => {
+        if (ev.type === "GIVE_SEEK_VAL") {
+          return {
+            seekValue: ev.payload.seekValue,
+          };
+        }
+
+        return {};
+      }),
     },
   }
 );
