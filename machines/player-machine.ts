@@ -3,6 +3,8 @@ import router from "next/router";
 
 import type { Song } from "@prisma/client";
 
+type SongType = Song;
+
 // I CASE OF NESTED STATES TARGET REFERENCING CAN BE A LITTLE BIT
 // COMPLICATED THEREFORE I AM GOING TO DEFINE A HELPER
 /**
@@ -46,8 +48,8 @@ export const fs = {
  * @description EVENTS
  */
 export const EV = {
-  PAGE_VISIT: "PAGE_VISIT",
-  AUTH_MODE_TOGGLE: "AUTH_MODE_TOGGLE",
+  GIVE_ACTIVE_SONGS: "GIVE_ACTIVE_SONGS",
+  GIVE_SINGLE_ACTIVE_SONG: "GIVE_SINGLE_ACTIVE_SONG",
 } as const;
 
 /**
@@ -55,6 +57,11 @@ export const EV = {
  */
 const ac = {
   resetContext: "resetContext",
+  removeActiveSongs: "removeActiveSongs",
+  removeSingleActiveSong: "removeSingleActiveSong",
+  //
+  setSingleActiveSong: "setSingleActiveSong",
+  setActiveSongs: "setActiveSongs",
 } as const;
 
 // --------------------------------------------------
@@ -65,16 +72,24 @@ export interface MachineContextGenericI {
   // THIS IS GOING TO BE CURRENT PLAYLIS I THINK (I DON'T KNOW HOW WOULD THIS WORK
   // MAYBE IF A USER VISITS PLAYLIST PAGE, LIST OF ACTIVE SONGS SHOULD
   // BE LOADED INTO THIS CONTEXT PROPERTY)
-  activeSongs: Song[];
+  activeSongs: SongType[];
   // SONG THAT WE ARE CURRENTLY USING WITH OUR PLAYER
-  activeSong: Song | null;
+  activeSingleSong: SongType | null;
 }
 
 export type machineEventsGenericType =
   | {
-      type: typeof EV.PAGE_VISIT;
+      type: typeof EV.GIVE_ACTIVE_SONGS;
+      payload: {
+        songs: SongType[];
+      };
     }
-  | { type: typeof EV.AUTH_MODE_TOGGLE };
+  | {
+      type: typeof EV.GIVE_SINGLE_ACTIVE_SONG;
+      payload: {
+        song: SongType;
+      };
+    };
 
 export type machineFiniteStatesGenericType =
   | {
@@ -99,7 +114,7 @@ const authPageMachine = createMachine<
     initial: fs.idle,
     context: {
       activeSongs: [],
-      activeSong: null,
+      activeSingleSong: null,
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
@@ -113,7 +128,16 @@ const authPageMachine = createMachine<
     // },
     // -------------------------------------------------------------------
     states: {
-      [fs.idle]: {},
+      [fs.idle]: {
+        on: {
+          [EV.GIVE_ACTIVE_SONGS]: {
+            actions: [ac.setActiveSongs],
+          },
+          [EV.GIVE_SINGLE_ACTIVE_SONG]: {
+            actions: [ac.setSingleActiveSong],
+          },
+        },
+      },
       [fs.non_idle]: {},
     },
   },
@@ -121,9 +145,37 @@ const authPageMachine = createMachine<
     actions: {
       [ac.resetContext]: assign((_, __) => {
         return {
-          activeSong: null,
+          activeSingleSong: null,
           activeSongs: [],
         };
+      }),
+      [ac.removeActiveSongs]: assign((_, __) => {
+        return {
+          activeSongs: [],
+        };
+      }),
+      [ac.removeSingleActiveSong]: assign((_, __) => {
+        return {
+          activeSingleSong: null,
+        };
+      }),
+      [ac.setActiveSongs]: assign((_, ev) => {
+        if (ev.type === "GIVE_ACTIVE_SONGS") {
+          return {
+            activeSongs: ev.payload.songs,
+          };
+        } else {
+          return {};
+        }
+      }),
+      [ac.setSingleActiveSong]: assign((_, ev) => {
+        if (ev.type === "GIVE_SINGLE_ACTIVE_SONG") {
+          return {
+            activeSingleSong: ev.payload.song,
+          };
+        } else {
+          return {};
+        }
       }),
     },
   }
@@ -136,7 +188,7 @@ playerActor.onTransition((state, event) => {
   console.log({ authMachineCurrentState: state.value });
 
   console.log({ activeSongs: state.context.activeSongs });
-  console.log({ activeSong: state.context.activeSong });
+  console.log({ activeSingleSong: state.context.activeSingleSong });
 });
 
 export default playerActor;
