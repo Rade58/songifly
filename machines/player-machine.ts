@@ -67,7 +67,7 @@ export interface MachineContextGenericI {
   // BE LOADED INTO THIS CONTEXT PROPERTY)
   activeSongs: Song[];
   // SONG THAT WE ARE CURRENTLY USING WITH OUR PLAYER
-  activeSong?: Song;
+  activeSong: Song | null;
 }
 
 export type machineEventsGenericType =
@@ -99,6 +99,7 @@ const authPageMachine = createMachine<
     initial: fs.idle,
     context: {
       activeSongs: [],
+      activeSong: null,
     },
     // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
     // YOU CAN DEFINE TRANSITION HERE TOO-----
@@ -120,7 +121,7 @@ const authPageMachine = createMachine<
     actions: {
       [ac.resetContext]: assign((_, __) => {
         return {
-          activeSong: undefined,
+          activeSong: null,
           activeSongs: [],
         };
       }),
