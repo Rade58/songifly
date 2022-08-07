@@ -50,9 +50,11 @@ export const fs = {
 export const EV = {
   GIVE_SONGS: "GIVE_SONGS",
   GIVE_ACTIVE_SONG: "GIVE_ACTIVE_SONG",
+  PLAY: "PLAY",
+  PAUSE: "PAUSE",
+  TOGGLE_PLAY: "TOGGLE_PLAY",
   GIVE_VOLUME: "GIVE_VOLUME",
   MUTE: "MUTE",
-  TOGGLE_PLAY: "TOGGLE_PLAY",
 } as const;
 
 /**
@@ -68,7 +70,10 @@ const ac = {
   setVolume: "setVolume",
   setVolumeToZero: "setVolumeToZero",
   checkIfMuted: "checkIfMuted",
-  setPlayingStatus: "setPlayingStatus",
+  togglePlayingStatus: "togglePlayingStatus",
+  //
+  playSong: "playSong",
+  pauseSong: "pauseSong",
 } as const;
 
 // --------------------------------------------------
@@ -134,7 +139,7 @@ const authPageMachine = createMachine<
   {
     id: machineId,
     key,
-    initial: fs.idle,
+    initial: fs.no_active_song,
     context: {
       songs: [],
       activeSong: null,
@@ -152,28 +157,38 @@ const authPageMachine = createMachine<
     // target: fs.off_auth,
     // },
     // },
+    on: {
+      [EV.GIVE_SONGS]: {
+        actions: [ac.setSongs],
+      },
+
+      [EV.GIVE_VOLUME]: {
+        actions: [ac.setVolume, ac.checkIfMuted],
+      },
+
+      [EV.MUTE]: {
+        actions: [ac.setVolumeToZero, ac.checkIfMuted],
+      },
+    },
+
     // -------------------------------------------------------------------
     states: {
-      [fs.idle]: {
+      [fs.no_active_song]: {
         on: {
-          [EV.GIVE_SONGS]: {
-            actions: [ac.setSongs],
-          },
           [EV.GIVE_ACTIVE_SONG]: {
-            actions: [ac.setActiveSong],
-          },
-          [EV.GIVE_VOLUME]: {
-            actions: [ac.setVolume, ac.checkIfMuted],
-          },
-          [EV.MUTE]: {
-            actions: [ac.setVolumeToZero, ac.checkIfMuted],
-          },
-          [EV.TOGGLE_PLAY]: {
-            actions: [ac.setPlayingStatus],
+            actions: [ac.setActiveSong, ac.playSong],
+            target: fs.idle,
           },
         },
       },
-      [fs.no_active_song]: {},
+
+      [fs.idle]: {
+        on: {
+          [EV.TOGGLE_PLAY]: {
+            actions: [ac.togglePlayingStatus],
+          },
+        },
+      },
     },
   },
   {
@@ -244,13 +259,15 @@ const authPageMachine = createMachine<
           };
         }
       }),
-      [ac.setPlayingStatus]: assign((ctx, ev) => {
+      [ac.togglePlayingStatus]: assign((ctx, ev) => {
         if (ev.type === "TOGGLE_PLAY") {
           return !ctx.isPlaying;
         } else {
           return {};
         }
       }),
+      [ac.playSong]: assign((_, __) => ({ isPlaying: true })),
+      [ac.pauseSong]: assign((_, __) => ({ isPlaying: false })),
     },
   }
 );
