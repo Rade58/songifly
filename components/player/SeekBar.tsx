@@ -1,5 +1,5 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useRef } from "react";
 import type { FC, ReactNode, ChangeEvent } from "react";
 
 import usePlayerActor from "@/hooks/xstate/actors/usePlayerActor";
@@ -11,6 +11,9 @@ interface Props {
 }
 
 const SeekBar: FC<Props> = () => {
+  // REFERENCE FOR THE TIMER ID
+  const timerId = useRef<NodeJS.Timer | undefined>();
+
   const [
     {
       context: {
@@ -75,6 +78,19 @@ const SeekBar: FC<Props> = () => {
             // player?.seek()
             // GETTING SEEK
             // player.seek
+
+            timerId.current = setInterval(() => {
+              if (player) {
+                console.log({ SEEK: player.seek() });
+
+                dispatch({
+                  type: "GIVE_SEEK_VAL",
+                  payload: {
+                    seekValue: player.seek() / 10 || 0,
+                  },
+                });
+              }
+            }, 1000);
 
             console.log({ player });
           }}
