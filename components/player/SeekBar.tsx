@@ -1,5 +1,5 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
-import React, { useState, createRef, useRef } from "react";
+import React, { useState, createRef, useRef, useEffect } from "react";
 import type { FC, ReactNode, ChangeEvent } from "react";
 import Howller from "react-howler";
 
@@ -14,6 +14,14 @@ interface Props {
 const SeekBar: FC<Props> = () => {
   // REFERENCE FOR THE TIMER ID
   const timerId = useRef<NodeJS.Timer | undefined>();
+
+  useEffect(() => {
+    return () => {
+      if (timerId.current !== undefined) {
+        clearInterval(timerId.current);
+      }
+    };
+  }, [timerId]);
 
   const [
     {
@@ -80,20 +88,24 @@ const SeekBar: FC<Props> = () => {
             // GETTING SEEK
             // player.seek
 
-            timerId.current = setInterval(() => {
-              if (player) {
-                console.log({ SEEK: player.seek() });
+            if (isPlaying) {
+              timerId.current = setInterval(() => {
+                if (player) {
+                  console.log({ SEEK: player.seek() });
 
-                dispatch({
-                  type: "GIVE_SEEK_VAL",
-                  payload: {
-                    seekValue: player.seek() || 0,
-                  },
-                });
+                  dispatch({
+                    type: "GIVE_SEEK_VAL",
+                    payload: {
+                      seekValue: player.seek() || 0,
+                    },
+                  });
+                }
+              }, 1000);
+            } else {
+              if (timerId.current !== undefined) {
+                clearInterval(timerId.current);
               }
-            }, 1000);
-
-            console.log({ player });
+            }
           }}
           playing={isPlaying}
           src={
