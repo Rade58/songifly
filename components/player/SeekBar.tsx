@@ -80,7 +80,7 @@ const SeekBar: FC<Props> = () => {
 
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
-      {activeSong && (
+      {activeSong && activeSong.data && activeSong.data.url && (
         <Howller
           ref={(player) => {
             // SETTING SEEK
@@ -88,7 +88,7 @@ const SeekBar: FC<Props> = () => {
             // GETTING SEEK
             // player.seek
 
-            if (isPlaying && timerId.current !== undefined) {
+            if (isPlaying && timerId.current === undefined) {
               timerId.current = setInterval(() => {
                 if (player) {
                   console.log({ SEEK: player.seek() });
@@ -111,7 +111,7 @@ const SeekBar: FC<Props> = () => {
           playing={isPlaying}
           src={
             // "https://dl.dropboxusercontent.com/s/7xmpwvvek6szx5n/fermi-paradox.mp3?dl=0"
-            activeSong.data.url
+            activeSong?.data.url || ""
           }
           /* onSeek={(howlerSeekValue) => {
             console.log({ howlerSeekValue });
@@ -125,37 +125,41 @@ const SeekBar: FC<Props> = () => {
           }} */
         />
       )}
-      <div className="text-sm font-light opacity-75">
-        {formatTime(howlerSeekValue)}
-      </div>
-      <div className="player-progress-cont flex h-6 justify-center flex-col border-0 border-rose-600 w-10/12">
-        <div className="hidden input-range-cont">
-          <input
-            onMouseUp={handleMouseUp}
-            onMouseDown={handleMouseDown}
-            onChange={handleChange}
-            type="range"
-            min={0}
-            max={activeSong?.data.duration}
-            //
-            value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
-            //
-            className="range range-xs range-secondary"
-          />
-        </div>
-        <div className="progress-cont flex">
-          <progress
-            className="progress progress-secondary progress-xs w-full"
-            //
-            value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
-            //
-            max={activeSong?.data.duration}
-          ></progress>
-        </div>
-      </div>
-      <div className="text-sm font-light opacity-75">
-        {formatTime(activeSong?.data.duration)}
-      </div>
+      {activeSong && (
+        <>
+          <div className="text-sm font-light opacity-75">
+            {formatTime(howlerSeekValue)}
+          </div>
+          <div className="player-progress-cont flex h-6 justify-center flex-col border-0 border-rose-600 w-10/12">
+            <div className="hidden input-range-cont">
+              <input
+                onMouseUp={handleMouseUp}
+                onMouseDown={handleMouseDown}
+                onChange={handleChange}
+                type="range"
+                min={0}
+                max={activeSong?.data.duration}
+                //
+                value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
+                //
+                className="range range-xs range-secondary"
+              />
+            </div>
+            <div className="progress-cont flex">
+              <progress
+                className="progress progress-secondary progress-xs w-full"
+                //
+                value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
+                //
+                max={activeSong?.data.duration}
+              ></progress>
+            </div>
+          </div>
+          <div className="text-sm font-light opacity-75">
+            {formatTime(activeSong?.data.duration)}
+          </div>
+        </>
+      )}
     </div>
   );
 };
