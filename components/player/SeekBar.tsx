@@ -116,7 +116,7 @@ const SeekBar: FC<Props> = () => {
                     },
                   });
                 }
-              }, 2000);
+              }, 1000);
             } else {
               if (timerIdRef.current !== undefined) {
                 clearInterval(timerIdRef.current);
