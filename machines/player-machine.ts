@@ -62,6 +62,9 @@ export const EV = {
   SKIP_RIGHT: "SKIP_RIGHT",
   //
   CHANGE_ACTIVE_SONG: "CHANGE_ACTIVE_SONG",
+  //
+  TOGGLE_SHUFFLE: "TOGGLE_SHUFFLE",
+  TOGGLE_REPEAT: "TOGGLE_REPEAT",
 } as const;
 
 /**
@@ -90,6 +93,9 @@ const ac = {
   setSeekToZero: "setSeekToZero",
   //
   resetCurrentIndex: "resetCurrentIndex",
+  //
+  switchShuffle: "switchShuffle",
+  switchRepeat: "switchRepeat",
 } as const;
 
 // --------------------------------------------------
@@ -110,6 +116,9 @@ export interface MachineContextGenericI {
   mute: boolean;
   isPlaying: boolean;
   seekValue: number;
+  //
+  shuffle: boolean;
+  repeat: boolean;
 }
 
 export type machineEventsGenericType =
@@ -154,6 +163,12 @@ export type machineEventsGenericType =
     }
   | {
       type: typeof EV.SKIP_RIGHT;
+    }
+  | {
+      type: typeof EV.TOGGLE_REPEAT;
+    }
+  | {
+      type: typeof EV.TOGGLE_SHUFFLE;
     };
 
 export type machineFiniteStatesGenericType =
@@ -184,6 +199,8 @@ const authPageMachine = createMachine<
       mute: false,
       isPlaying: false,
       seekValue: 0,
+      repeat: false,
+      shuffle: false,
     },
 
     on: {
@@ -386,6 +403,25 @@ const authPageMachine = createMachine<
       [ac.resetCurrentIndex]: assign((ctx, __) => {
         if (ctx.activeSong) {
           return { activeSong: { data: ctx.activeSong.data, songIndex: 0 } };
+        }
+
+        return {};
+      }),
+      [ac.switchRepeat]: assign((ctx, ev) => {
+        if (ev.type === "TOGGLE_REPEAT") {
+          return {
+            repeat: !ctx.repeat,
+          };
+        }
+
+        return {};
+      }),
+
+      [ac.switchShuffle]: assign((ctx, ev) => {
+        if (ev.type === "TOGGLE_SHUFFLE") {
+          return {
+            shuffle: !ctx.shuffle,
+          };
         }
 
         return {};
