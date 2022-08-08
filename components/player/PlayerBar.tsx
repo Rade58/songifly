@@ -7,6 +7,8 @@ import CurrentSong from "./CurrentSong";
 import Player from "./Player";
 import Volume from "./Volume";
 
+import Howler from "./Howler";
+
 interface Props {
   children?: ReactNode;
 }
@@ -16,6 +18,7 @@ const PlayerBar: FC<Props> = () => {
 
   return (
     <section className="flex border-0 border-rose-600 h-full w-full justify-evenly items-center">
+      <Howler />
       <div className="current-song flex items-center mr-auto border-0 border-teal-500 w-2/12">
         <CurrentSong />
       </div>
