@@ -17,6 +17,7 @@ const SeekBar: FC<Props> = () => {
         seekValue: howlerSeekValue,
 
         isPlaying,
+        activeSong,
       },
     },
     dispatch,
@@ -67,26 +68,29 @@ const SeekBar: FC<Props> = () => {
 
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
-      <Howller
-        ref={(player) => {
-          // SETTING SEEK
-          // player?.seek()
-          // GETTING SEEK
-          // player.seek
-        }}
-        playing={isPlaying}
-        src={
-          "https://dl.dropboxusercontent.com/s/7xmpwvvek6szx5n/fermi-paradox.mp3?dl=0"
-        }
-        onSeek={(seekValue) => {
-          dispatch({
-            type: "GIVE_SEEK_VAL",
-            payload: {
-              seekValue,
-            },
-          });
-        }}
-      />
+      {activeSong && (
+        <Howller
+          ref={(player) => {
+            // SETTING SEEK
+            // player?.seek()
+            // GETTING SEEK
+            // player.seek
+          }}
+          playing={isPlaying}
+          src={
+            // "https://dl.dropboxusercontent.com/s/7xmpwvvek6szx5n/fermi-paradox.mp3?dl=0"
+            activeSong.data.url
+          }
+          onSeek={(seekValue) => {
+            dispatch({
+              type: "GIVE_SEEK_VAL",
+              payload: {
+                seekValue,
+              },
+            });
+          }}
+        />
+      )}
       <div className="text-sm font-light opacity-75">1:24</div>
       <div className="player-progress-cont flex h-6 justify-center flex-col border-0 border-rose-600 w-10/12">
         <div className="hidden input-range-cont">
