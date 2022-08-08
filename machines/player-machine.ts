@@ -50,8 +50,8 @@ export const fs = {
 export const EV = {
   GIVE_SONGS: "GIVE_SONGS",
   GIVE_ACTIVE_SONG: "GIVE_ACTIVE_SONG",
-  PLAY: "PLAY",
-  PAUSE: "PAUSE",
+  // PLAY: "PLAY",
+  // PAUSE: "PAUSE",
   TOGGLE_PLAY: "TOGGLE_PLAY",
   GIVE_VOLUME: "GIVE_VOLUME",
   MUTE: "MUTE",
@@ -137,12 +137,12 @@ export type machineEventsGenericType =
   | {
       type: typeof EV.TOGGLE_PLAY;
     }
-  | {
+  /*  | {
       type: typeof EV.PAUSE;
     }
   | {
       type: typeof EV.PLAY;
-    }
+    } */
   | {
       type: typeof EV.GIVE_SEEK_VAL;
       payload: {
@@ -185,16 +185,7 @@ const authPageMachine = createMachine<
       isPlaying: false,
       seekValue: 0,
     },
-    // ---- EVENTS RECEVIED WHEN CURRENT FINITE STATE DOESN'T MATTER
-    // YOU CAN DEFINE TRANSITION HERE TOO-----
-    // on: {
-    // I THINK THIS EVENT I'M NOT GOING TO USE AT ALL
-    // THIS IS MY TRANSITION, NO MATTER IN WHICH STATE YOUR MACHINE IS
-    // THIS TRANSITION WILL HAPPEN ON THIS EVENT
-    // [EV.BACK_TO_OFF_PAGE]: {
-    // target: fs.off_auth,
-    // },
-    // },
+
     on: {
       [EV.GIVE_SONGS]: {
         actions: [ac.setSongs, ac.resetCurrentIndex],
