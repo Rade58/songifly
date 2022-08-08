@@ -1,10 +1,11 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import React, { useState, createRef, useRef } from "react";
 import type { FC, ReactNode, ChangeEvent } from "react";
+import Howller from "react-howler";
+
+import { formatTime } from "@/util/formatters";
 
 import usePlayerActor from "@/hooks/xstate/actors/usePlayerActor";
-
-import Howller from "react-howler";
 
 interface Props {
   children?: ReactNode;
@@ -99,7 +100,7 @@ const SeekBar: FC<Props> = () => {
             // "https://dl.dropboxusercontent.com/s/7xmpwvvek6szx5n/fermi-paradox.mp3?dl=0"
             activeSong.data.url
           }
-          onSeek={(howlerSeekValue) => {
+          /* onSeek={(howlerSeekValue) => {
             console.log({ howlerSeekValue });
 
             dispatch({
@@ -108,10 +109,12 @@ const SeekBar: FC<Props> = () => {
                 seekValue: howlerSeekValue,
               },
             });
-          }}
+          }} */
         />
       )}
-      <div className="text-sm font-light opacity-75">1:24</div>
+      <div className="text-sm font-light opacity-75">
+        {formatTime(howlerSeekValue)}
+      </div>
       <div className="player-progress-cont flex h-6 justify-center flex-col border-0 border-rose-600 w-10/12">
         <div className="hidden input-range-cont">
           <input
@@ -137,7 +140,9 @@ const SeekBar: FC<Props> = () => {
           ></progress>
         </div>
       </div>
-      <div className="text-sm font-light opacity-75">{"3:45"}</div>
+      <div className="text-sm font-light opacity-75">
+        {formatTime(activeSong?.data.duration)}
+      </div>
     </div>
   );
 };
