@@ -13,15 +13,17 @@ interface Props {
 
 const SeekBar: FC<Props> = () => {
   // REFERENCE FOR THE TIMER ID
-  const timerId = useRef<NodeJS.Timer | undefined>();
+  const timerIdRef = useRef<NodeJS.Timer | undefined>();
+
+  const howlerPlayerRef = useRef<Howller | null>(null);
 
   useEffect(() => {
     return () => {
-      if (timerId.current !== undefined) {
-        clearInterval(timerId.current);
+      if (timerIdRef.current !== undefined) {
+        clearInterval(timerIdRef.current);
       }
     };
-  }, [timerId]);
+  }, [timerIdRef]);
 
   const [
     {
@@ -70,6 +72,17 @@ const SeekBar: FC<Props> = () => {
     //                                    HOWLER PLAYER
     //                                    IN HERE
     //
+    dispatch({
+      type: "GIVE_SEEK_VAL",
+      payload: {
+        seekValue: seekVal,
+      },
+    });
+
+    if (howlerPlayerRef.current) {
+      howlerPlayerRef.current.seek(seekVal);
+    }
+
     //
     setUseHowlerSeekValue(true);
   };
@@ -87,9 +100,12 @@ const SeekBar: FC<Props> = () => {
             // player?.seek()
             // GETTING SEEK
             // player.seek
+            if (!howlerPlayerRef.current) {
+              howlerPlayerRef.current = player;
+            }
 
-            if (isPlaying && timerId.current === undefined) {
-              timerId.current = setInterval(() => {
+            if (isPlaying && timerIdRef.current === undefined) {
+              timerIdRef.current = setInterval(() => {
                 if (player) {
                   console.log({ SEEK: player.seek() });
 
@@ -102,9 +118,9 @@ const SeekBar: FC<Props> = () => {
                 }
               }, 2000);
             } else {
-              if (timerId.current !== undefined) {
-                clearInterval(timerId.current);
-                timerId.current = undefined;
+              if (timerIdRef.current !== undefined) {
+                clearInterval(timerIdRef.current);
+                timerIdRef.current = undefined;
               }
             }
           }}
