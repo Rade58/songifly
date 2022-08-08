@@ -4,11 +4,19 @@ import type { FC, ReactNode } from "react";
 
 import Image from "next/image";
 
+import usePlayerActor from "@/hooks/xstate/actors/usePlayerActor";
+
 interface Props {
   children?: ReactNode;
 }
 
 const CurrentSong: FC<Props> = () => {
+  const [
+    {
+      context: { activeSong },
+    },
+  ] = usePlayerActor();
+
   return (
     <>
       <div className="avatar ml-4 mr-4">
@@ -22,8 +30,10 @@ const CurrentSong: FC<Props> = () => {
         </div>
       </div>
       <div>
-        <div className="text-sm">Song Name</div>
-        <div className="current-artist opacity-60 mt-1">Artist Name</div>
+        <div className="text-sm">{activeSong?.data.name}</div>
+        <div className="current-artist opacity-60 mt-1">
+          {activeSong?.data.artist.name}
+        </div>
       </div>
     </>
   );
