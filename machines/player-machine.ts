@@ -81,6 +81,11 @@ const ac = {
   pauseSong: "pauseSong",
   //
   setSeekVal: "setSeekVal",
+  //
+  skippSongToTheLeft: "skippSongToTheLeft",
+  skipSongToTheRight: "skipSongToTheRight",
+  //
+  setSeekToZero: "setSeekToZero",
 } as const;
 
 // --------------------------------------------------
@@ -139,6 +144,12 @@ export type machineEventsGenericType =
       payload: {
         seekValue: number;
       };
+    }
+  | {
+      type: typeof EV.SKIP_LEFT;
+    }
+  | {
+      type: typeof EV.SKIP_RIGHT;
     };
 
 export type machineFiniteStatesGenericType =
@@ -199,7 +210,7 @@ const authPageMachine = createMachine<
       [fs.no_active_song]: {
         on: {
           [EV.GIVE_ACTIVE_SONG]: {
-            actions: [ac.setActiveSong, ac.playSong],
+            actions: [ac.setActiveSong, ac.setSeekToZero, ac.playSong],
             target: fs.idle,
           },
         },
@@ -212,6 +223,12 @@ const authPageMachine = createMachine<
           },
           [EV.GIVE_SEEK_VAL]: {
             actions: [ac.setSeekVal],
+          },
+          [EV.SKIP_LEFT]: {
+            actions: [ac.skippSongToTheLeft, ac.setSeekToZero],
+          },
+          [EV.SKIP_RIGHT]: {
+            actions: [ac.skipSongToTheRight, ac.setSeekToZero],
           },
         },
       },
@@ -303,6 +320,57 @@ const authPageMachine = createMachine<
 
         return {};
       }),
+      [ac.skippSongToTheLeft]: assign((ctx, ev) => {
+        if (ctx.activeSong) {
+          if (ev.type === "SKIP_LEFT") {
+            if (ctx.activeSong.songIndex === 0) {
+              return {
+                activeSong: {
+                  data: ctx.songs[ctx.songs.length - 1],
+                  songIndex: ctx.songs.length - 1,
+                },
+              };
+            } else {
+              return {
+                activeSong: {
+                  data: ctx.songs[ctx.activeSong.songIndex - 1],
+                  songIndex: ctx.activeSong.songIndex - 1,
+                },
+              };
+            }
+          }
+
+          return {};
+        }
+
+        return {};
+      }),
+      [ac.skipSongToTheRight]: assign((ctx, ev) => {
+        if (ctx.activeSong) {
+          if (ev.type === "SKIP_RIGHT") {
+            if (ctx.activeSong.songIndex === ctx.songs.length - 1) {
+              return {
+                activeSong: {
+                  data: ctx.songs[0],
+                  songIndex: 0,
+                },
+              };
+            } else {
+              return {
+                activeSong: {
+                  data: ctx.songs[ctx.activeSong.songIndex + 1],
+                  songIndex: ctx.activeSong.songIndex + 1,
+                },
+              };
+            }
+          }
+
+          return {};
+        }
+
+        return {};
+      }),
+      [ac.setSeekToZero]: assign((_, __) => ({ seekValue: 0 })),
     },
   }
 );
