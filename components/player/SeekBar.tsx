@@ -58,7 +58,7 @@ const SeekBar: FC<Props> = () => {
   // const [seekValueForHowler, setSeekValueForHowler] = useState(0);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSeekVal(+e.target.value);
+    setSeekVal(Math.round(+e.target.value));
   };
 
   const handleMouseDown = () => {
@@ -107,12 +107,12 @@ const SeekBar: FC<Props> = () => {
             if (isPlaying && timerIdRef.current === undefined) {
               timerIdRef.current = setInterval(() => {
                 if (player) {
-                  console.log({ SEEK: player.seek() });
+                  // console.log({ SEEK: player.seek() });
 
                   dispatch({
                     type: "GIVE_SEEK_VAL",
                     payload: {
-                      seekValue: player.seek(),
+                      seekValue: Math.round(player.seek()),
                     },
                   });
                 }
