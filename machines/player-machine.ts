@@ -325,7 +325,9 @@ const authPageMachine = createMachine<
       }),
       [ac.togglePlayingStatus]: assign((ctx, ev) => {
         if (ev.type === "TOGGLE_PLAY") {
-          return !ctx.isPlaying;
+          return {
+            isPlaying: !ctx.isPlaying,
+          };
         } else {
           return {};
         }

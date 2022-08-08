@@ -75,17 +75,21 @@ const SeekBar: FC<Props> = () => {
             // player?.seek()
             // GETTING SEEK
             // player.seek
+
+            console.log({ player });
           }}
           playing={isPlaying}
           src={
             // "https://dl.dropboxusercontent.com/s/7xmpwvvek6szx5n/fermi-paradox.mp3?dl=0"
             activeSong.data.url
           }
-          onSeek={(seekValue) => {
+          onSeek={(howlerSeekValue) => {
+            console.log({ howlerSeekValue });
+
             dispatch({
               type: "GIVE_SEEK_VAL",
               payload: {
-                seekValue,
+                seekValue: howlerSeekValue,
               },
             });
           }}

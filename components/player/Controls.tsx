@@ -15,7 +15,12 @@ interface Props {
 }
 
 const Controls: FC<Props> = () => {
-  const [_, dispatch] = usePlayerActor();
+  const [
+    {
+      context: { isPlaying },
+    },
+    dispatch,
+  ] = usePlayerActor();
 
   return (
     <div className="music-controls flex mx-auto mb-2 border-0 border-rose-200 w-56 justify-between items-center">
@@ -41,13 +46,23 @@ const Controls: FC<Props> = () => {
           <BiSkipPrevious size={34} />
         </div>
       </button>
-      <button className="play-btn btn btn-circle btn-sm scale-110">
-        {/* <div className="ml-0.5">
-          <IoIosPlay size={22} />
-        </div> */}
-        <div className="">
-          <IoIosPause size={22} />
-        </div>
+      <button
+        onClick={() => {
+          dispatch({
+            type: "TOGGLE_PLAY",
+          });
+        }}
+        className="play-btn btn btn-circle btn-sm scale-110"
+      >
+        {!isPlaying ? (
+          <div className="ml-0.5">
+            <IoIosPlay size={22} />
+          </div>
+        ) : (
+          <div className="">
+            <IoIosPause size={22} />
+          </div>
+        )}
       </button>
       <button
         onClick={() => {
