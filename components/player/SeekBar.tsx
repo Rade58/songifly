@@ -139,6 +139,11 @@ const SeekBar: FC<Props> = () => {
               },
             });
           }} */
+          onEnd={() => {
+            dispatch({
+              type: "SKIP_RIGHT",
+            });
+          }}
         />
       )}
       {activeSong && (
