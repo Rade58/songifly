@@ -17,24 +17,30 @@ const CurrentSong: FC<Props> = () => {
     },
   ] = usePlayerActor();
 
+  console.log({ activeSong });
+
   return (
     <>
-      <div className="avatar ml-4 mr-4">
-        <div className="mask mask-square w-14 h-14">
-          <Image
-            priority
-            layout="fill"
-            src="https://placeimg.com/192/192/people"
-            alt="song"
-          />
-        </div>
-      </div>
-      <div>
-        <div className="text-sm">{activeSong?.data.name}</div>
-        <div className="current-artist opacity-60 mt-1">
-          {activeSong?.data.artist.name}
-        </div>
-      </div>
+      {activeSong && activeSong.data && (
+        <>
+          <div className="avatar ml-4 mr-4">
+            <div className="mask mask-square w-14 h-14">
+              <Image
+                priority
+                layout="fill"
+                src="https://placeimg.com/192/192/people"
+                alt="song"
+              />
+            </div>
+          </div>
+          <div>
+            <div className="text-sm">{activeSong?.data.name}</div>
+            <div className="current-artist opacity-60 mt-1">
+              {activeSong?.data.artist.name}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
