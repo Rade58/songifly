@@ -87,7 +87,7 @@ const SeekBar: FC<Props> = () => {
                 dispatch({
                   type: "GIVE_SEEK_VAL",
                   payload: {
-                    seekValue: player.seek() / 10 || 0,
+                    seekValue: player.seek() || 0,
                   },
                 });
               }
@@ -123,7 +123,7 @@ const SeekBar: FC<Props> = () => {
             onChange={handleChange}
             type="range"
             min={0}
-            max={100}
+            max={activeSong?.data.duration}
             //
             value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
             //
@@ -136,7 +136,7 @@ const SeekBar: FC<Props> = () => {
             //
             value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
             //
-            max="100"
+            max={activeSong?.data.duration}
           ></progress>
         </div>
       </div>
