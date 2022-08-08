@@ -60,6 +60,8 @@ export const EV = {
   //
   SKIP_LEFT: "SKIP_LEFT",
   SKIP_RIGHT: "SKIP_RIGHT",
+  //
+  CHANGE_ACTIVE_SONG: "CHANGE_ACTIVE_SONG",
 } as const;
 
 /**
@@ -86,6 +88,8 @@ const ac = {
   skipSongToTheRight: "skipSongToTheRight",
   //
   setSeekToZero: "setSeekToZero",
+  //
+  resetCurrentIndex: "resetCurrentIndex",
 } as const;
 
 // --------------------------------------------------
@@ -193,7 +197,7 @@ const authPageMachine = createMachine<
     // },
     on: {
       [EV.GIVE_SONGS]: {
-        actions: [ac.setSongs],
+        actions: [ac.setSongs, ac.resetCurrentIndex],
       },
 
       [EV.GIVE_VOLUME]: {
@@ -229,6 +233,10 @@ const authPageMachine = createMachine<
           },
           [EV.SKIP_RIGHT]: {
             actions: [ac.skipSongToTheRight, ac.setSeekToZero],
+          },
+
+          [EV.GIVE_ACTIVE_SONG]: {
+            actions: [ac.setActiveSong, ac.setSeekToZero, ac.playSong],
           },
         },
       },
@@ -341,6 +349,14 @@ const authPageMachine = createMachine<
           }
 
           return {};
+        } else {
+          return {
+            activeSong: {
+              data: ctx.songs[ctx.songs.length - 1],
+              songIndex: ctx.songs.length - 1,
+            },
+            isPlaying: true,
+          };
         }
 
         return {};
@@ -366,11 +382,23 @@ const authPageMachine = createMachine<
           }
 
           return {};
+        } else {
+          return {
+            activeSong: { data: ctx.songs[0], songIndex: 0 },
+            isPlaying: true,
+          };
         }
 
         return {};
       }),
       [ac.setSeekToZero]: assign((_, __) => ({ seekValue: 0 })),
+      [ac.resetCurrentIndex]: assign((ctx, __) => {
+        if (ctx.activeSong) {
+          return { activeSong: { data: ctx.activeSong.data, songIndex: 0 } };
+        }
+
+        return {};
+      }),
     },
   }
 );
