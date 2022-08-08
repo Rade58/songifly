@@ -1,5 +1,6 @@
 /* eslint react/react-in-jsx-scope: 0 */
 /* eslint jsx-a11y/anchor-is-valid: 1 */
+import { useState, useEffect } from "react";
 import type { ReactElement } from "react";
 import type { GetServerSideProps, NextPage as NP } from "next";
 
@@ -14,6 +15,8 @@ import ColorContainer from "@/components/common/ColorContainer";
 import SongsTable from "@/components/playlist/SongsTable";
 
 import { verifyUser } from "@/lib/auth/util";
+
+import usePlayerActor from "@/hooks/xstate/actors/usePlayerActor";
 
 interface PropsI {
   playlist: Playlist & {
@@ -104,7 +107,24 @@ export const getServerSideProps: GetServerSideProps<
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
   const { colorVariant, name, songs } = playlist;
 
-  // console.log(colorVariant);
+  const [playslistGiven, setPlaylistGiven] = useState(false);
+
+  const [_, dispatch] = usePlayerActor();
+
+  useEffect(() => {
+    if (playslistGiven) return;
+
+    if (songs) {
+      dispatch({
+        type: "GIVE_SONGS",
+        payload: {
+          songs,
+        },
+      });
+
+      setPlaylistGiven(true);
+    }
+  }, [playslistGiven, setPlaylistGiven, dispatch, songs]);
 
   return (
     <GradientContainer variant={colorVariant} customGradient>

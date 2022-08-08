@@ -2,7 +2,7 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
-import moment from "moment";
+// import moment from "moment";
 
 import Image from "next/image";
 
@@ -13,6 +13,8 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import type { Song } from "@prisma/client";
 
 import { formatTime, formatDate } from "@/util/formatters";
+
+import usePlayerActor from "@/hooks/xstate/actors/usePlayerActor";
 
 interface Props {
   children?: ReactNode;
@@ -25,11 +27,26 @@ interface Props {
 }
 
 const SongsTable: FC<Props> = ({ songs }) => {
+  const [{ value }, dispatch] = usePlayerActor();
+
   return (
     <>
       <div className="relative">
         <span className="absolute -top-16 -mt-3 left-12">
-          <button className="my-large-btn btn btn-circle btn-lg btn-success">
+          <button
+            onClick={() => {
+              if (value === "no_active_song") {
+                dispatch({
+                  type: "SKIP_RIGHT",
+                });
+              } else {
+                dispatch({
+                  type: "TOGGLE_PLAY",
+                });
+              }
+            }}
+            className="my-large-btn btn btn-circle btn-lg btn-success"
+          >
             {/* <div className="ml-1">
               <IoIosPlay size={42} />
             </div> */}
@@ -62,8 +79,15 @@ const SongsTable: FC<Props> = ({ songs }) => {
           </thead>
           <tbody>
             {/* <!-- row 1 --> */}
-            {songs.map(
-              ({ name, artist: { name: artist }, duration, updatedAt }, i) => (
+            {songs.map((song, i) => {
+              const {
+                name,
+                artist: { name: artist },
+                duration,
+                updatedAt,
+              } = song;
+
+              return (
                 <tr key={name} className="song-row">
                   <td className="border-0 border-rose-200 w-14">
                     {/* <label>
@@ -71,7 +95,20 @@ const SongsTable: FC<Props> = ({ songs }) => {
                   </label> */}
                     <span className="num-of-song ml-4">{i + 1}</span>
                     <span className="play-icon hidden">
-                      <button className="btn btn-ghost btn-xs">
+                      <button
+                        className="btn btn-ghost btn-xs"
+                        onClick={() => {
+                          dispatch({
+                            type: "GIVE_ACTIVE_SONG",
+                            payload: {
+                              song: {
+                                data: song,
+                                songIndex: i,
+                              },
+                            },
+                          });
+                        }}
+                      >
                         <IoIosPlay size={19} />
                       </button>
                     </span>
@@ -121,8 +158,8 @@ const SongsTable: FC<Props> = ({ songs }) => {
                     <span className="opacity-60">{formatTime(duration)}</span>
                   </td>
                 </tr>
-              )
-            )}
+              );
+            })}
           </tbody>
           {/* <!-- foot --> */}
           {/* <tfoot>

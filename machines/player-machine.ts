@@ -3,7 +3,12 @@ import router from "next/router";
 
 import type { Song } from "@prisma/client";
 
-type SongType = Song;
+type SongType = Song & {
+  artist: {
+    name: string;
+    id: number;
+  };
+};
 
 // I CASE OF NESTED STATES TARGET REFERENCING CAN BE A LITTLE BIT
 // COMPLICATED THEREFORE I AM GOING TO DEFINE A HELPER

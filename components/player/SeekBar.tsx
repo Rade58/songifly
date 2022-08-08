@@ -1,21 +1,34 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import type { FC, ReactNode, ChangeEvent } from "react";
 
-import ReactHowler from "react-howler";
+import usePlayerActor from "@/hooks/xstate/actors/usePlayerActor";
+
+import Howller from "react-howler";
 
 interface Props {
   children?: ReactNode;
 }
 
 const SeekBar: FC<Props> = () => {
+  const [
+    {
+      context: {
+        seekValue: howlerSeekValue,
+
+        isPlaying,
+      },
+    },
+    dispatch,
+  ] = usePlayerActor();
+
   // -- HOWLER VALUE (TODO) (THIS IS JUST TEMPORARRY)]
   // -- TODO- WE ARE GOING TO BRING THIS HERE FROM THE MACHINE
-  const howlerSeekValue = 20;
+  // const howlerSeekValue = 20;
   // ------------------------------------------------
   // ------------------------------------------------
 
-  // FOT CONTROLED RANGE INPUT
+  // FOR CONTROLED RANGE INPUT
   const [seekVal, setSeekVal] = useState<number>(0);
 
   // TO DETERMINE IF WE ARE GOING TO
@@ -27,7 +40,7 @@ const SeekBar: FC<Props> = () => {
   // TO CHANGE HOWLER VALUE onchange BECAUSE YOU WOULD
   // HAVE TOO MUCH ANOYING RERENDERING AS YOU SLIDE
   // RANGE ELEMENT))
-  const [seekValueForHowler, setSeekValueForHowler] = useState(0);
+  // const [seekValueForHowler, setSeekValueForHowler] = useState(0);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSeekVal(+e.target.value);
@@ -38,7 +51,13 @@ const SeekBar: FC<Props> = () => {
   };
 
   const handleMouseUp = () => {
-    setSeekValueForHowler(seekVal);
+    // todo: set seek to the howler player
+    // you need reference for the howler player
+    // WE NEED TO ASSIGN      seekVal     VALUE TO THE
+    //                                    HOWLER PLAYER
+    //                                    IN HERE
+    //
+    //
     setUseHowlerSeekValue(true);
   };
 
@@ -48,6 +67,26 @@ const SeekBar: FC<Props> = () => {
 
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
+      <Howller
+        ref={(player) => {
+          // SETTING SEEK
+          // player?.seek()
+          // GETTING SEEK
+          // player.seek
+        }}
+        playing={isPlaying}
+        src={
+          "https://dl.dropboxusercontent.com/s/7xmpwvvek6szx5n/fermi-paradox.mp3?dl=0"
+        }
+        onSeek={(seekValue) => {
+          dispatch({
+            type: "GIVE_SEEK_VAL",
+            payload: {
+              seekValue,
+            },
+          });
+        }}
+      />
       <div className="text-sm font-light opacity-75">1:24</div>
       <div className="player-progress-cont flex h-6 justify-center flex-col border-0 border-rose-600 w-10/12">
         <div className="hidden input-range-cont">
@@ -74,7 +113,7 @@ const SeekBar: FC<Props> = () => {
           ></progress>
         </div>
       </div>
-      <div className="text-sm font-light opacity-75">{seekValueForHowler}</div>
+      <div className="text-sm font-light opacity-75">{"3:45"}</div>
     </div>
   );
 };
