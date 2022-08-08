@@ -88,7 +88,7 @@ const SeekBar: FC<Props> = () => {
             // GETTING SEEK
             // player.seek
 
-            if (isPlaying) {
+            if (isPlaying && timerId.current !== undefined) {
               timerId.current = setInterval(() => {
                 if (player) {
                   console.log({ SEEK: player.seek() });
@@ -96,7 +96,7 @@ const SeekBar: FC<Props> = () => {
                   dispatch({
                     type: "GIVE_SEEK_VAL",
                     payload: {
-                      seekValue: player.seek() || 0,
+                      seekValue: player.seek(),
                     },
                   });
                 }
@@ -104,6 +104,7 @@ const SeekBar: FC<Props> = () => {
             } else {
               if (timerId.current !== undefined) {
                 clearInterval(timerId.current);
+                timerId.current = undefined;
               }
             }
           }}
