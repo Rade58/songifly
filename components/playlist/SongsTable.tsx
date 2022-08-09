@@ -156,9 +156,9 @@ const SongsTable: FC<Props> = ({ songs }) => {
                         </span>
                       )}
                     </span>
-                    <span className="play-icon hidden">
+                    <span className="play-icon hidden relative">
                       <button
-                        className="btn btn-ghost btn-xs"
+                        className="relative left-2 btn btn-ghost btn-circle btn-xs"
                         onClick={() => {
                           if (songIsPlaying) {
                             dispatch({
