@@ -151,14 +151,14 @@ const SongsTable: FC<Props> = ({ songs }) => {
                           className={`${songIsActive ? "text-success" : ""}`}
                         >{`${i + 1}`}</span>
                       ) : (
-                        <span className="relative -left-3 flex justify-center items-center text-success">
+                        <span className="relative -left-2 flex justify-center items-center text-success">
                           <CgLoadbarSound size={24} />
                         </span>
                       )}
                     </span>
                     <span className="play-icon hidden relative">
                       <button
-                        className="relative left-2 btn btn-ghost btn-circle btn-xs"
+                        className="relative left-1.5 btn btn-ghost btn-circle btn-sm"
                         onClick={() => {
                           if (songIsPlaying) {
                             dispatch({
