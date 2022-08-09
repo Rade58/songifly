@@ -57,6 +57,19 @@ const SongsTable: FC<Props> = ({ songs }) => {
     return false;
   };
 
+  const activeSongSelected = (songIndex: number) => {
+    if (
+      activeSong &&
+      typeof playlistId === "string" &&
+      activeSong.playlistId === +playlistId &&
+      activeSong.songIndex === songIndex
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   // console.log({ playlistId });
 
   return (
@@ -124,6 +137,8 @@ const SongsTable: FC<Props> = ({ songs }) => {
 
               const songIsPlaying = activeSongPlaying(i);
 
+              const songIsActive = activeSongSelected(i);
+
               return (
                 <tr key={name} className={"song-row"}>
                   <td className="border-0 border-rose-200 w-14">
@@ -132,7 +147,9 @@ const SongsTable: FC<Props> = ({ songs }) => {
                   </label> */}
                     <span className="num-of-song ml-4 flex items-center relative">
                       {!songIsPlaying ? (
-                        `${i + 1}`
+                        <span
+                          className={`${songIsActive ? "text-success" : ""}`}
+                        >{`${i + 1}`}</span>
                       ) : (
                         <span className="relative -left-3 flex justify-center items-center text-success">
                           <CgLoadbarSound size={24} />
@@ -184,7 +201,13 @@ const SongsTable: FC<Props> = ({ songs }) => {
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">{name}</div>
+                        <div
+                          className={`font-bold ${
+                            songIsActive ? "text-success" : ""
+                          }`}
+                        >
+                          {name}
+                        </div>
                         <div className="text-sm text-opacity-10 opacity-70">
                           {artist}
                         </div>
