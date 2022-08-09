@@ -166,10 +166,17 @@ const SeekBar: FC<Props> = () => {
 
   // console.log({ repeat });
 
+  const [duration, setDuration] = useState(0);
+
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
       {activeSong && activeSong.data && activeSong.data.url && (
         <Howller
+          onLoad={(p) => {
+            if (howlerPlayerRef.current) {
+              setDuration(howlerPlayerRef.current.duration);
+            }
+          }}
           ref={(player) => {
             if (!howlerPlayerRef.current) {
               howlerPlayerRef.current = player;
@@ -212,7 +219,7 @@ const SeekBar: FC<Props> = () => {
                 onChange={handleChange}
                 type="range"
                 min={0}
-                max={activeSong?.data.duration}
+                max={duration}
                 //
                 value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
                 //
@@ -225,7 +232,7 @@ const SeekBar: FC<Props> = () => {
                 //
                 value={!useHowlerSeekValue ? seekVal : howlerSeekValue}
                 //
-                max={activeSong?.data.duration}
+                max={duration}
               ></progress>
             </div>
           </div>
