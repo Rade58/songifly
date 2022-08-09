@@ -15,6 +15,7 @@ const SeekBar: FC<Props> = () => {
   // REFERENCE FOR THE TIMER ID
   const timerIdRef = useRef<NodeJS.Timer | undefined>();
 
+  // HOWLER PLAYER REF
   const howlerPlayerRef = useRef<Howller | null>(null);
 
   useEffect(() => {
@@ -25,10 +26,13 @@ const SeekBar: FC<Props> = () => {
     };
   }, [timerIdRef]);
 
+  // WE NEED TO ELIMINATE SEEK VALUES THAT COME FROM MACHINE
+  // BECAUSE THEY MAKE UNECESSARY RERENDERING OF BUNCH OF
+  // COMPONENTS THAT USES THE ACTOR
   const [
     {
       context: {
-        seekValue: howlerSeekValue,
+        // seekValue: howlerSeekValue,
 
         isPlaying,
         activeSong,
@@ -37,9 +41,8 @@ const SeekBar: FC<Props> = () => {
     dispatch,
   ] = usePlayerActor();
 
-  // -- HOWLER VALUE (TODO) (THIS IS JUST TEMPORARRY)]
-  // -- TODO- WE ARE GOING TO BRING THIS HERE FROM THE MACHINE
-  // const howlerSeekValue = 20;
+  // -- HOWLER VALUE (TODO)
+  const [howlerSeekValue, setHowlerSeekValue] = useState<number>(0);
   // ------------------------------------------------
   // ------------------------------------------------
 
@@ -66,18 +69,19 @@ const SeekBar: FC<Props> = () => {
   };
 
   const handleMouseUp = () => {
-    // todo: set seek to the howler player
-    // you need reference for the howler player
     // WE NEED TO ASSIGN      seekVal     VALUE TO THE
     //                                    HOWLER PLAYER
     //                                    IN HERE
     //
-    dispatch({
+    /* dispatch({
       type: "GIVE_SEEK_VAL",
       payload: {
         seekValue: seekVal,
       },
     });
+    */
+
+    setHowlerSeekValue(seekVal);
 
     if (howlerPlayerRef.current) {
       howlerPlayerRef.current.seek(seekVal);
@@ -109,12 +113,14 @@ const SeekBar: FC<Props> = () => {
                 if (player) {
                   // console.log({ SEEK: player.seek() });
 
-                  dispatch({
+                  /* dispatch({
                     type: "GIVE_SEEK_VAL",
                     payload: {
                       seekValue: Math.round(player.seek()),
                     },
-                  });
+                  }); */
+
+                  setHowlerSeekValue(Math.round(player.seek()));
                 }
               }, 1000);
             } else {
