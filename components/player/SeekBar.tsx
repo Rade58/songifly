@@ -104,12 +104,9 @@ const SeekBar: FC<Props> = () => {
 
   const handleEnd = useCallback(
     (param: number) => {
-      /* console.log("REPEAT");
+      console.log("REPEAT");
       console.log({ repeat });
-
-      dispatch({
-        type: "SKIP_RIGHT",
-      }); */
+      console.log("SONG ENDED");
 
       if (!repeat) {
         //
