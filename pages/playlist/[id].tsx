@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import type { ReactElement } from "react";
 import type { GetServerSideProps, NextPage as NP } from "next";
 
+import { useRouter } from "next/router";
+
 import type { Playlist, Song, User } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
@@ -107,32 +109,47 @@ export const getServerSideProps: GetServerSideProps<
 const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
   const { colorVariant, name, songs } = playlist;
 
-  const [playslistGiven, setPlaylistGiven] = useState(false);
+  const {
+    query: { id: playlistId },
+  } = useRouter();
 
   const [
     {
-      context: { songs: machineSongs },
+      context: { currentVisitedSongs },
     },
     dispatch,
   ] = usePlayerActor();
 
-  /* useEffect(() => {
-    if (playslistGiven) return;
-    console.log(machineSongs.length > 0);
-    if (machineSongs.length > 0) return;
-
-    if (songs) {
+  useEffect(() => {
+    if (!currentVisitedSongs && playlistId) {
       dispatch({
-        type: "GIVE_SONGS",
+        type: "VISIT_PLAYLIST",
         payload: {
-          songs,
+          songs: {
+            playlistId: +(playlistId as string),
+            tracks: songs,
+          },
         },
       });
-
-      setPlaylistGiven(true);
     }
-  }, [playslistGiven, setPlaylistGiven, dispatch, songs, machineSongs]);
- */
+
+    if (currentVisitedSongs && playlistId) {
+      if (currentVisitedSongs.playlistId !== +(playlistId as string)) {
+        dispatch({
+          type: "VISIT_PLAYLIST",
+          payload: {
+            songs: {
+              playlistId: +(playlistId as string),
+              tracks: songs,
+            },
+          },
+        });
+      }
+    }
+
+    console.log("playlit mounted");
+  }, [playlistId, currentVisitedSongs]);
+
   return (
     <GradientContainer variant={colorVariant} customGradient>
       <ColorContainer

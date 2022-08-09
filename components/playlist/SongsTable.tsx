@@ -41,6 +41,8 @@ const SongsTable: FC<Props> = ({ songs }) => {
     query: { id: playlistId },
   } = useRouter();
 
+  console.log({ playlistId });
+
   return (
     <>
       <div className="relative">

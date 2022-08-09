@@ -70,6 +70,8 @@ export const EV = {
   //
   TOGGLE_SHUFFLE: "TOGGLE_SHUFFLE",
   TOGGLE_REPEAT: "TOGGLE_REPEAT",
+  //
+  VISIT_PLAYLIST: "VISIT_PLAYLIST",
 } as const;
 
 /**
@@ -101,6 +103,8 @@ const ac = {
   //
   switchShuffle: "switchShuffle",
   switchRepeat: "switchRepeat",
+  //
+  setVisitedSongs: "setVisitedSongs",
 } as const;
 
 // --------------------------------------------------
@@ -130,6 +134,12 @@ export interface MachineContextGenericI {
 export type machineEventsGenericType =
   | {
       type: typeof EV.GIVE_SONGS;
+      payload: {
+        songs: { tracks: SongType[]; playlistId: number };
+      };
+    }
+  | {
+      type: typeof EV.VISIT_PLAYLIST;
       payload: {
         songs: { tracks: SongType[]; playlistId: number };
       };
@@ -211,8 +221,11 @@ const authPageMachine = createMachine<
     },
 
     on: {
-      [EV.GIVE_SONGS]: {
+      /* [EV.GIVE_SONGS]: {
         actions: [ac.setSongs, ac.resetCurrentIndex],
+      }, */
+      [EV.VISIT_PLAYLIST]: {
+        //
       },
 
       [EV.GIVE_VOLUME]: {
@@ -430,6 +443,12 @@ const authPageMachine = createMachine<
           };
         }
 
+        return {};
+      }),
+      [ac.setVisitedSongs]: assign((_, ev) => {
+        if (ev.type === "VISIT_PLAYLIST") {
+          return { currentVisitedSongs: ev.payload.songs };
+        }
         return {};
       }),
     },
