@@ -22,7 +22,7 @@ const Controls: FC<Props> = () => {
     dispatch,
   ] = usePlayerActor();
 
-  console.log({ shuffle, repeat });
+  // console.log({ shuffle, repeat });
 
   return (
     <>

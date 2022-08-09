@@ -1,5 +1,11 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
-import React, { useState, createRef, useRef, useEffect } from "react";
+import React, {
+  useState,
+  createRef,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import type { FC, ReactNode, ChangeEvent } from "react";
 import Howller from "react-howler";
 
@@ -148,6 +154,7 @@ const SeekBar: FC<Props> = () => {
             });
           }} */
           onEnd={() => {
+            console.log({ repeat });
             if (repeat) return;
             dispatch({
               type: "SKIP_RIGHT",
