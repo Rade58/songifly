@@ -43,6 +43,7 @@ const SeekBar: FC<Props> = () => {
         activeSong,
         repeat,
         shuffle,
+        songs,
       },
     },
     dispatch,
@@ -80,6 +81,45 @@ const SeekBar: FC<Props> = () => {
     setUseHowlerSeekValue(true);
   };
 
+  const allIDoIsShuffling = () => {
+    if (songs && activeSong) {
+      const length = songs.tracks.length - 1;
+
+      let randomIndex = Math.round(Math.random() * length);
+
+      do {
+        randomIndex = Math.round(Math.random() * length);
+      } while (randomIndex === activeSong.songIndex);
+
+      dispatch({
+        type: "GIVE_ACTIVE_SONG",
+        payload: {
+          song: {
+            data: songs.tracks[randomIndex],
+            songIndex: randomIndex,
+            playlistId: songs.playlistId,
+          },
+        },
+      });
+
+      return;
+    }
+
+    if (songs && !activeSong) {
+      const randomIndex = Math.round(Math.random() * length);
+      dispatch({
+        type: "GIVE_ACTIVE_SONG",
+        payload: {
+          song: {
+            data: songs.tracks[randomIndex],
+            songIndex: randomIndex,
+            playlistId: songs.playlistId,
+          },
+        },
+      });
+    }
+  };
+
   const handleEnd = (param: number) => {
     setSongEnded((prev) => prev + 1);
   };
@@ -110,11 +150,18 @@ const SeekBar: FC<Props> = () => {
           song: activeSong,
         },
       });
-    } else {
-      dispatch({
-        type: "SKIP_RIGHT",
-      });
+
+      return;
     }
+
+    if (shuffle) {
+      allIDoIsShuffling();
+      return;
+    }
+
+    dispatch({
+      type: "SKIP_RIGHT",
+    });
   }, [songEnded]);
 
   // console.log({ repeat });
