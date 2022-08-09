@@ -75,7 +75,7 @@ const SeekBar: FC<Props> = () => {
   const handleMouseDown = () => {
     setUseHowlerSeekValue(false);
   };
-
+  //
   const handleMouseUp = () => {
     // WE NEED TO ASSIGN      seekVal     VALUE TO THE
     //                                    HOWLER PLAYER
