@@ -72,7 +72,7 @@ const SeekBar: FC<Props> = () => {
     setUseHowlerSeekValue(true);
   };
 
-  const handleEnd = useCallback(
+  const handleEndRepeat = useCallback(
     (param: number) => {
       // console.log("---------");
       // console.log({ repeat });
@@ -87,6 +87,33 @@ const SeekBar: FC<Props> = () => {
         // return;
       }
 
+      /* if (repeat && activeSong) {
+        dispatch({
+          type: "GIVE_ACTIVE_SONG",
+          payload: {
+            song: activeSong,
+          },
+        });
+      } */
+    },
+    [repeat, activeSong]
+  );
+
+  const handleEndNoRepeat = useCallback(
+    (param: number) => {
+      // console.log("---------");
+      // console.log({ repeat });
+      // console.log("ENDED!!!!");
+
+      /* if (!repeat) {
+        //
+        dispatch({
+          type: "SKIP_RIGHT",
+        });
+
+        // return;
+      } */
+
       if (repeat && activeSong) {
         dispatch({
           type: "GIVE_ACTIVE_SONG",
@@ -96,7 +123,7 @@ const SeekBar: FC<Props> = () => {
         });
       }
     },
-    [repeat, shuffle, activeSong]
+    [repeat, activeSong]
   );
 
   console.log({ repeat });
@@ -127,7 +154,7 @@ const SeekBar: FC<Props> = () => {
               }}
               playing={isPlaying}
               src={activeSong?.data.url || ""}
-              onEnd={handleEnd}
+              onEnd={repeat ? handleEndRepeat : undefined}
             />
           ) : (
             <Howller
@@ -151,7 +178,7 @@ const SeekBar: FC<Props> = () => {
               }}
               playing={isPlaying}
               src={activeSong?.data.url || ""}
-              onEnd={handleEnd}
+              onEnd={!repeat ? handleEndNoRepeat : undefined}
             />
           )}
         </>
