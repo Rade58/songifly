@@ -17,7 +17,7 @@ const CurrentSong: FC<Props> = () => {
     },
   ] = usePlayerActor();
 
-  console.log({ activeSong });
+  // console.log({ activeSong });
 
   return (
     <>

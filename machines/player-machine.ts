@@ -1,5 +1,5 @@
 import { createMachine, assign, interpret } from "xstate";
-import router from "next/router";
+import Router from "next/router";
 
 import type { Song } from "@prisma/client";
 
@@ -28,7 +28,7 @@ const buildTarget = (
 };
 
 const navigateOfThePage = () => {
-  router.push("/");
+  Router.push("/");
 };
 
 // MACHINE ID AND (key IS MARKING MACHINE AS AN ACTOR)
@@ -111,11 +111,12 @@ export interface MachineContextGenericI {
   // THIS IS GOING TO BE CURRENT PLAYLIS I THINK (I DON'T KNOW HOW WOULD THIS WORK
   // MAYBE IF A USER VISITS PLAYLIST PAGE, LIST OF ACTIVE SONGS SHOULD
   // BE LOADED INTO THIS CONTEXT PROPERTY)
-  songs: SongType[];
+  songs: { tracks: SongType[]; playlistId: number } | null;
+  currentVisitedSongs: { tracks: SongType[]; playlistId: number } | null;
   // SONG THAT WE ARE CURRENTLY USING WITH OUR PLAYER
   // INDEX OF THE CTIVE SONG FROM THE sangs ARRAY SHOULD BE INCLUDED
   // BECAUSE OF SKIP LEFT AND SKIP RIGHT BUTTONS
-  activeSong: { data: SongType; songIndex: number } | null;
+  activeSong: { data: SongType; songIndex: number; playlistId: number } | null;
   //
   volume: number;
   mute: boolean;
@@ -130,13 +131,13 @@ export type machineEventsGenericType =
   | {
       type: typeof EV.GIVE_SONGS;
       payload: {
-        songs: SongType[];
+        songs: { tracks: SongType[]; playlistId: number };
       };
     }
   | {
       type: typeof EV.GIVE_ACTIVE_SONG;
       payload: {
-        song: { data: SongType; songIndex: number };
+        song: { data: SongType; songIndex: number; playlistId: number };
       };
     }
   | {
@@ -198,7 +199,8 @@ const authPageMachine = createMachine<
     key,
     initial: fs.no_active_song,
     context: {
-      songs: [],
+      songs: null,
+      currentVisitedSongs: null,
       activeSong: null,
       volume: 50,
       mute: false,
@@ -268,7 +270,7 @@ const authPageMachine = createMachine<
       }),
       [ac.removeSongs]: assign((_, __) => {
         return {
-          songs: [],
+          songs: null,
         };
       }),
       [ac.removeActiveSong]: assign((_, __) => {
@@ -344,64 +346,55 @@ const authPageMachine = createMachine<
         return {};
       }),
       [ac.skippSongToTheLeft]: assign((ctx, ev) => {
-        if (ctx.activeSong) {
+        if (ctx.activeSong && ctx.songs && ctx.songs.tracks.length > 0) {
           if (ev.type === "SKIP_LEFT") {
             if (ctx.activeSong.songIndex === 0) {
               return {
                 activeSong: {
-                  data: ctx.songs[ctx.songs.length - 1],
-                  songIndex: ctx.songs.length - 1,
+                  data: ctx.songs.tracks[ctx.songs.tracks.length - 1],
+                  songIndex: ctx.songs.tracks.length - 1,
+                  playlistId: ctx.activeSong.playlistId,
                 },
               };
             } else {
               return {
                 activeSong: {
-                  data: ctx.songs[ctx.activeSong.songIndex - 1],
+                  data: ctx.songs.tracks[ctx.activeSong.songIndex - 1],
                   songIndex: ctx.activeSong.songIndex - 1,
+                  playlistId: ctx.activeSong.playlistId,
                 },
               };
             }
           }
 
           return {};
-        } else {
-          return {
-            activeSong: {
-              data: ctx.songs[ctx.songs.length - 1],
-              songIndex: ctx.songs.length - 1,
-            },
-            isPlaying: true,
-          };
         }
 
         return {};
       }),
       [ac.skipSongToTheRight]: assign((ctx, ev) => {
-        if (ctx.activeSong) {
+        if (ctx.activeSong && ctx.songs && ctx.songs.tracks.length > 0) {
           if (ev.type === "SKIP_RIGHT") {
-            if (ctx.activeSong.songIndex === ctx.songs.length - 1) {
+            if (ctx.activeSong.songIndex === ctx.songs.tracks.length - 1) {
               return {
                 activeSong: {
-                  data: ctx.songs[0],
+                  data: ctx.songs.tracks[0],
                   songIndex: 0,
+                  playlistId: ctx.activeSong.playlistId,
                 },
               };
             } else {
               return {
                 activeSong: {
-                  data: ctx.songs[ctx.activeSong.songIndex + 1],
+                  data: ctx.songs.tracks[ctx.activeSong.songIndex + 1],
                   songIndex: ctx.activeSong.songIndex + 1,
+                  playlistId: ctx.activeSong.playlistId,
                 },
               };
             }
           }
 
           return {};
-        } else {
-          return {
-            activeSong: { data: ctx.songs[0], songIndex: 0 },
-            isPlaying: true,
-          };
         }
 
         return {};
@@ -409,7 +402,13 @@ const authPageMachine = createMachine<
       [ac.setSeekToZero]: assign((_, __) => ({ seekValue: 0 })),
       [ac.resetCurrentIndex]: assign((ctx, __) => {
         if (ctx.activeSong) {
-          return { activeSong: { data: ctx.activeSong.data, songIndex: 0 } };
+          return {
+            activeSong: {
+              data: ctx.activeSong.data,
+              playlistId: ctx.activeSong.playlistId,
+              songIndex: 0,
+            },
+          };
         }
 
         return {};

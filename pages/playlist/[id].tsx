@@ -116,10 +116,10 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
     dispatch,
   ] = usePlayerActor();
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (playslistGiven) return;
-
-    // if (machineSongs.length > 0) return;
+    console.log(machineSongs.length > 0);
+    if (machineSongs.length > 0) return;
 
     if (songs) {
       dispatch({
@@ -132,7 +132,7 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
       setPlaylistGiven(true);
     }
   }, [playslistGiven, setPlaylistGiven, dispatch, songs, machineSongs]);
-
+ */
   return (
     <GradientContainer variant={colorVariant} customGradient>
       <ColorContainer

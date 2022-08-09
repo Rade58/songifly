@@ -2,6 +2,8 @@
 import React from "react";
 import type { FC, ReactNode } from "react";
 
+import { useRouter } from "next/router";
+
 // import moment from "moment";
 
 import Image from "next/image";
@@ -34,6 +36,10 @@ const SongsTable: FC<Props> = ({ songs }) => {
     },
     dispatch,
   ] = usePlayerActor();
+
+  const {
+    query: { id: playlistId },
+  } = useRouter();
 
   return (
     <>
@@ -115,6 +121,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
                               song: {
                                 data: song,
                                 songIndex: i,
+                                playlistId: +(playlistId as string),
                               },
                             },
                           });
