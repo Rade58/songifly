@@ -38,7 +38,7 @@ const SeekBar: FC<Props> = () => {
   const [
     {
       context: {
-        // seekValue: howlerSeekValue,
+        seekValue: howlerSeekValue,
 
         isPlaying,
         activeSong,
@@ -50,7 +50,7 @@ const SeekBar: FC<Props> = () => {
   ] = usePlayerActor();
 
   // -- HOWLER VALUE (TODO)
-  const [howlerSeekValue, setHowlerSeekValue] = useState<number>(0);
+  // const [howlerSeekValue, setHowlerSeekValue] = useState<number>(0);
   // ------------------------------------------------
   // ------------------------------------------------
 
@@ -81,15 +81,14 @@ const SeekBar: FC<Props> = () => {
     //                                    HOWLER PLAYER
     //                                    IN HERE
     //
-    /* dispatch({
+    dispatch({
       type: "GIVE_SEEK_VAL",
       payload: {
         seekValue: seekVal,
       },
     });
-    */
 
-    setHowlerSeekValue(seekVal);
+    // setHowlerSeekValue(seekVal);
 
     if (howlerPlayerRef.current) {
       howlerPlayerRef.current.seek(seekVal);
@@ -152,14 +151,14 @@ const SeekBar: FC<Props> = () => {
                 if (player) {
                   // console.log({ SEEK: player.seek() });
 
-                  /* dispatch({
+                  dispatch({
                     type: "GIVE_SEEK_VAL",
                     payload: {
                       seekValue: Math.round(player.seek()),
                     },
-                  }); */
+                  });
 
-                  setHowlerSeekValue(Math.round(player.seek()));
+                  // setHowlerSeekValue(Math.round(player.seek()));
                 }
               }, 1000);
             } else {
