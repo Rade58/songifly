@@ -49,10 +49,6 @@ const SeekBar: FC<Props> = () => {
     dispatch,
   ] = usePlayerActor();
 
-  const onEnd = useCallback(() => {
-    return { repeat, shuffle };
-  }, [repeat, shuffle]);
-
   // -- HOWLER VALUE (TODO)
   const [howlerSeekValue, setHowlerSeekValue] = useState<number>(0);
   // ------------------------------------------------
@@ -107,6 +103,29 @@ const SeekBar: FC<Props> = () => {
   // BUT WE NEED TO STOP FEEDING THAT STATE TO OUR RANGE AND PROGRE
   // WHEN WE CLICK ON THE RANGE
 
+  const handleEnd = useCallback(
+    (param: number) => {
+      if (!repeat) {
+        //
+        dispatch({
+          type: "SKIP_RIGHT",
+        });
+
+        return;
+      }
+
+      if (activeSong && repeat === true) {
+        dispatch({
+          type: "GIVE_ACTIVE_SONG",
+          payload: {
+            song: activeSong,
+          },
+        });
+      }
+    },
+    [repeat, shuffle, activeSong]
+  );
+
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
       {activeSong && activeSong.data && activeSong.data.url && (
@@ -157,15 +176,7 @@ const SeekBar: FC<Props> = () => {
               },
             });
           }} */
-          onEnd={() => {
-            const { repeat: re, shuffle: sh } = onEnd();
-
-            if (re) return;
-
-            dispatch({
-              type: "SKIP_RIGHT",
-            });
-          }}
+          onEnd={handleEnd}
         />
       )}
       {activeSong && (
