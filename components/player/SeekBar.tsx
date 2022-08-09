@@ -49,6 +49,10 @@ const SeekBar: FC<Props> = () => {
     dispatch,
   ] = usePlayerActor();
 
+  const onEnd = useCallback(() => {
+    return { repeat, shuffle };
+  }, [repeat, shuffle]);
+
   // -- HOWLER VALUE (TODO)
   const [howlerSeekValue, setHowlerSeekValue] = useState<number>(0);
   // ------------------------------------------------
@@ -154,8 +158,10 @@ const SeekBar: FC<Props> = () => {
             });
           }} */
           onEnd={() => {
-            console.log({ repeat });
-            if (repeat) return;
+            const { repeat: re, shuffle: sh } = onEnd();
+
+            if (re) return;
+
             dispatch({
               type: "SKIP_RIGHT",
             });
