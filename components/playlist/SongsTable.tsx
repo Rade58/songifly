@@ -130,11 +130,11 @@ const SongsTable: FC<Props> = ({ songs }) => {
                     {/* <label>
                     <input type="checkbox" className="checkbox" />
                   </label> */}
-                    <span className="num-of-song ml-4 flex items-center">
+                    <span className="num-of-song ml-4 flex items-center relative">
                       {!songIsPlaying ? (
                         `${i + 1}`
                       ) : (
-                        <span className="flex justify-center items-center text-success">
+                        <span className="relative -left-3 flex justify-center items-center text-success">
                           <CgLoadbarSound size={24} />
                         </span>
                       )}
