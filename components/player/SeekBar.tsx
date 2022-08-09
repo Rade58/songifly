@@ -36,6 +36,8 @@ const SeekBar: FC<Props> = () => {
 
         isPlaying,
         activeSong,
+        repeat,
+        shuffle,
       },
     },
     dispatch,
@@ -146,6 +148,7 @@ const SeekBar: FC<Props> = () => {
             });
           }} */
           onEnd={() => {
+            if (repeat) return;
             dispatch({
               type: "SKIP_RIGHT",
             });
