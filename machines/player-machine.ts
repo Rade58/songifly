@@ -3,6 +3,9 @@ import Router from "next/router";
 
 import type { Song } from "@prisma/client";
 
+// TODO
+// REMOVE ALL SEEKING LOGIC FROM THE MACHINE IT IS NOT NECESSARY
+
 type SongType = Song & {
   artist: {
     name: string;
