@@ -281,6 +281,13 @@ const authPageMachine = createMachine<
               ac.playSong,
             ],
           },
+
+          [EV.TOGGLE_REPEAT]: {
+            actions: [ac.switchRepeat],
+          },
+          [EV.TOGGLE_SHUFFLE]: {
+            actions: [ac.switchShuffle],
+          },
         },
       },
     },

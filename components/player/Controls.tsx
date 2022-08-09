@@ -17,10 +17,12 @@ interface Props {
 const Controls: FC<Props> = () => {
   const [
     {
-      context: { isPlaying, activeSong },
+      context: { isPlaying, activeSong, repeat, shuffle },
     },
     dispatch,
   ] = usePlayerActor();
+
+  console.log({ shuffle, repeat });
 
   return (
     <>
@@ -32,7 +34,9 @@ const Controls: FC<Props> = () => {
                 type: "TOGGLE_SHUFFLE",
               });
             }}
-            className="btn btn-ghost btn-sm btn-circle"
+            className={`btn btn-ghost btn-sm btn-circle ${
+              shuffle ? "text-success" : ""
+            }`.trim()}
           >
             <BiShuffle size={16} />
           </button>
@@ -84,7 +88,9 @@ const Controls: FC<Props> = () => {
                 type: "TOGGLE_REPEAT",
               });
             }}
-            className="btn btn-ghost btn-sm btn-circle"
+            className={`btn btn-ghost btn-sm btn-circle ${
+              repeat ? "text-success" : ""
+            }`.trim()}
           >
             <TbRepeat size={16} />
           </button>
