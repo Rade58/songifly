@@ -37,7 +37,7 @@ const SeekBar: FC<Props> = () => {
   const [
     {
       context: {
-        // seekValue: howlerSeekValue,
+        seekValue: howlerSeekValue,
 
         isPlaying,
         activeSong,
@@ -48,7 +48,7 @@ const SeekBar: FC<Props> = () => {
     dispatch,
   ] = usePlayerActor();
 
-  const [howlerSeekValue, setHowlerSeekValue] = useState<number>(0);
+  // const [howlerSeekValue, setHowlerSeekValue] = useState<number>(0);
   // ------------------------------------------------
   // ------------------------------------------------
 
@@ -65,7 +65,13 @@ const SeekBar: FC<Props> = () => {
   };
   //
   const handleMouseUp = () => {
-    setHowlerSeekValue(seekVal);
+    // setHowlerSeekValue(seekVal);
+    dispatch({
+      type: "GIVE_SEEK_VAL",
+      payload: {
+        seekValue: seekVal,
+      },
+    });
 
     if (howlerPlayerRef.current) {
       howlerPlayerRef.current.seek(seekVal);
@@ -84,9 +90,18 @@ const SeekBar: FC<Props> = () => {
 
     if (repeat && activeSong) {
       if (howlerPlayerRef.current) {
+        // howlerPlayerRef.current.seek(0);
+
+        dispatch({
+          type: "GIVE_SEEK_VAL",
+          payload: {
+            seekValue: 0,
+          },
+        });
         howlerPlayerRef.current.seek(0);
-        setHowlerSeekValue(0);
-        setSeekVal(0);
+
+        // setHowlerSeekValue(0);
+        // setSeekVal(0);
       }
 
       dispatch({
@@ -116,7 +131,13 @@ const SeekBar: FC<Props> = () => {
             if (isPlaying && timerIdRef.current === undefined) {
               timerIdRef.current = setInterval(() => {
                 if (player) {
-                  setHowlerSeekValue(Math.round(player.seek()));
+                  // setHowlerSeekValue(Math.round(player.seek()));
+                  dispatch({
+                    type: "GIVE_SEEK_VAL",
+                    payload: {
+                      seekValue: Math.round(player.seek()),
+                    },
+                  });
                 }
               }, 1000);
             } else {
