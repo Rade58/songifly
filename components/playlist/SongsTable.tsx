@@ -202,7 +202,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
                       </div>
                       <div>
                         <div
-                          className={`font-bold ${
+                          className={`font-semibold ${
                             songIsActive ? "text-success" : ""
                           }`}
                         >
