@@ -75,34 +75,45 @@ const SongsTable: FC<Props> = ({ songs }) => {
   return (
     <>
       <div className="relative">
-        {activeSong && (
-          <span className="absolute -top-16 -mt-3 left-12">
-            <button
-              onClick={() => {
-                if (value === "no_active_song") {
+        {/* {activeSong && */}
+        <span className="absolute -top-16 -mt-3 left-12">
+          <button
+            onClick={() => {
+              console.log(value, songs);
+
+              if (value === "no_song") {
+                if (songs) {
                   dispatch({
-                    type: "SKIP_RIGHT",
-                  });
-                } else {
-                  dispatch({
-                    type: "TOGGLE_PLAY",
+                    type: "GIVE_ACTIVE_SONG",
+                    payload: {
+                      song: {
+                        data: songs[0],
+                        songIndex: 0,
+                        playlistId: +(playlistId as string),
+                      },
+                    },
                   });
                 }
-              }}
-              className="my-large-btn btn btn-circle btn-lg btn-success"
-            >
-              {!isPlaying ? (
-                <div className="ml-1">
-                  <IoIosPlay size={42} />
-                </div>
-              ) : (
-                <div className="">
-                  <IoIosPause size={42} />
-                </div>
-              )}
-            </button>
-          </span>
-        )}
+              } else {
+                dispatch({
+                  type: "TOGGLE_PLAY",
+                });
+              }
+            }}
+            className="my-large-btn btn btn-circle btn-lg btn-success"
+          >
+            {!isPlaying ? (
+              <div className="ml-1">
+                <IoIosPlay size={42} />
+              </div>
+            ) : (
+              <div className="">
+                <IoIosPause size={42} />
+              </div>
+            )}
+          </button>
+        </span>
+        {/*)}*/}
       </div>
       <div className="overflow-x-auto mx-12 mt-24">
         <table className="songs-table table-compact w-full">
