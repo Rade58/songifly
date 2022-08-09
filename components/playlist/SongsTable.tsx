@@ -143,22 +143,24 @@ const SongsTable: FC<Props> = ({ songs }) => {
                       <button
                         className="btn btn-ghost btn-xs"
                         onClick={() => {
-                          if (!isPlaying) {
-                            dispatch({
-                              type: "GIVE_ACTIVE_SONG",
-                              payload: {
-                                song: {
-                                  data: song,
-                                  songIndex: i,
-                                  playlistId: +(playlistId as string),
-                                },
-                              },
-                            });
-                          } else {
+                          if (songIsPlaying) {
                             dispatch({
                               type: "TOGGLE_PLAY",
                             });
+
+                            return;
                           }
+
+                          dispatch({
+                            type: "GIVE_ACTIVE_SONG",
+                            payload: {
+                              song: {
+                                data: song,
+                                songIndex: i,
+                                playlistId: +(playlistId as string),
+                              },
+                            },
+                          });
                         }}
                       >
                         {!songIsPlaying ? (
