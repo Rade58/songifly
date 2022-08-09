@@ -18,6 +18,8 @@ interface Props {
 }
 
 const SeekBar: FC<Props> = () => {
+  const [songEnded, setSongEnded] = useState<number>(0);
+
   // REFERENCE FOR THE TIMER ID
   const timerIdRef = useRef<NodeJS.Timer | undefined>();
 
@@ -72,116 +74,62 @@ const SeekBar: FC<Props> = () => {
     setUseHowlerSeekValue(true);
   };
 
-  const handleEndRepeat = useCallback(
-    (param: number) => {
-      // console.log("---------");
-      // console.log({ repeat });
-      // console.log("ENDED!!!!");
+  const handleEnd = (param: number) => {
+    setSongEnded((prev) => prev + 1);
+  };
 
-      if (!repeat) {
-        //
-        dispatch({
-          type: "SKIP_RIGHT",
-        });
+  useEffect(() => {
+    if (songEnded === 0) return;
+    if (!dispatch) return;
 
-        // return;
+    if (repeat && activeSong) {
+      if (howlerPlayerRef.current) {
+        howlerPlayerRef.current.seek(0);
+        setHowlerSeekValue(0);
+        setSeekVal(0);
       }
 
-      /* if (repeat && activeSong) {
-        dispatch({
-          type: "GIVE_ACTIVE_SONG",
-          payload: {
-            song: activeSong,
-          },
-        });
-      } */
-    },
-    [repeat, activeSong]
-  );
+      dispatch({
+        type: "GIVE_ACTIVE_SONG",
+        payload: {
+          song: activeSong,
+        },
+      });
+    } else {
+      dispatch({
+        type: "SKIP_RIGHT",
+      });
+    }
+  }, [songEnded]);
 
-  const handleEndNoRepeat = useCallback(
-    (param: number) => {
-      // console.log("---------");
-      // console.log({ repeat });
-      // console.log("ENDED!!!!");
-
-      /* if (!repeat) {
-        //
-        dispatch({
-          type: "SKIP_RIGHT",
-        });
-
-        // return;
-      } */
-
-      if (repeat && activeSong) {
-        dispatch({
-          type: "GIVE_ACTIVE_SONG",
-          payload: {
-            song: activeSong,
-          },
-        });
-      }
-    },
-    [repeat, activeSong]
-  );
-
-  console.log({ repeat });
+  // console.log({ repeat });
 
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
       {activeSong && activeSong.data && activeSong.data.url && (
-        <>
-          {repeat ? (
-            <Howller
-              ref={(player) => {
-                if (!howlerPlayerRef.current) {
-                  howlerPlayerRef.current = player;
-                }
+        <Howller
+          ref={(player) => {
+            if (!howlerPlayerRef.current) {
+              howlerPlayerRef.current = player;
+            }
 
-                if (isPlaying && timerIdRef.current === undefined) {
-                  timerIdRef.current = setInterval(() => {
-                    if (player) {
-                      setHowlerSeekValue(Math.round(player.seek()));
-                    }
-                  }, 1000);
-                } else {
-                  if (timerIdRef.current !== undefined) {
-                    clearInterval(timerIdRef.current);
-                    timerIdRef.current = undefined;
-                  }
+            if (isPlaying && timerIdRef.current === undefined) {
+              timerIdRef.current = setInterval(() => {
+                if (player) {
+                  setHowlerSeekValue(Math.round(player.seek()));
                 }
-              }}
-              playing={isPlaying}
-              src={activeSong?.data.url || ""}
-              onEnd={repeat ? handleEndRepeat : undefined}
-            />
-          ) : (
-            <Howller
-              ref={(player) => {
-                if (!howlerPlayerRef.current) {
-                  howlerPlayerRef.current = player;
-                }
-
-                if (isPlaying && timerIdRef.current === undefined) {
-                  timerIdRef.current = setInterval(() => {
-                    if (player) {
-                      setHowlerSeekValue(Math.round(player.seek()));
-                    }
-                  }, 1000);
-                } else {
-                  if (timerIdRef.current !== undefined) {
-                    clearInterval(timerIdRef.current);
-                    timerIdRef.current = undefined;
-                  }
-                }
-              }}
-              playing={isPlaying}
-              src={activeSong?.data.url || ""}
-              onEnd={!repeat ? handleEndNoRepeat : undefined}
-            />
-          )}
-        </>
+              }, 1000);
+            } else {
+              if (timerIdRef.current !== undefined) {
+                clearInterval(timerIdRef.current);
+                timerIdRef.current = undefined;
+              }
+            }
+          }}
+          playing={isPlaying}
+          src={activeSong?.data.url || ""}
+          onEnd={handleEnd}
+        />
       )}
       {activeSong && (
         <>
