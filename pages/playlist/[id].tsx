@@ -147,8 +147,10 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
       }
     }
 
-    console.log("playlit mounted");
+    // console.log("playlit mounted");
   }, [playlistId, currentVisitedSongs]);
+
+  // console.log({ currentVisitedSongs });
 
   return (
     <GradientContainer variant={colorVariant} customGradient>

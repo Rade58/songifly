@@ -105,6 +105,8 @@ const ac = {
   switchRepeat: "switchRepeat",
   //
   setVisitedSongs: "setVisitedSongs",
+  //
+  compareAndSwitchSongsArrays: "compareAndSwitchSongsArrays",
 } as const;
 
 // --------------------------------------------------
@@ -225,7 +227,7 @@ const authPageMachine = createMachine<
         actions: [ac.setSongs, ac.resetCurrentIndex],
       }, */
       [EV.VISIT_PLAYLIST]: {
-        //
+        actions: [ac.setVisitedSongs],
       },
 
       [EV.GIVE_VOLUME]: {
@@ -242,7 +244,12 @@ const authPageMachine = createMachine<
       [fs.no_active_song]: {
         on: {
           [EV.GIVE_ACTIVE_SONG]: {
-            actions: [ac.setActiveSong, ac.setSeekToZero, ac.playSong],
+            actions: [
+              ac.setActiveSong,
+              ac.compareAndSwitchSongsArrays,
+              ac.setSeekToZero,
+              ac.playSong,
+            ],
             target: fs.idle,
           },
         },
@@ -264,7 +271,12 @@ const authPageMachine = createMachine<
           },
 
           [EV.GIVE_ACTIVE_SONG]: {
-            actions: [ac.setActiveSong, ac.setSeekToZero, ac.playSong],
+            actions: [
+              ac.setActiveSong,
+              ac.compareAndSwitchSongsArrays,
+              ac.setSeekToZero,
+              ac.playSong,
+            ],
           },
         },
       },
@@ -451,6 +463,21 @@ const authPageMachine = createMachine<
         }
         return {};
       }),
+      [ac.compareAndSwitchSongsArrays]: assign((ctx, _) => {
+        if (ctx.activeSong && ctx.currentVisitedSongs) {
+          if (
+            ctx.activeSong.playlistId === ctx.currentVisitedSongs.playlistId
+          ) {
+            return {
+              songs: ctx.currentVisitedSongs,
+            };
+          }
+
+          return {};
+        }
+
+        return {};
+      }),
     },
   }
 );
@@ -458,11 +485,13 @@ const authPageMachine = createMachine<
 const playerActor = interpret(authPageMachine);
 
 playerActor.onTransition((state, event) => {
-  console.log("FROM on TRANSITION");
-  console.log({ playerMachineCurrentState: state.value });
+  // console.log("FROM on TRANSITION");
+  // console.log({ playerMachineCurrentState: state.value });
 
-  console.log({ loadedSongs: state.context.songs });
-  console.log({ activeSingleSong: state.context.activeSong });
+  // console.log({ loadedSongs: state.context.songs });
+  // console.log({ activeSingleSong: state.context.activeSong });
+
+  console.log({ VISITED_SONGS: state.context.currentVisitedSongs });
 });
 
 export default playerActor;
