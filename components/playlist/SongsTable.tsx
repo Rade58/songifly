@@ -79,7 +79,7 @@ const SongsTable: FC<Props> = ({ songs }) => {
         <span className="absolute -top-16 -mt-3 left-12">
           <button
             onClick={() => {
-              console.log(value, songs);
+              // console.log(value, songs);
 
               if (value === "no_song") {
                 if (songs) {
