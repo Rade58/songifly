@@ -32,9 +32,6 @@ const SeekBar: FC<Props> = () => {
     };
   }, [timerIdRef]);
 
-  // WE NEED TO ELIMINATE SEEK VALUES THAT COME FROM MACHINE
-  // BECAUSE THEY MAKE UNECESSARY RERENDERING OF BUNCH OF
-  // COMPONENTS THAT USES THE ACTOR
   const [
     {
       context: {
@@ -49,24 +46,13 @@ const SeekBar: FC<Props> = () => {
     dispatch,
   ] = usePlayerActor();
 
-  // -- HOWLER VALUE (TODO)
   const [howlerSeekValue, setHowlerSeekValue] = useState<number>(0);
   // ------------------------------------------------
   // ------------------------------------------------
 
-  // FOR CONTROLED RANGE INPUT
   const [seekVal, setSeekVal] = useState<number>(0);
 
-  // TO DETERMINE IF WE ARE GOING TO
-  // FEED INPUT WITH HOWLER SEEK VALUUE OR LOCAL STATE VALUE
   const [useHowlerSeekValue, setUseHowlerSeekValue] = useState(true);
-
-  // INTENDED FOR THE HOWLER (ONLY TIME IT IS GOING TO CHANGE
-  // IS ON mouseup EVENT OF TH RANGE INPUT (WE DON'T WANT
-  // TO CHANGE HOWLER VALUE onchange BECAUSE YOU WOULD
-  // HAVE TOO MUCH ANOYING RERENDERING AS YOU SLIDE
-  // RANGE ELEMENT))
-  // const [seekValueForHowler, setSeekValueForHowler] = useState(0);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSeekVal(Math.round(+e.target.value));
@@ -77,44 +63,31 @@ const SeekBar: FC<Props> = () => {
   };
   //
   const handleMouseUp = () => {
-    // WE NEED TO ASSIGN      seekVal     VALUE TO THE
-    //                                    HOWLER PLAYER
-    //                                    IN HERE
-    //
-    /* dispatch({
-      type: "GIVE_SEEK_VAL",
-      payload: {
-        seekValue: seekVal,
-      },
-    });
-    */
-
     setHowlerSeekValue(seekVal);
 
     if (howlerPlayerRef.current) {
       howlerPlayerRef.current.seek(seekVal);
     }
 
-    //
     setUseHowlerSeekValue(true);
   };
 
-  // BUT ALSO A HOWLER SHOULD CHANGE THE PROGRESS AND A RANGE
-  // BUT WE NEED TO STOP FEEDING THAT STATE TO OUR RANGE AND PROGRE
-  // WHEN WE CLICK ON THE RANGE
-
   const handleEnd = useCallback(
     (param: number) => {
+      // console.log("---------");
+      // console.log({ repeat });
+      // console.log("ENDED!!!!");
+
       if (!repeat) {
         //
         dispatch({
           type: "SKIP_RIGHT",
         });
 
-        return;
+        // return;
       }
 
-      if (activeSong && repeat === true) {
+      if (repeat && activeSong) {
         dispatch({
           type: "GIVE_ACTIVE_SONG",
           payload: {
@@ -126,58 +99,62 @@ const SeekBar: FC<Props> = () => {
     [repeat, shuffle, activeSong]
   );
 
+  console.log({ repeat });
+
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
       {activeSong && activeSong.data && activeSong.data.url && (
-        <Howller
-          ref={(player) => {
-            // SETTING SEEK
-            // player?.seek()
-            // GETTING SEEK
-            // player.seek
-            if (!howlerPlayerRef.current) {
-              howlerPlayerRef.current = player;
-            }
-
-            if (isPlaying && timerIdRef.current === undefined) {
-              timerIdRef.current = setInterval(() => {
-                if (player) {
-                  // console.log({ SEEK: player.seek() });
-
-                  /* dispatch({
-                    type: "GIVE_SEEK_VAL",
-                    payload: {
-                      seekValue: Math.round(player.seek()),
-                    },
-                  }); */
-
-                  setHowlerSeekValue(Math.round(player.seek()));
+        <>
+          {repeat ? (
+            <Howller
+              ref={(player) => {
+                if (!howlerPlayerRef.current) {
+                  howlerPlayerRef.current = player;
                 }
-              }, 1000);
-            } else {
-              if (timerIdRef.current !== undefined) {
-                clearInterval(timerIdRef.current);
-                timerIdRef.current = undefined;
-              }
-            }
-          }}
-          playing={isPlaying}
-          src={
-            // "https://dl.dropboxusercontent.com/s/7xmpwvvek6szx5n/fermi-paradox.mp3?dl=0"
-            activeSong?.data.url || ""
-          }
-          /* onSeek={(howlerSeekValue) => {
-            console.log({ howlerSeekValue });
 
-            dispatch({
-              type: "GIVE_SEEK_VAL",
-              payload: {
-                seekValue: howlerSeekValue,
-              },
-            });
-          }} */
-          onEnd={handleEnd}
-        />
+                if (isPlaying && timerIdRef.current === undefined) {
+                  timerIdRef.current = setInterval(() => {
+                    if (player) {
+                      setHowlerSeekValue(Math.round(player.seek()));
+                    }
+                  }, 1000);
+                } else {
+                  if (timerIdRef.current !== undefined) {
+                    clearInterval(timerIdRef.current);
+                    timerIdRef.current = undefined;
+                  }
+                }
+              }}
+              playing={isPlaying}
+              src={activeSong?.data.url || ""}
+              onEnd={handleEnd}
+            />
+          ) : (
+            <Howller
+              ref={(player) => {
+                if (!howlerPlayerRef.current) {
+                  howlerPlayerRef.current = player;
+                }
+
+                if (isPlaying && timerIdRef.current === undefined) {
+                  timerIdRef.current = setInterval(() => {
+                    if (player) {
+                      setHowlerSeekValue(Math.round(player.seek()));
+                    }
+                  }, 1000);
+                } else {
+                  if (timerIdRef.current !== undefined) {
+                    clearInterval(timerIdRef.current);
+                    timerIdRef.current = undefined;
+                  }
+                }
+              }}
+              playing={isPlaying}
+              src={activeSong?.data.url || ""}
+              onEnd={handleEnd}
+            />
+          )}
+        </>
       )}
       {activeSong && (
         <>
