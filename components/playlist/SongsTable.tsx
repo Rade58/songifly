@@ -12,6 +12,8 @@ import { IoIosPlay, IoIosPause } from "react-icons/io";
 
 import { AiOutlineClockCircle } from "react-icons/ai";
 
+import { CgLoadbarSound } from "react-icons/cg";
+
 import type { Song } from "@prisma/client";
 
 import { formatTime, formatDate } from "@/util/formatters";
@@ -41,7 +43,21 @@ const SongsTable: FC<Props> = ({ songs }) => {
     query: { id: playlistId },
   } = useRouter();
 
-  console.log({ playlistId });
+  const activeSongPlaying = (songIndex: number) => {
+    if (
+      isPlaying &&
+      activeSong &&
+      typeof playlistId === "string" &&
+      activeSong.playlistId === +playlistId &&
+      activeSong.songIndex === songIndex
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  // console.log({ playlistId });
 
   return (
     <>
@@ -106,30 +122,50 @@ const SongsTable: FC<Props> = ({ songs }) => {
                 updatedAt,
               } = song;
 
+              const songIsPlaying = activeSongPlaying(i);
+
               return (
-                <tr key={name} className="song-row">
+                <tr key={name} className={"song-row"}>
                   <td className="border-0 border-rose-200 w-14">
                     {/* <label>
                     <input type="checkbox" className="checkbox" />
                   </label> */}
-                    <span className="num-of-song ml-4">{i + 1}</span>
+                    <span className="num-of-song ml-4 flex items-center">
+                      {!songIsPlaying ? (
+                        `${i + 1}`
+                      ) : (
+                        <span className="flex justify-center items-center text-success">
+                          <CgLoadbarSound size={24} />
+                        </span>
+                      )}
+                    </span>
                     <span className="play-icon hidden">
                       <button
                         className="btn btn-ghost btn-xs"
                         onClick={() => {
-                          dispatch({
-                            type: "GIVE_ACTIVE_SONG",
-                            payload: {
-                              song: {
-                                data: song,
-                                songIndex: i,
-                                playlistId: +(playlistId as string),
+                          if (!isPlaying) {
+                            dispatch({
+                              type: "GIVE_ACTIVE_SONG",
+                              payload: {
+                                song: {
+                                  data: song,
+                                  songIndex: i,
+                                  playlistId: +(playlistId as string),
+                                },
                               },
-                            },
-                          });
+                            });
+                          } else {
+                            dispatch({
+                              type: "TOGGLE_PLAY",
+                            });
+                          }
                         }}
                       >
-                        <IoIosPlay size={19} />
+                        {!songIsPlaying ? (
+                          <IoIosPlay size={19} />
+                        ) : (
+                          <IoIosPause size={19} />
+                        )}
                       </button>
                     </span>
                   </td>
