@@ -168,13 +168,19 @@ const SeekBar: FC<Props> = () => {
 
   const [duration, setDuration] = useState(0);
 
+  console.log({ duration });
+
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
       {activeSong && activeSong.data && activeSong.data.url && (
         <Howller
           onLoad={(p) => {
             if (howlerPlayerRef.current) {
-              setDuration(howlerPlayerRef.current.duration);
+              console.log(howlerPlayerRef.current.duration());
+
+              // if()
+
+              setDuration(howlerPlayerRef.current.duration());
             }
           }}
           ref={(player) => {
@@ -237,7 +243,7 @@ const SeekBar: FC<Props> = () => {
             </div>
           </div>
           <div className="text-sm font-light opacity-75">
-            {formatTime(activeSong?.data.duration)}
+            {formatTime(duration)}
           </div>
         </>
       )}
