@@ -1,5 +1,5 @@
 import { createMachine, assign, interpret } from "xstate";
-import Router from "next/router";
+// import Router from "next/router";
 
 // MACHINE ID AND (key IS MARKING MACHINE AS AN ACTOR)
 // (TODO I GOT TO RENEW MY KNOLEDGE ON ACTOR MODEL)
