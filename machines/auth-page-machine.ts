@@ -28,7 +28,12 @@ const buildTarget = (
 // THIS IS ONE OF THE ACTIONS
 const navigateOfThePage = () => {
   // WE WILL CHANGE THIS ROUTE LATER
-  router.push("/");
+
+  fetch("/api/current-user")
+    .then((resp) => resp.json())
+    .then(() => {
+      router.push("/");
+    });
 };
 
 // MACHINE ID AND (key IS MARKING MACHINE AS AN ACTOR)
