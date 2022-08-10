@@ -60,7 +60,7 @@
     "p:introspect": "dotenv -e .env.production -- npx prisma introspect"
   },
   "dependencies": {
-    "@prisma/client": "^4.1.1",
+    "@prisma/client": "^4.2.0",
     "@xstate/react": "^3.0.0",
     "bcrypt": "^5.0.1",
     "cookie": "^0.5.0",
@@ -101,7 +101,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
-    "prisma": "^4.1.1",
+    "prisma": "^4.2.0",
     "tailwindcss": "^3.1.6",
     "ts-node": "^10.9.1",
     "typescript": "4.7.4"
