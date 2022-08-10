@@ -29,11 +29,13 @@ const buildTarget = (
 const navigateOfThePage = () => {
   // WE WILL CHANGE THIS ROUTE LATER
 
-  fetch("/api/current-user")
+  window.location.reload();
+
+  /* fetch("/api/current-user")
     .then((resp) => resp.json())
-    .then(() => {
-      router.push("/");
-    });
+    .then((data) => {
+      router.push("/",);
+    }); */
 };
 
 // MACHINE ID AND (key IS MARKING MACHINE AS AN ACTOR)
