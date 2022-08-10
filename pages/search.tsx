@@ -3,7 +3,7 @@
 import type { NextPage as NP } from "next";
 
 const Search: NP = () => {
-  return <div>Search</div>;
+  return <div>Search (Work in progress)</div>;
 };
 
 export default Search;

@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 };
 
 const LibraryPage: NextPageWithLayout<PropsI> = () => {
-  return <div>Library</div>;
+  return <div>Library (work in progress)</div>;
 };
 
 export default LibraryPage;
