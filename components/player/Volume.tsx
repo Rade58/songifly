@@ -1,5 +1,5 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
-import React, { ChangeEvent, createRef, useEffect } from "react";
+import React, { ChangeEvent, createRef, useEffect, useState } from "react";
 import type { FC, ReactNode } from "react";
 
 import { TiVolumeUp, TiVolumeMute } from "react-icons/ti";
@@ -13,10 +13,12 @@ interface Props {
 const Volume: FC<Props> = () => {
   const [
     {
-      context: { mute },
+      context: { mute, volume },
     },
     dispatch,
   ] = usePlayerActor();
+
+  const [prevVol, setPrevVol] = useState(0);
 
   return (
     <div className="ml-auto mr-4 flex w-3/4 items-center">
@@ -24,13 +26,20 @@ const Volume: FC<Props> = () => {
         onClick={() => {
           if (mute) {
             dispatch({
-              type: "VOLUME_TO_HALF",
+              type: "GIVE_VOLUME",
+              payload: {
+                volume: prevVol,
+              },
             });
           } else {
             dispatch({
-              type: "MUTE",
+              type: "GIVE_VOLUME",
+              payload: {
+                volume: 0,
+              },
             });
           }
+          setPrevVol(volume);
         }}
         className="volume-btn cursor-default btn btn-xs btn-ghost hover:bg-transparent"
       >
@@ -51,7 +60,7 @@ const Volume: FC<Props> = () => {
         type="range"
         min="0"
         max="10"
-        // value="50"
+        value={volume * 10}
         className="range range-secondary range-xs cursor-default"
         // defaultValue="5"
       />
