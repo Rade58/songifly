@@ -47,8 +47,6 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
 
     if (signup) {
       dispatch({
-        // eslint-disable-next-line
-        // @ts-ignore
         type: "MAKE_SIGNUP_REQUEST",
         payload: {
           email,

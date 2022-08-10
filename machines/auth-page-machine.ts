@@ -115,7 +115,7 @@ export type machineEventsGenericType =
       payload: {
         email: string;
         password: string;
-        username: string;
+        username: string | undefined;
       };
     };
 
