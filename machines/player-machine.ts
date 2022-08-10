@@ -75,6 +75,8 @@ export const EV = {
   TOGGLE_REPEAT: "TOGGLE_REPEAT",
   //
   VISIT_PLAYLIST: "VISIT_PLAYLIST",
+  //
+  VOLUME_TO_HALF: "VOLUME_TO_HALF",
 } as const;
 
 /**
@@ -110,6 +112,8 @@ const ac = {
   setVisitedSongs: "setVisitedSongs",
   //
   compareAndSwitchSongsArrays: "compareAndSwitchSongsArrays",
+  //
+  setVolumeToHalf: "setVolumeToHalf",
 } as const;
 
 // --------------------------------------------------
@@ -190,6 +194,9 @@ export type machineEventsGenericType =
     }
   | {
       type: typeof EV.TOGGLE_SHUFFLE;
+    }
+  | {
+      type: typeof EV.VOLUME_TO_HALF;
     };
 
 export type machineFiniteStatesGenericType =
@@ -239,6 +246,9 @@ const authPageMachine = createMachine<
 
       [EV.MUTE]: {
         actions: [ac.setVolumeToZero, ac.checkIfMuted],
+      },
+      [EV.VOLUME_TO_HALF]: {
+        actions: [ac.setVolumeToHalf, ac.checkIfMuted],
       },
     },
 
@@ -356,7 +366,7 @@ const authPageMachine = createMachine<
           };
         } else {
           return {
-            mute: true,
+            mute: false,
           };
         }
       }),
@@ -486,6 +496,14 @@ const authPageMachine = createMachine<
           return {};
         }
 
+        return {};
+      }),
+      [ac.setVolumeToHalf]: assign((_, ev) => {
+        if (ev.type === "VOLUME_TO_HALF") {
+          return {
+            volume: 0.5,
+          };
+        }
         return {};
       }),
     },

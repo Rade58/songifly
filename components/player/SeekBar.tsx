@@ -44,6 +44,7 @@ const SeekBar: FC<Props> = () => {
         repeat,
         shuffle,
         songs,
+        volume,
       },
     },
     dispatch,
@@ -174,6 +175,7 @@ const SeekBar: FC<Props> = () => {
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
       {activeSong && activeSong.data && activeSong.data.url && (
         <Howller
+          volume={volume}
           onLoad={(p) => {
             if (howlerPlayerRef.current) {
               console.log(howlerPlayerRef.current.duration());
