@@ -44,7 +44,6 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
 
   const handleSubmit = useCallback(() => {
     //
-
     if (signup) {
       dispatch({
         type: "MAKE_SIGNUP_REQUEST",
@@ -55,6 +54,7 @@ const SignInOrUpForm: FC<PrOne | PrTwo> = ({ signup, signin }) => {
         },
       });
     }
+    // ------
     if (signin) {
       dispatch({
         type: "MAKE_SIGNIN_REQUEST",
