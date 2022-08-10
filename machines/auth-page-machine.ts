@@ -104,28 +104,25 @@ export type machineEventsGenericType =
   | { type: typeof EV.AUTH_MODE_TOGGLE }
   | { type: typeof EV.BACK_TO_OFF_PAGE }
   | {
-      type: typeof EV.MAKE_SIGNUP_REQUEST;
+      type: typeof EV.MAKE_SIGNIN_REQUEST;
       payload: {
-        username: string;
         email: string;
         password: string;
       };
     }
   | {
-      type: typeof EV.MAKE_SIGNIN_REQUEST;
+      type: typeof EV.MAKE_SIGNUP_REQUEST;
       payload: {
         email: string;
         password: string;
+        username: string;
       };
     };
 
 export type machineFiniteStatesGenericType =
   | {
       value: typeof fs.off_auth;
-      context: MachineContextGenericI & {
-        disableForms: true;
-        networkError: undefined;
-      };
+      context: MachineContextGenericI;
     }
   | {
       value: { [fs.off_auth]: typeof fs.idle };
@@ -133,7 +130,7 @@ export type machineFiniteStatesGenericType =
     }
   | {
       value: { [fs.off_auth]: typeof fs.leaving_page };
-      context: MachineContextGenericI & { isLoading: true };
+      context: MachineContextGenericI;
     }
   | {
       value: typeof fs.on_auth;
@@ -141,35 +138,29 @@ export type machineFiniteStatesGenericType =
     }
   | {
       value: { [fs.on_auth]: typeof fs.signin };
-      context: MachineContextGenericI & { disableForms: false };
+      context: MachineContextGenericI;
     }
   | {
       value: { [fs.on_auth]: typeof fs.signup };
-      context: MachineContextGenericI & { disableForms: false };
+      context: MachineContextGenericI;
     }
   //
   | {
       value: { [fs.on_auth]: { [fs.signup]: typeof fs["making_request"] } };
-      context: MachineContextGenericI & { disableForms: true; isLoading: true };
+      context: MachineContextGenericI;
     }
   | {
       value: { [fs.on_auth]: { [fs.signin]: typeof fs["making_request"] } };
-      context: MachineContextGenericI & { disableForms: true; isLoading: true };
+      context: MachineContextGenericI;
     }
   //
   | {
       value: { [fs.on_auth]: { [fs.signup]: typeof fs.idle } };
-      context: MachineContextGenericI & {
-        disableForms: false;
-        isLoading: false;
-      };
+      context: MachineContextGenericI;
     }
   | {
       value: { [fs.on_auth]: { [fs.signin]: typeof fs.idle } };
-      context: MachineContextGenericI & {
-        disableForms: false;
-        isLoading: false;
-      };
+      context: MachineContextGenericI;
     };
 
 // -----------------  MACHINE --------------------
