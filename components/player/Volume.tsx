@@ -18,16 +18,6 @@ const Volume: FC<Props> = () => {
     dispatch,
   ] = usePlayerActor();
 
-  const sliderRef = createRef<HTMLInputElement>();
-
-  /* useEffect(() => {
-    //
-    //
-    if (sliderRef.current) {
-      sliderRef.current.value = "2";
-    }
-  }, [sliderRef]);
- */
   return (
     <div className="ml-auto mr-4 flex w-3/4 items-center">
       <button
@@ -36,17 +26,10 @@ const Volume: FC<Props> = () => {
             dispatch({
               type: "VOLUME_TO_HALF",
             });
-            if (sliderRef.current) {
-              sliderRef.current.value = "5";
-            }
           } else {
             dispatch({
               type: "MUTE",
             });
-
-            if (sliderRef.current) {
-              sliderRef.current.value = "0";
-            }
           }
         }}
         className="volume-btn cursor-default btn btn-xs btn-ghost hover:bg-transparent"
@@ -54,7 +37,6 @@ const Volume: FC<Props> = () => {
         {!mute ? <TiVolumeUp size={20} /> : <TiVolumeMute size={20} />}
       </button>
       <input
-        ref={sliderRef}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           // console.log(e.target.value);
           // console.log(+e.target.value / 10);
@@ -71,7 +53,7 @@ const Volume: FC<Props> = () => {
         max="10"
         // value="50"
         className="range range-secondary range-xs cursor-default"
-        defaultValue="5"
+        // defaultValue="5"
       />
     </div>
   );

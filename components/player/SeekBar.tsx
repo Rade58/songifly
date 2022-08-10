@@ -169,7 +169,7 @@ const SeekBar: FC<Props> = () => {
 
   const [duration, setDuration] = useState(0);
 
-  console.log({ duration });
+  console.log({ volume });
 
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">

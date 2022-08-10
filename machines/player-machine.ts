@@ -224,7 +224,7 @@ const authPageMachine = createMachine<
       songs: null,
       currentVisitedSongs: null,
       activeSong: null,
-      volume: 50,
+      volume: 0.5,
       mute: false,
       isPlaying: false,
       seekValue: 0,
