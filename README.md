@@ -2,7 +2,9 @@
 
 decription:
 
-A fullstack project built with nextjs; to some extent this aapplication is spotify clone
+A fullstack project built with nextjs; to some extent this application is spotify clone
+
+inspired by <https://github.com/Hendrixer/fullstack-music>
 
 Completed:
 
