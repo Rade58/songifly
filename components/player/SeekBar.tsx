@@ -169,7 +169,7 @@ const SeekBar: FC<Props> = () => {
 
   const [duration, setDuration] = useState(0);
 
-  console.log({ volume });
+  // console.log({ volume });
 
   return (
     <div className="relative flex w-full border-0 border-rose-600 justify-between items-center">
@@ -178,7 +178,7 @@ const SeekBar: FC<Props> = () => {
           volume={volume}
           onLoad={(p) => {
             if (howlerPlayerRef.current) {
-              console.log(howlerPlayerRef.current.duration());
+              // console.log(howlerPlayerRef.current.duration());
 
               // if()
 

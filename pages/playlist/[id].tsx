@@ -121,6 +121,10 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
   ] = usePlayerActor();
 
   useEffect(() => {
+    console.log("MOUNTED MOUNTED ON PLAYLIST");
+  }, []);
+
+  useEffect(() => {
     if (!currentVisitedSongs && playlistId) {
       dispatch({
         type: "VISIT_PLAYLIST",
