@@ -11,6 +11,8 @@ import prisma from "@/lib/prisma";
 
 import { SONGIFY_ACCESS_TOKEN } from "@/constants/token";
 
+import { createPlaylists as fooCreatePlaylists } from "@/lib/foo_seed";
+
 type Data = {
   user?: User;
   errors?: string[];
@@ -75,6 +77,14 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     });
 
     res.setHeader("Set-Cookie", serializedCookie);
+
+    //
+    await fooCreatePlaylists(user, [
+      "Sounds like tool",
+      "Progressive rock",
+      "Relaxing Jazz",
+      "Lofi girl",
+    ]);
 
     return res
       .status(201)
