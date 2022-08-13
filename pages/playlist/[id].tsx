@@ -116,20 +116,22 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
 
   const [
     {
-      context: { currentVisitedSongs },
+      context: { currentVisitedSongs, songs: currentSongs },
       value,
     },
     dispatch,
   ] = usePlayerActor();
 
   useEffect(() => {
-    if (value !== "no_song") {
+    /* if (value === "no_song") {
       push(`/playlist/${playlistId}`);
-    }
+    } */
+
+    console.log({ currentSongs });
 
     // console.log("MOUNTED MOUNTED ON PLAYLIST");
     // console.log({ value });
-  }, [value]);
+  }, [currentSongs]);
 
   useEffect(() => {
     if (!currentVisitedSongs && playlistId) {
