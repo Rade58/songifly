@@ -4,6 +4,8 @@ import fetcher from "@/lib/xstate-fetcher/auth-fetcher";
 
 // import {createPlaylists} from '@/lib/foo_seed'
 
+import cookie from "js-cookie";
+
 // I USED FETCHER LIKE THIS ONLY BECAUSE I WANT IT TO BE
 // EASIER TO MOCK WHEN I USE VISUALIZER
 // BECUSE I WANT TO TEST FAILIURE TOO
@@ -29,10 +31,11 @@ const buildTarget = (
 
 // THIS IS ONE OF THE ACTIONS
 const navigateOfThePage = () => {
-  // WE WILL CHANGE THIS ROUTE LATER
+  // WE
 
-  window.location.reload();
+  const playlistId = cookie.get("playlistId");
 
+  window.location.href = window.origin + "/playlists/" + playlistId;
   /* fetch("/api/current-user")
     .then((resp) => resp.json())
     .then((data) => {

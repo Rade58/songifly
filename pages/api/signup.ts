@@ -76,15 +76,31 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       path: "/",
     });
 
-    res.setHeader("Set-Cookie", serializedCookie);
-
-    //
-    await fooCreatePlaylists(user, [
+    const playlistsProm = await fooCreatePlaylists(user, [
       "Sounds like tool",
       "Progressive rock",
       "Relaxing Jazz",
       "Lofi girl",
     ]);
+
+    const playlist = await playlistsProm[0][0];
+
+    const serializedCookiePlaylistId = cookie.serialize(
+      "playlistId",
+      playlist.id.toString(),
+      {
+        maxAge: 8 * 60 * 60,
+        sameSite: "lax",
+        secure:
+          process.env.NODE_ENV !== "development" &&
+          process.env.NODE_ENV !== "test",
+        path: "/",
+      }
+    );
+
+    res.setHeader("Set-Cookie", [serializedCookie, serializedCookiePlaylistId]);
+
+    //
 
     return res
       .status(201)

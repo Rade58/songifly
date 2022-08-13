@@ -28,6 +28,16 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 };
 
 const LibraryPage: NextPageWithLayout<PropsI> = () => {
+  useEffect(() => {
+    console.log(
+      Router.pathname,
+      Router.asPath,
+      Router.query,
+      Router.route,
+      window.origin
+    );
+  }, []);
+
   return <div>Library (work in progress)</div>;
 };
 
