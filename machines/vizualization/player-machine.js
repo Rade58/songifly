@@ -87,7 +87,7 @@ const ac = {
 
 // -----------------  MACHINE --------------------
 
-const authPageMachine = createMachine(
+const playerMachine = createMachine(
   /* <
   MachineContextGenericI,
   machineEventsGenericType,
@@ -109,9 +109,9 @@ const authPageMachine = createMachine(
     },
 
     on: {
-      /* [EV.GIVE_SONGS]: {
-        actions: [ac.setSongs, ac.resetCurrentIndex],
-      }, */
+      [EV.GIVE_SONGS]: {
+        actions: [ac.setSongs],
+      },
       [EV.VISIT_PLAYLIST]: {
         actions: [ac.setVisitedSongs],
       },

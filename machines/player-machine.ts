@@ -211,7 +211,7 @@ export type machineFiniteStatesGenericType =
 
 // -----------------  MACHINE --------------------
 
-const authPageMachine = createMachine<
+const playerMachine = createMachine<
   MachineContextGenericI,
   machineEventsGenericType,
   machineFiniteStatesGenericType
@@ -510,7 +510,7 @@ const authPageMachine = createMachine<
   }
 );
 
-const playerActor = interpret(authPageMachine);
+const playerActor = interpret(playerMachine);
 
 playerActor.onTransition((state, event) => {
   // console.log("FROM on TRANSITION");
