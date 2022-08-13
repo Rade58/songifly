@@ -47,7 +47,7 @@ const key = "player_machine_actor";
  */
 export const fs = {
   // OF THE AUTH PAGE
-  no_active_song: "no_song",
+  no_active_song: "no_active_song",
   idle: "idle",
 } as const;
 
@@ -256,6 +256,9 @@ const authPageMachine = createMachine<
     states: {
       [fs.no_active_song]: {
         on: {
+          [EV.GIVE_SONGS]: {
+            actions: [ac.setSongs, ac.resetCurrentIndex],
+          },
           [EV.GIVE_ACTIVE_SONG]: {
             actions: [
               ac.setActiveSong,

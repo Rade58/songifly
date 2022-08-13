@@ -127,11 +127,25 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
       push(`/playlist/${playlistId}`);
     } */
 
-    console.log({ currentSongs });
+    console.log({ currentSongs, value, songs, playlistId });
+
+    if (!currentSongs && songs && playlistId) {
+      dispatch({
+        type: "GIVE_SONGS",
+        payload: {
+          songs: {
+            tracks: songs,
+            playlistId: +playlistId,
+          },
+        },
+      });
+    }
 
     // console.log("MOUNTED MOUNTED ON PLAYLIST");
     // console.log({ value });
-  }, [currentSongs]);
+  }, [currentSongs, songs, dispatch, playlistId]);
+
+  console.log({ currentSongs, songs, dispatch, playlistId });
 
   useEffect(() => {
     if (!currentVisitedSongs && playlistId) {
