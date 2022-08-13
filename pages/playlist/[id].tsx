@@ -124,7 +124,7 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
 
   useEffect(() => {
     if (value !== "no_song") {
-      push(`playlist/${parseInt(playlistId) + 1}`);
+      push(`/playlist/${playlistId}`);
     }
 
     // console.log("MOUNTED MOUNTED ON PLAYLIST");
