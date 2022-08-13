@@ -4,7 +4,7 @@
 
 Project bootstraped with `npx create-next-app@latest --ts`
 
-A spotify clone (to some extent) built with Nextjs, Tailwind (DaisyUI), PostgreSQL
+A spotify clone (to some extent) built with Nextjs, Xstate, TailwindCSS (DaisyUI component library), PostgreSQL (Prisma ORM)
 
 inspired by <https://github.com/Hendrixer/fullstack-music>
 
