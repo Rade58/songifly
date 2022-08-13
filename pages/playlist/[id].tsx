@@ -111,6 +111,7 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
 
   const {
     query: { id: playlistId },
+    push,
   } = useRouter();
 
   const [
@@ -122,8 +123,12 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
   ] = usePlayerActor();
 
   useEffect(() => {
-    console.log("MOUNTED MOUNTED ON PLAYLIST");
-    console.log({ value });
+    if (value !== "no_song") {
+      push(`playlist/${parseInt(playlistId) + 1}`);
+    }
+
+    // console.log("MOUNTED MOUNTED ON PLAYLIST");
+    // console.log({ value });
   }, [value]);
 
   useEffect(() => {
