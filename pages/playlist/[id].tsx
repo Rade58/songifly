@@ -127,10 +127,10 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
       push(`/playlist/${playlistId}`);
     } */
 
-    console.log({ currentSongs, value, songs, playlistId });
+    // console.log({ currentSongs, value, songs, playlistId });
 
     if (!currentSongs && songs && playlistId) {
-      console.log("DISPATCHED DISPATCHED DISPATCHED DISPATCHED");
+      // console.log("DISPATCHED DISPATCHED DISPATCHED DISPATCHED");
 
       dispatch({
         type: "GIVE_SONGS",
@@ -147,7 +147,7 @@ const PlaylistPage: NextPageWithLayout<PropsI> = ({ playlist }) => {
     // console.log({ value });
   }, [currentSongs, songs, dispatch, playlistId, value]);
 
-  console.log({ currentSongs, songs, dispatch, playlistId });
+  // console.log({ currentSongs, songs, dispatch, playlistId });
 
   useEffect(() => {
     if (!currentVisitedSongs && playlistId) {

@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
 };
 
 const LibraryPage: NextPageWithLayout<PropsI> = () => {
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(
       Router.pathname,
       Router.asPath,
@@ -36,9 +36,9 @@ const LibraryPage: NextPageWithLayout<PropsI> = () => {
       Router.route,
       window.origin
     );
-  }, []);
+  }, []); */
 
-  return <div>Library (work in progress)</div>;
+  return <div>Out of scope of this project</div>;
 };
 
 export default LibraryPage;

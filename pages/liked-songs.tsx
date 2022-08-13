@@ -3,7 +3,7 @@
 import type { NextPage as NP } from "next";
 
 const LikedSongs: NP = () => {
-  return <div>Liked Songs (work in progress)</div>;
+  return <div>Out of scope of this project</div>;
 };
 
 export default LikedSongs;
