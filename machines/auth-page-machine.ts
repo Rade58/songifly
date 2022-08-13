@@ -35,7 +35,10 @@ const navigateOfThePage = () => {
 
   const playlistId = cookie.get("playlistId");
 
-  window.location.href = window.origin + "/playlists/" + playlistId;
+  window.location.replace(window.origin + "/playlist/" + playlistId);
+
+  // window.location.href = window.origin + "/playlists/" + playlistId;
+
   /* fetch("/api/current-user")
     .then((resp) => resp.json())
     .then((data) => {
