@@ -14,7 +14,7 @@ Completed:
 
 - spotify audio player logic
 
-Out of scope: everything else; because building exact spotify clone would be time consuming
+Out of scope: everything else spotify; because building exact spotify clone requires time I do not have
 
 # State machines
 
