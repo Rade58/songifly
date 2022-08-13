@@ -233,9 +233,9 @@ const authPageMachine = createMachine<
     },
 
     on: {
-      /* [EV.GIVE_SONGS]: {
-        actions: [ac.setSongs, ac.resetCurrentIndex],
-      }, */
+      [EV.GIVE_SONGS]: {
+        actions: [ac.setSongs],
+      },
       [EV.VISIT_PLAYLIST]: {
         actions: [ac.setVisitedSongs],
       },
@@ -256,9 +256,6 @@ const authPageMachine = createMachine<
     states: {
       [fs.no_active_song]: {
         on: {
-          [EV.GIVE_SONGS]: {
-            actions: [ac.setSongs, ac.resetCurrentIndex],
-          },
           [EV.GIVE_ACTIVE_SONG]: {
             actions: [
               ac.setActiveSong,
@@ -523,6 +520,8 @@ playerActor.onTransition((state, event) => {
   // console.log({ activeSingleSong: state.context.activeSong });
 
   console.log({ VISITED_SONGS: state.context.currentVisitedSongs });
+
+  console.log({ SONGZIES: state.context.songs });
 });
 
 export default playerActor;
