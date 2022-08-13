@@ -515,13 +515,10 @@ const playerActor = interpret(playerMachine);
 playerActor.onTransition((state, event) => {
   // console.log("FROM on TRANSITION");
   // console.log({ playerMachineCurrentState: state.value });
-
   // console.log({ loadedSongs: state.context.songs });
   // console.log({ activeSingleSong: state.context.activeSong });
-
-  console.log({ VISITED_SONGS: state.context.currentVisitedSongs });
-
-  console.log({ SONGZIES: state.context.songs });
+  // console.log({ VISITED_SONGS: state.context.currentVisitedSongs });
+  // console.log({ SONGZIES: state.context.songs });
 });
 
 export default playerActor;
