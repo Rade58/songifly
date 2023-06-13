@@ -1,7 +1,5 @@
 # Songifly
 
-<https://songifly.vercel.app>
-
 Project bootstraped with `npx create-next-app@latest --ts`
 
 A spotify clone (to some extent) that plays some of royalty free songs; built with Nextjs, Xstate, TailwindCSS (DaisyUI component library), PostgreSQL (Prisma ORM)
